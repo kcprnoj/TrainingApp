@@ -18,7 +18,8 @@ class RunListAdapter : ListAdapter<Run, RunListAdapter.RunViewHolder>(RunsCompar
 
     override fun onBindViewHolder(holder: RunViewHolder, position: Int) {
         var current = getItem(position)
-        holder.bind(current.id.toString() + " " + current.distance.toString() + "km")
+        holder.bind(current.id.toString() + " " + current.distance.toString() + " km"
+                    + current.calories.toString() + " calories " + current.avgSpeed.toString() + " avg ")
     }
 
     class RunViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
