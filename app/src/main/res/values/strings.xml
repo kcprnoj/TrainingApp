@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">training_app</string>
+    <string name="add_training">Add training</string>
 </resources>

@@ -1,9 +1,6 @@
 package com.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.main.database.Run
 import com.main.database.RunRepository
 import kotlinx.coroutines.launch
@@ -36,4 +33,14 @@ class RunViewModel(private val repository: RunRepository) : ViewModel() {
         repository.delete(run)
     }
 
+}
+
+class RunViewModelFactory(private val repository: RunRepository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom((RunViewModel::class.java))) {
+            @Suppress("UNCHECKED_CAST")
+            return RunViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel Class")
+    }
 }
