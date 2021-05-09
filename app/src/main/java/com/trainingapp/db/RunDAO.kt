@@ -1,4 +1,4 @@
-package com.main.database
+package com.trainingapp.db
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow

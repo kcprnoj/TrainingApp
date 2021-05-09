@@ -1,6 +1,5 @@
-package com.main.database
+package com.trainingapp.db
 
-import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

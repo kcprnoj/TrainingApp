@@ -1,5 +1,7 @@
-package com.main.database
+package com.trainingapp.repositories
 
+import com.trainingapp.db.Run
+import com.trainingapp.db.RunDAO
 import kotlinx.coroutines.flow.Flow
 
 class RunRepository(private val runDAO: RunDAO) {

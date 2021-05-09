@@ -1,4 +1,4 @@
-package com.main.database
+package com.trainingapp.db
 
 import android.content.Context
 import androidx.room.Database
@@ -30,7 +30,6 @@ abstract class RunDatabase : RoomDatabase() {
                 INSTANCE?.let { database ->
                     scope.launch {
                         var wordDao = database.getRunDao()
-
 
                         // Add sample words.
                         var run = Run(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli(),

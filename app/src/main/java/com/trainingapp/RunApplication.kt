@@ -1,8 +1,8 @@
-package com.main
+package com.trainingapp
 
 import android.app.Application
-import com.main.database.RunDatabase
-import com.main.database.RunRepository
+import com.trainingapp.db.RunDatabase
+import com.trainingapp.repositories.RunRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 

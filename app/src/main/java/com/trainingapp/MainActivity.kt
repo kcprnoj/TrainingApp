@@ -1,4 +1,4 @@
-package com.main
+package com.trainingapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +7,9 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.main.R
+import com.trainingapp.viewmodels.RunListAdapter
+import com.trainingapp.viewmodels.RunViewModel
+import com.trainingapp.viewmodels.RunViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 

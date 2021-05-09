@@ -1,8 +1,8 @@
-package com.main
+package com.trainingapp.viewmodels
 
 import androidx.lifecycle.*
-import com.main.database.Run
-import com.main.database.RunRepository
+import com.trainingapp.db.Run
+import com.trainingapp.repositories.RunRepository
 import kotlinx.coroutines.launch
 
 class RunViewModel(private val repository: RunRepository) : ViewModel() {

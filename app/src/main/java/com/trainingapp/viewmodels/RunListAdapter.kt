@@ -1,4 +1,4 @@
-package com.main
+package com.trainingapp.viewmodels
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.main.R
-import com.main.database.Run
+import com.trainingapp.db.Run
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class RunListAdapter : ListAdapter<Run, RunListAdapter.RunViewHolder>(RunsComparator()) {
 
@@ -17,16 +20,27 @@ class RunListAdapter : ListAdapter<Run, RunListAdapter.RunViewHolder>(RunsCompar
     }
 
     override fun onBindViewHolder(holder: RunViewHolder, position: Int) {
-        var current = getItem(position)
-        holder.bind(current.id.toString() + " " + current.distance.toString() + " km"
-                    + current.calories.toString() + " calories " + current.avgSpeed.toString() + " avg ")
+        val current = getItem(position)
+
+        val currentDate = Instant.ofEpochSecond(current.timestamp)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime()
+
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+
+
+        holder.bind(current.id.toString() + ". " + currentDate.format(formatter),
+                current.distance.toString() + " km \n" + current.calories.toString() + " cal "
+                        + current.avgSpeed.toString() + " avg ")
     }
 
     class RunViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        private val runItemView: TextView = itemView.findViewById(R.id.textView)
+        private val runItemViewTitle: TextView = itemView.findViewById(R.id.title)
+        private val runItemViewDes: TextView = itemView.findViewById(R.id.desc)
 
-        fun bind(text: String?) {
-            runItemView.text = text
+        fun bind(title: String?, text: String?) {
+            runItemViewTitle.text = title
+            runItemViewDes.text = text
         }
 
         companion object {
