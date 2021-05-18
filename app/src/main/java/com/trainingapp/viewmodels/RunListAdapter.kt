@@ -1,5 +1,7 @@
 package com.trainingapp.viewmodels
 
+import android.content.Context
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +15,7 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-class RunListAdapter : ListAdapter<Run, RunListAdapter.RunViewHolder>(RunsComparator()) {
+class RunListAdapter(private val context: Context) : ListAdapter<Run, RunListAdapter.RunViewHolder>(RunsComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunViewHolder {
         return RunViewHolder.create(parent)
@@ -22,25 +24,38 @@ class RunListAdapter : ListAdapter<Run, RunListAdapter.RunViewHolder>(RunsCompar
     override fun onBindViewHolder(holder: RunViewHolder, position: Int) {
         val current = getItem(position)
 
-        val currentDate = Instant.ofEpochSecond(current.timestamp)
+        val currentDate = Instant.ofEpochMilli(current.timestamp)
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime()
+        val title = context.getString(R.string.training_title, current.id,
+                currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
 
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val distance = context.getString(R.string.training_distance, current.distance)
 
+        val time = context.getString(R.string.training_time,
+                String.format("%02d:%02d:%02d", current.time/1000/60/60%60,
+                        current.time/1000/60%60, current.time/1000%60))
 
-        holder.bind(current.id.toString() + ". " + currentDate.format(formatter),
-                current.distance.toString() + " km \n" + current.calories.toString() + " cal "
-                        + current.avgSpeed.toString() + " avg ")
+        val avg = context.getString(R.string.training_avg, current.avgSpeed)
+
+        val calories = context.getString(R.string.training_calories, current.calories)
+
+        holder.bind(title, distance, time, avg, calories)
     }
 
     class RunViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         private val runItemViewTitle: TextView = itemView.findViewById(R.id.title)
-        private val runItemViewDes: TextView = itemView.findViewById(R.id.desc)
+        private val runItemViewDistance: TextView = itemView.findViewById(R.id.distance)
+        private val runItemViewTime: TextView = itemView.findViewById(R.id.time)
+        private val runItemViewAvg: TextView = itemView.findViewById(R.id.avg)
+        private val runItemViewCalories: TextView = itemView.findViewById(R.id.calories)
 
-        fun bind(title: String?, text: String?) {
+        fun bind(title : String, distance: String, time: String, avg: String, calories: String) {
             runItemViewTitle.text = title
-            runItemViewDes.text = text
+            runItemViewDistance.text = distance
+            runItemViewTime.text = time
+            runItemViewAvg.text = avg
+            runItemViewCalories.text = calories
         }
 
         companion object {

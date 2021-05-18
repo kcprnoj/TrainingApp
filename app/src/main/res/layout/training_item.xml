@@ -11,8 +11,27 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/desc"
+        android:id="@+id/distance"
         style="@style/training_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/time"
+        style="@style/training_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/avg"
+        style="@style/training_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/calories"
+        style="@style/training_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp" />
 </LinearLayout>

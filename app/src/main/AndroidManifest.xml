@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Training_app">
-        <activity android:name="com.trainingapp.MainActivity" android:launchMode="singleTask">
+        <activity android:name="com.trainingapp.ui.MainActivity" android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">training_app</string>
     <string name="add_training">Add training</string>
+
+
+    <string name="training_title">%d. %s</string>
+    <string name="training_distance">Distance: %.2f km</string>
+    <string name="training_time">Time: %s</string>
+    <string name="training_avg">Average speed: %.2f km/s</string>
+    <string name="training_calories">Burned: %d calories.</string>
+
 </resources>
