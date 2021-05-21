@@ -9,5 +9,13 @@
         android:id="@+id/trainingFragment"
         android:name="com.trainingapp.ui.TrainingFragment"
         android:label="fragment_training"
-        tools:layout="@layout/fragment_training" />
+        tools:layout="@layout/fragment_training" >
+        <action
+            android:id="@+id/action_trainingFragment_to_runningFragment"
+            app:destination="@id/runningFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/runningFragment"
+        android:name="com.trainingapp.ui.RunningFragment"
+        android:label="RunningFragment" />
 </navigation>

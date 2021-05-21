@@ -1,0 +1,101 @@
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="runningViewModel"
+            type="com.trainingapp.viewmodels.RunningViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/statistics_running_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"
+            app:layout_constraintVertical_weight="2"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/statistics_running_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mapView"
+            app:layout_constraintVertical_chainStyle="spread"
+            app:layout_constraintVertical_weight="1">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/text_running"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RUNNING"
+                app:layout_constraintBottom_toTopOf="@id/time_display"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/time_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12:00:00"
+                app:layout_constraintBottom_toTopOf="@id/distance_display"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/text_running" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/distance_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DYSTANS"
+                app:layout_constraintBottom_toTopOf="@+id/start_stop_timer"
+                app:layout_constraintEnd_toStartOf="@+id/calories_display"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/time_display" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/calories_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="KALORIE"
+                app:layout_constraintBottom_toTopOf="@+id/start_stop_timer"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toEndOf="@+id/distance_display"
+                app:layout_constraintTop_toBottomOf="@+id/time_display" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/start_stop_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="START"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
