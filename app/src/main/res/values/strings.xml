@@ -1,12 +1,20 @@
 <resources>
     <string name="app_name">training_app</string>
     <string name="add_training">Add training</string>
-
+    <string name="bottom_menu_train">Train</string>
+    <string name="bottom_menu_history">History</string>
+    <string name="bottom_menu_statistics">Statistics</string>
+    <string name="bottom_menu_train_description">Training view</string>
+    <string name="bottom_menu_history_description">Training history view</string>
+    <string name="bottom_menu_statistics_description">Training statistics view</string>
 
     <string name="training_title">%d. %s</string>
     <string name="training_distance">Distance: %.2f km</string>
     <string name="training_time">Time: %s</string>
     <string name="training_avg">Average speed: %.2f km/s</string>
     <string name="training_calories">Burned: %d calories.</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="at_home_training_button">At home training</string>
+    <string name="running_training_button">Running training</string>
 
 </resources>

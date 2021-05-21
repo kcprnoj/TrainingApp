@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/training_menu_top"
+        android:icon="@drawable/baseline_person_24"
+        android:title="@string/bottom_menu_train"
+        />
+    <item
+        android:id="@+id/history_menu_top"
+        android:icon="@drawable/baseline_settings_24"
+        android:title="@string/bottom_menu_history"
+        />
+</menu>
