@@ -17,13 +17,16 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolygonOptions
 import com.google.android.gms.maps.model.PolylineOptions
+import com.trainingapp.RunApplication
 import com.trainingapp.tracking.TrackingService
 import com.trainingapp.viewmodels.RunningViewModel
+import com.trainingapp.viewmodels.RunningViewModelFactory
 import kotlinx.android.synthetic.main.fragment_running.*
 
 class RunningFragment : Fragment() {
     private lateinit var binding: FragmentRunningBinding
     private lateinit var viewModel : RunningViewModel
+    private lateinit var viewModelFactory: RunningViewModelFactory
 
     private var map: GoogleMap? = null
 
@@ -35,7 +38,8 @@ class RunningFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_running,container,false)
-        viewModel = ViewModelProvider(this).get(RunningViewModel::class.java)
+        viewModelFactory = RunningViewModelFactory((activity?.application as RunApplication).repository)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(RunningViewModel::class.java)
         binding.runningViewModel = viewModel
         binding.lifecycleOwner = this
 
