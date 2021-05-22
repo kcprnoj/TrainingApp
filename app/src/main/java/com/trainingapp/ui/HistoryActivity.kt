@@ -18,6 +18,7 @@ class HistoryActivity : AppCompatActivity() {
         RunViewModelFactory((application as RunApplication).repository)
     }
 
+    /*
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,5 +32,5 @@ class HistoryActivity : AppCompatActivity() {
             runs.let { adapter.submitList(it) }
         }
         
-    }
+    }*/
 }

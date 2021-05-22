@@ -30,7 +30,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mapView"
             app:layout_constraintVertical_chainStyle="spread"
-            app:layout_constraintVertical_weight="1">
+            app:layout_constraintVertical_weight="1"
+            tools:layout_editor_absoluteX="0dp">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_left"
@@ -60,7 +61,7 @@
                 android:id="@+id/time_display"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="12:00:00"
+                android:text="00:00:00"
                 app:layout_constraintBottom_toTopOf="@id/distance_display"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -71,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DYSTANS"
-                app:layout_constraintBottom_toTopOf="@+id/start_stop_timer"
+                app:layout_constraintBottom_toTopOf="@+id/start_stop"
                 app:layout_constraintEnd_toStartOf="@+id/calories_display"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
                 app:layout_constraintTop_toBottomOf="@+id/time_display" />
@@ -81,18 +82,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="KALORIE"
-                app:layout_constraintBottom_toTopOf="@+id/start_stop_timer"
+                app:layout_constraintBottom_toTopOf="@+id/start_stop"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toEndOf="@+id/distance_display"
                 app:layout_constraintTop_toBottomOf="@+id/time_display" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/start_stop_timer"
+                android:id="@+id/start_stop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="START"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="END"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
