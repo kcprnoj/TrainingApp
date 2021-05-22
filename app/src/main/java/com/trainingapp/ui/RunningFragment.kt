@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentRunningBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -18,11 +19,13 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 import com.trainingapp.RunApplication
+import com.trainingapp.db.Run
 import com.trainingapp.tracking.TrackingService
 import com.trainingapp.viewmodels.RunningViewModel
 import com.trainingapp.viewmodels.RunningViewModelFactory
 import kotlinx.android.synthetic.main.fragment_running.*
 import java.util.*
+import kotlin.math.round
 
 class RunningFragment : Fragment() {
     private lateinit var binding: FragmentRunningBinding
@@ -55,6 +58,11 @@ class RunningFragment : Fragment() {
         mapView.onCreate(savedInstanceState)
         start_stop.setOnClickListener{
             toggleRun()
+        }
+
+        button_end.setOnClickListener {
+            endRun()
+            button_end.visibility = View.GONE
         }
 
         mapView.getMapAsync {
@@ -176,6 +184,21 @@ class RunningFragment : Fragment() {
                 .add(lastLng)
             map?.addPolyline(polyline)
         }
+    }
+
+    private fun endRun() {
+        updateDistance()
+        updateCalories()
+        val run = Run(
+            Calendar.getInstance().timeInMillis,
+            round((distance/1000f) / (currentTime/1000f/60f/60f)*10f)/10f,
+            distance.toFloat(),
+            currentTime,
+            calories
+        )
+        viewModel.insert(run)
+        sendCommandToService("STOP")
+        findNavController().navigate(R.id.action_runningFragment_to_trainingFragment)
     }
 
     override fun onResume() {
