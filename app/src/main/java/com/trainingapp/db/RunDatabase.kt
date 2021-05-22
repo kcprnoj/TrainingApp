@@ -30,14 +30,6 @@ abstract class RunDatabase : RoomDatabase() {
                 INSTANCE?.let { database ->
                     scope.launch {
                         var wordDao = database.getRunDao()
-
-                        // Add sample words.
-                        var run = Run(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli(),
-                                        10.0f, 10.0f, 1800000L, 200)
-
-                        wordDao.insert(run)
-                        wordDao.insert(run)
-                        wordDao.insert(run)
                     }
                 }
             }

@@ -1,4 +1,4 @@
-package com.trainingapp.ui
+package com.trainingapp.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,8 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentTrainingBinding
-import com.google.android.material.bottomnavigation.BottomNavigationMenu
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.trainingapp.viewmodels.TrainingViewModel
 
 class TrainingFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.trainingapp.ui
+package com.trainingapp.ui.fragments
 
 import android.content.Intent
 import android.graphics.Color
@@ -111,9 +111,9 @@ class RunningFragment : Fragment() {
         minutes %= 60
         hours %= 60
 
-        var secondsString = ""
-        var minutesString = ""
-        var hoursString = ""
+        var secondsString: String
+        var minutesString: String
+        var hoursString: String
 
         secondsString = if (seconds < 10)
             "0$seconds"
@@ -228,7 +228,7 @@ class RunningFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        mapView.onSaveInstanceState(outState)
+        mapView?.onSaveInstanceState(outState)
     }
 
     private fun updateDistance() {
