@@ -1,4 +1,4 @@
-package com.trainingapp.ui
+package com.trainingapp.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 
 import com.example.main.R
 
@@ -29,6 +30,10 @@ class LoginFragment : Fragment() {
         binding.loginViewModel = viewModel
         binding.lifecycleOwner = this
 
+
+        binding.loginButton.setOnClickListener {
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
+        }
         return binding.root
     }
 }

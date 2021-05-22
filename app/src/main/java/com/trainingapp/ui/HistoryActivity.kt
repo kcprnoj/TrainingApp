@@ -21,7 +21,7 @@ class HistoryActivity : AppCompatActivity() {
     /*
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.training_history)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
         val adapter = RunListAdapter(this)

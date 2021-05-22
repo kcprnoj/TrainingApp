@@ -1,4 +1,4 @@
-package com.trainingapp.ui
+package com.trainingapp.ui.fragments
 
 import android.content.Intent
 import android.graphics.Color

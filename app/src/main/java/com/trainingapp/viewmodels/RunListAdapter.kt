@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.main.R
 import com.trainingapp.db.Run
-import com.trainingapp.ui.HistoryFragment
+import com.trainingapp.ui.fragments.HistoryFragment
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
