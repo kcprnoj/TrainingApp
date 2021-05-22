@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 class TrackingService : LifecycleService() {
 
     var isFirst = true;
+    var service = true;
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     
@@ -64,7 +65,7 @@ class TrackingService : LifecycleService() {
         when (intent?.action) {
             "START_OR_RESUME" -> {
                 if (isFirst) {
-                    startForeground()
+                    startForegroundService()
                     isFirst = false;
                     Log.d("TrackingService", "Started Service")
                 } else {
@@ -74,6 +75,7 @@ class TrackingService : LifecycleService() {
             }
             "STOP" -> {
                 Log.d("TRACKING SERVICE", "STOPPED")
+                killService()
             }
             "PAUSE" -> {
                 Log.d("TRACKING SERVICE", "PAUSED")
@@ -141,7 +143,7 @@ class TrackingService : LifecycleService() {
         }
     }
 
-    private fun startForeground() {
+    private fun startForegroundService() {
         startTimer()
         isTracking.postValue(true)
 
@@ -159,12 +161,21 @@ class TrackingService : LifecycleService() {
             .setContentTitle("Running App")
             .setContentText("00:00:00")
 
-        startForeground(1, notificationBuilder.build())
+        //startForeground(1, notificationBuilder.build())
     }
 
     private fun pauseService() {
         isTracking.postValue(false)
         isTimerEnabled = false
+    }
+
+    private fun killService() {
+        service = false;
+        isFirst = true
+        pauseService()
+        init()
+        stopForeground(true)
+        stopSelf()
     }
 
     private fun startTimer() {

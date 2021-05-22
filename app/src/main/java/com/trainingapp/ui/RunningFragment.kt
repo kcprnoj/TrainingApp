@@ -2,6 +2,7 @@ package com.trainingapp.ui
 
 import android.content.Intent
 import android.graphics.Color
+import android.location.Location
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,13 +16,13 @@ import com.example.main.databinding.FragmentRunningBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.PolygonOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.trainingapp.RunApplication
 import com.trainingapp.tracking.TrackingService
 import com.trainingapp.viewmodels.RunningViewModel
 import com.trainingapp.viewmodels.RunningViewModelFactory
 import kotlinx.android.synthetic.main.fragment_running.*
+import java.util.*
 
 class RunningFragment : Fragment() {
     private lateinit var binding: FragmentRunningBinding
@@ -34,6 +35,9 @@ class RunningFragment : Fragment() {
     private var pathPoints = mutableListOf<MutableList<LatLng>>()
 
     private var currentTime = 0L
+    private var distance = 0
+    private var calories = 0
+    private var weight = 73f
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -81,6 +85,12 @@ class RunningFragment : Fragment() {
             currentTime = it
             val formattedTime = formatTime(currentTime)
             time_display.text = formattedTime
+
+            updateDistance()
+            updateCalories()
+            val distaneInKm = distance.toDouble()/1000
+            distance_display.text = "$distaneInKm km"
+            calories_display.text = "$calories kcal"
         })
     }
 
@@ -196,5 +206,39 @@ class RunningFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mapView.onSaveInstanceState(outState)
+    }
+
+    private fun updateDistance() {
+        distance = 0;
+        for (locations in pathPoints) {
+            distance += calculateDistance(locations).toInt()
+        }
+    }
+
+    private fun updateCalories() {
+        calories = calculateCalories(distance, weight)
+    }
+
+    fun calculateDistance(polyline: MutableList<LatLng>): Float {
+        var distance = 0f
+        for(i in 0..polyline.size - 2) {
+            val pos1 = polyline[i]
+            val pos2 = polyline[i + 1]
+
+            val result = FloatArray(1)
+            Location.distanceBetween(
+                pos1.latitude,
+                pos1.longitude,
+                pos2.latitude,
+                pos2.longitude,
+                result
+            )
+            distance += result[0]
+        }
+        return distance
+    }
+
+    private fun calculateCalories(distance: Int, weight: Float): Int{
+        return (distance.toFloat()/1000f/1.6f*weight*0.75).toInt()
     }
 }

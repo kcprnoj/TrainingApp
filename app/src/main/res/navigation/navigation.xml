@@ -17,5 +17,9 @@
     <fragment
         android:id="@+id/runningFragment"
         android:name="com.trainingapp.ui.RunningFragment"
-        android:label="RunningFragment" />
+        android:label="RunningFragment" >
+        <action
+            android:id="@+id/action_runningFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
 </navigation>
