@@ -1,6 +1,7 @@
 package com.trainingapp.tracking
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_LOW
@@ -53,6 +54,7 @@ class TrackingService : LifecycleService() {
     override fun onCreate() {
         super.onCreate()
         init()
+        @SuppressLint("VisibleForTests")
         fusedLocationProviderClient = FusedLocationProviderClient(this)
 
         isTracking.observe(this, Observer {
@@ -117,7 +119,7 @@ class TrackingService : LifecycleService() {
 
     private  fun update(isTracking: Boolean) {
         if (isTracking) {
-            val request = LocationRequest().apply {
+            val request = LocationRequest.create().apply {
                 interval = 5000L
                 fastestInterval = 3000L
                 priority = PRIORITY_HIGH_ACCURACY
@@ -147,7 +149,7 @@ class TrackingService : LifecycleService() {
         startTimer()
         isTracking.postValue(true)
 
-
+        /*
         val id = "tracking_service"
         val notificationManager : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
             as NotificationManager
@@ -161,7 +163,7 @@ class TrackingService : LifecycleService() {
             .setContentTitle("Running App")
             .setContentText("00:00:00")
 
-        //startForeground(1, notificationBuilder.build())
+        startForeground(1, notificationBuilder.build())*/
     }
 
     private fun pauseService() {
