@@ -1,4 +1,4 @@
-package com.trainingapp.ui
+package com.trainingapp.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

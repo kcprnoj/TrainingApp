@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.trainingapp.db.Run
 import com.trainingapp.repositories.RunRepository
 import kotlinx.coroutines.launch
-import java.util.*
 
 class RunningViewModel(private val repository: RunRepository) : ViewModel() {
 

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/trainingFragment"
-        android:name="com.trainingapp.ui.TrainingFragment"
+        android:name="com.trainingapp.ui.fragments.TrainingFragment"
         android:label="fragment_training"
         tools:layout="@layout/fragment_training" >
         <action
@@ -17,7 +17,13 @@
     <fragment
         android:id="@+id/runningFragment"
         android:name="com.trainingapp.ui.RunningFragment"
-        android:label="RunningFragment" />
+        android:label="RunningFragment"
+        android:name="com.trainingapp.ui.fragments.RunningFragment"
+        android:label="RunningFragment" >
+        <action
+            android:id="@+id/action_runningFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.trainingapp.ui.HistoryFragment"
@@ -37,6 +43,12 @@
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
+        android:name="com.trainingapp.ui.fragments.RunningFragment"
+        android:label="RunningFragment" >
+        <action
+            android:id="@+id/action_runningFragment_to_trainingFragment"
             app:destination="@id/trainingFragment" />
     </fragment>
 </navigation>

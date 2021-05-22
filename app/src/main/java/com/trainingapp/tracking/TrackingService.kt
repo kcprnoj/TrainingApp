@@ -1,6 +1,7 @@
 package com.trainingapp.tracking
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_LOW
@@ -29,7 +30,7 @@ import kotlinx.coroutines.launch
 class TrackingService : LifecycleService() {
 
     private var isFirst = true
-
+    private var service = true
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     
     companion object {
@@ -52,6 +53,7 @@ class TrackingService : LifecycleService() {
     override fun onCreate() {
         super.onCreate()
         init()
+        @SuppressLint("VisibleForTests")
         fusedLocationProviderClient = FusedLocationProviderClient(this)
 
         isTracking.observe(this, {
@@ -64,7 +66,7 @@ class TrackingService : LifecycleService() {
         when (intent?.action) {
             "START_OR_RESUME" -> {
                 if (isFirst) {
-                    startForeground()
+                    startForegroundService()
                     isFirst = false
                     Log.d("TrackingService", "Started Service")
                 } else {
@@ -74,6 +76,7 @@ class TrackingService : LifecycleService() {
             }
             "STOP" -> {
                 Log.d("TRACKING SERVICE", "STOPPED")
+                killService()
             }
             "PAUSE" -> {
                 Log.d("TRACKING SERVICE", "PAUSED")
@@ -115,7 +118,7 @@ class TrackingService : LifecycleService() {
 
     private  fun update(isTracking: Boolean) {
         if (isTracking) {
-            val request = LocationRequest().apply {
+            val request = LocationRequest.create().apply {
                 interval = 5000L
                 fastestInterval = 3000L
                 priority = PRIORITY_HIGH_ACCURACY
@@ -141,11 +144,11 @@ class TrackingService : LifecycleService() {
         }
     }
 
-    private fun startForeground() {
+    private fun startForegroundService() {
         startTimer()
         isTracking.postValue(true)
 
-
+        /*
         val id = "tracking_service"
         val notificationManager : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
             as NotificationManager
@@ -155,18 +158,25 @@ class TrackingService : LifecycleService() {
 
         val notificationBuilder = NotificationCompat.Builder (this, id)
             .setAutoCancel(false)
-            .setSmallIcon(R.drawable.baseline_directions_run_24)
             .setOngoing(true)
             .setContentTitle("Running App")
             .setContentText("00:00:00")
 
-        notificationManager.notify(1,notificationBuilder.build())
-        //startForeground(1, notificationBuilder.build())
+        startForeground(1, notificationBuilder.build())*/
     }
 
     private fun pauseService() {
         isTracking.postValue(false)
         isTimerEnabled = false
+    }
+
+    private fun killService() {
+        service = false;
+        isFirst = true
+        pauseService()
+        init()
+        stopForeground(true)
+        stopSelf()
     }
 
     private fun startTimer() {
