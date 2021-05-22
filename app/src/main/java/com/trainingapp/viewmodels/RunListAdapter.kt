@@ -1,7 +1,5 @@
 package com.trainingapp.viewmodels
 
-import android.content.Context
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +9,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.main.R
 import com.trainingapp.db.Run
+import com.trainingapp.ui.HistoryFragment
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-class RunListAdapter(private val context: Context) : ListAdapter<Run, RunListAdapter.RunViewHolder>(RunsComparator()) {
+class RunListAdapter(private val context: HistoryFragment) : ListAdapter<Run, RunListAdapter.RunViewHolder>(RunsComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunViewHolder {
         return RunViewHolder.create(parent)
@@ -61,7 +60,7 @@ class RunListAdapter(private val context: Context) : ListAdapter<Run, RunListAda
         companion object {
             fun create(parent: ViewGroup): RunViewHolder {
                 val view: View = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.training_item, parent, false)
+                    .inflate(R.layout.training_item_running, parent, false)
                 return RunViewHolder(view)
             }
         }

@@ -4,31 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title"
         style="@style/training_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/distance"
         style="@style/training_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/time"
         style="@style/training_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/avg"
         style="@style/training_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/calories"
         style="@style/training_desc"
         android:layout_width="match_parent"

@@ -8,14 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.main.R
 import com.example.main.databinding.FragmentRunningBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.PolygonOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.trainingapp.RunApplication
 import com.trainingapp.tracking.TrackingService
@@ -30,7 +28,7 @@ class RunningFragment : Fragment() {
 
     private var map: GoogleMap? = null
 
-    private var isTracking = false;
+    private var isTracking = false
     private var pathPoints = mutableListOf<MutableList<LatLng>>()
 
     private var currentTime = 0L
@@ -57,27 +55,27 @@ class RunningFragment : Fragment() {
             map = it
             addAllLocations()
         }
-        subToObservers();
+        subToObservers()
     }
 
     private fun sendCommandToService(action: String) {
         val intent = Intent(requireContext(), TrackingService::class.java)
-        intent.action = action;
+        intent.action = action
         requireContext().startService(intent)
     }
 
     private fun subToObservers() {
-        TrackingService.isTracking.observe(viewLifecycleOwner, Observer {
+        TrackingService.isTracking.observe(viewLifecycleOwner, {
             updateTracking(it)
         })
 
-        TrackingService.pathPoints.observe(viewLifecycleOwner, Observer {
-            pathPoints = it;
+        TrackingService.pathPoints.observe(viewLifecycleOwner, {
+            pathPoints = it
             addLatestLocation()
             moveCamera()
         })
 
-        TrackingService.timeInMillis.observe(viewLifecycleOwner, Observer {
+        TrackingService.timeInMillis.observe(viewLifecycleOwner, {
             currentTime = it
             val formattedTime = formatTime(currentTime)
             time_display.text = formattedTime
@@ -93,21 +91,17 @@ class RunningFragment : Fragment() {
         minutes %= 60
         hours %= 60
 
-        var secondsString = ""
-        var minutesString = ""
-        var hoursString = ""
-
-        secondsString = if (seconds < 10)
+        val secondsString: String = if (seconds < 10)
             "0$seconds"
         else
             "$seconds"
 
-        minutesString = if (minutes < 10)
+        val minutesString: String = if (minutes < 10)
             "0$minutes"
         else
             "$minutes"
 
-        hoursString = if (hours < 10)
+        val hoursString : String = if (hours < 10)
             "0$hours"
         else
             "$hours"
@@ -126,10 +120,10 @@ class RunningFragment : Fragment() {
     private fun updateTracking(isTracking: Boolean) {
         this.isTracking = isTracking
         if (isTracking) {
-            start_stop.text = "Stop"
+            start_stop.text = getString(R.string.stop)
             button_end.visibility = View.GONE
         } else {
-            start_stop.text = "Start"
+            start_stop.text = getString(R.string.start)
             button_end.visibility = View.VISIBLE
         }
     }

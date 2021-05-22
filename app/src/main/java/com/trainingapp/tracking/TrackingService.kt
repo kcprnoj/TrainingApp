@@ -14,7 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import com.example.main.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -28,9 +28,9 @@ import kotlinx.coroutines.launch
 
 class TrackingService : LifecycleService() {
 
-    var isFirst = true;
+    private var isFirst = true
 
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     
     companion object {
         val timeInMillis = MutableLiveData<Long>()
@@ -54,7 +54,7 @@ class TrackingService : LifecycleService() {
         init()
         fusedLocationProviderClient = FusedLocationProviderClient(this)
 
-        isTracking.observe(this, Observer {
+        isTracking.observe(this, {
             update(it)
         })
     }
@@ -65,7 +65,7 @@ class TrackingService : LifecycleService() {
             "START_OR_RESUME" -> {
                 if (isFirst) {
                     startForeground()
-                    isFirst = false;
+                    isFirst = false
                     Log.d("TrackingService", "Started Service")
                 } else {
                     startTimer()
@@ -88,7 +88,7 @@ class TrackingService : LifecycleService() {
         override fun onLocationResult(result: LocationResult) {
             super.onLocationResult(result)
             if (isTracking.value!!) {
-                result?.locations?.let { locations ->
+                result.locations.let { locations ->
                     for (location in locations) {
                         addPathPoint(location)
                         Log.d("TrackingService", "Added path point $location")
@@ -155,11 +155,13 @@ class TrackingService : LifecycleService() {
 
         val notificationBuilder = NotificationCompat.Builder (this, id)
             .setAutoCancel(false)
+            .setSmallIcon(R.drawable.baseline_directions_run_24)
             .setOngoing(true)
             .setContentTitle("Running App")
             .setContentText("00:00:00")
 
-        startForeground(1, notificationBuilder.build())
+        notificationManager.notify(1,notificationBuilder.build())
+        //startForeground(1, notificationBuilder.build())
     }
 
     private fun pauseService() {

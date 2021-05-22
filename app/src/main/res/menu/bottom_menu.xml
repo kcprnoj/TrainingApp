@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/training_menu_button"
+        android:id="@+id/trainingFragment"
         android:icon="@drawable/baseline_directions_run_24"
         android:title="@string/bottom_menu_train"
         android:enabled="true"
         />
     <item
-        android:id="@+id/history_menu_button"
+        android:id="@+id/historyFragment"
         android:icon="@drawable/baseline_library_books_24"
         android:title="@string/bottom_menu_history"
         android:enabled="true"
         />
     <item
-        android:id="@+id/statistics_menu_button"
+        android:id="@+id/statisticsFragment"
         android:icon="@drawable/baseline_leaderboard_24"
         android:title="@string/bottom_menu_statistics"
         android:enabled="true"

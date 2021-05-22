@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/trainingFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/trainingFragment"
@@ -18,4 +18,25 @@
         android:id="@+id/runningFragment"
         android:name="com.trainingapp.ui.RunningFragment"
         android:label="RunningFragment" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.trainingapp.ui.HistoryFragment"
+        android:label="HistoryFragment" />
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.trainingapp.ui.StatisticsFragment"
+        android:label="StatisticsFragment" />
+    <fragment
+        android:id="@+id/modifyAccountFragment"
+        android:name="com.trainingapp.ui.ModifyAccountFragment"
+        android:label="fragment_modify_account"
+        tools:layout="@layout/fragment_modify_account" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.trainingapp.ui.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
 </navigation>

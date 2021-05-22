@@ -7,6 +7,8 @@
     <string name="bottom_menu_train_description">Training view</string>
     <string name="bottom_menu_history_description">Training history view</string>
     <string name="bottom_menu_statistics_description">Training statistics view</string>
+    <string name="stop">Stop</string>
+    <string name="start">Start</string>
 
     <string name="training_title">%d. %s</string>
     <string name="training_distance">Distance: %.2f km</string>
@@ -16,5 +18,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="at_home_training_button">At home training</string>
     <string name="running_training_button">Running training</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="button_register_message">Don\'t have an account? Register</string>
+    <string name="button_register">Register</string>
+    <string name="button_login">Login</string>
+    <string name="button_back">Back</string>
+    <string name="hint_email">E-mail</string>
 
 </resources>

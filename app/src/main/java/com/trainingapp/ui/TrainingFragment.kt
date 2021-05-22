@@ -10,8 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentTrainingBinding
-import com.google.android.material.bottomnavigation.BottomNavigationMenu
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.trainingapp.viewmodels.TrainingViewModel
 
 class TrainingFragment : Fragment() {
@@ -19,7 +17,7 @@ class TrainingFragment : Fragment() {
     private lateinit var viewModel : TrainingViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View{
 
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_training,container,false)
         viewModel = ViewModelProvider(this).get(TrainingViewModel::class.java)
@@ -29,4 +27,6 @@ class TrainingFragment : Fragment() {
         }
         return binding.root
     }
+
+
 }

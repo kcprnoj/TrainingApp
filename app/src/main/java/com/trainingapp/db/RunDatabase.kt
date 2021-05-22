@@ -29,10 +29,10 @@ abstract class RunDatabase : RoomDatabase() {
                 super.onCreate(db)
                 INSTANCE?.let { database ->
                     scope.launch {
-                        var wordDao = database.getRunDao()
+                        val wordDao = database.getRunDao()
 
                         // Add sample words.
-                        var run = Run(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli(),
+                        val run = Run(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli(),
                                         10.0f, 10.0f, 1800000L, 200)
 
                         wordDao.insert(run)
@@ -49,7 +49,7 @@ abstract class RunDatabase : RoomDatabase() {
             scope: CoroutineScope
         ): RunDatabase {
             return INSTANCE ?: synchronized(this) {
-                var instance = Room.databaseBuilder(
+                val instance = Room.databaseBuilder(
                         context.applicationContext,
                         RunDatabase::class.java,
                         "run_database"
