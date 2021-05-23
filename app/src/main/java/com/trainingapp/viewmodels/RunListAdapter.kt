@@ -29,7 +29,7 @@ class RunListAdapter(private val context: HistoryFragment) : ListAdapter<Run, Ru
         val title = context.getString(R.string.training_title, current.id,
                 currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
 
-        val distance = context.getString(R.string.training_distance, current.distance)
+        val distance = context.getString(R.string.training_distance, current.distance/1000)
 
         val time = context.getString(R.string.training_time,
                 String.format("%02d:%02d:%02d", current.time/1000/60/60%60,
