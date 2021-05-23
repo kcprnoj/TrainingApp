@@ -87,4 +87,7 @@ dependencies {
     implementation "android.arch.navigation:navigation-fragment-ktx:$version_navigation"
     implementation "android.arch.navigation:navigation-ui-ktx:$version_navigation"
 
+    //Graph
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 }
