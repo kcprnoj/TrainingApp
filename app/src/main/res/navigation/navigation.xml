@@ -54,4 +54,14 @@
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/changeAppearanceFragment"
+        android:name="com.trainingapp.ui.fragments.ChangeAppearanceFragment"
+        android:label="fragment_change_appearance"
+        tools:layout="@layout/fragment_change_appearance" />
+    <fragment
+        android:id="@+id/createNotificationFragment"
+        android:name="com.trainingapp.ui.fragments.CreateNotificationFragment"
+        android:label="fragment_create_notification"
+        tools:layout="@layout/fragment_create_notification" />
 </navigation>

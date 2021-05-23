@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.trainingFragment, R.id.historyFragment, R.id.statisticsFragment -> {
                     bottomNavView.visibility = View.VISIBLE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                    navController.graph.startDestination = R.id.trainingFragment
                 }
                 else -> {
                     bottomNavView.visibility = View.GONE
