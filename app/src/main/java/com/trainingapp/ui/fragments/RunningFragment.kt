@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentRunningBinding
@@ -193,7 +194,7 @@ class RunningFragment : Fragment() {
         )
         viewModel.insert(run)
         sendCommandToService("STOP")
-        findNavController().navigate(R.id.action_runningFragment_to_trainingFragment)
+        findNavController().navigate(RunningFragmentDirections.actionRunningFragmentToTrainingFragment())
     }
 
     override fun onResume() {
