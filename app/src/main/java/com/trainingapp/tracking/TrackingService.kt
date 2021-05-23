@@ -166,7 +166,7 @@ class TrackingService : LifecycleService() {
     }
 
     private fun killService() {
-        service = false;
+        service = false
         isFirst = true
         pauseService()
         init()
