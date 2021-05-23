@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/hint_username"
-            app:layout_constraintBottom_toTopOf="@+id/email_text_input_layout"
+            app:layout_constraintBottom_toTopOf="@+id/weight_text_input_layout"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintEnd_toEndOf="@+id/guideline_right">
@@ -43,19 +43,20 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email_text_input_layout"
+            android:id="@+id/weight_text_input_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_email"
+            android:hint="@string/hint_weight"
             app:layout_constraintBottom_toTopOf="@+id/password_text_input_layout"
             app:layout_constraintTop_toBottomOf="@+id/username_text_input_layout"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintEnd_toEndOf="@+id/guideline_right">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email_input"
+                android:id="@+id/weight_input"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -64,7 +65,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_password"
             app:layout_constraintBottom_toBottomOf="@+id/register_button"
-            app:layout_constraintTop_toBottomOf="@+id/email_text_input_layout"
+            app:layout_constraintTop_toBottomOf="@+id/weight_text_input_layout"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintEnd_toEndOf="@+id/guideline_right"
             app:errorEnabled="true">

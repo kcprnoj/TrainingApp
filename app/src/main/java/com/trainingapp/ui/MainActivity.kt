@@ -1,9 +1,10 @@
 package com.trainingapp.ui
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -11,17 +12,23 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.main.R
 import com.example.main.databinding.ActivityMainBinding
+import ua.naiksoftware.stomp.Stomp
+import ua.naiksoftware.stomp.StompClient
+import java.lang.Exception
+
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration : AppBarConfiguration
+    lateinit var stompClient: StompClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getSupportActionBar()?.hide()
+        supportActionBar?.hide()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupNavigation()
+        connectToServer()
     }
 
     private fun setupNavigation(){
@@ -49,9 +56,31 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(bottomNavView, navController)
         NavigationUI.setupWithNavController(topNavigation, navController)
     }
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.myNavHostFragment)
         return NavigationUI.navigateUp(navController, appBarConfiguration)
+    }
+
+    @SuppressLint("CheckResult")
+    private fun connectToServer(): Boolean {
+        try{
+            stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://10.0.2.2:8080/chat")
+            stompClient.connect()
+
+        } catch (e: Exception) {
+            Log.e("Connection", e.stackTrace.toString())
+            return false
+        }
+        Log.i("Connection", "Connected")
+        return true
+    }
+
+    override fun onDestroy() {
+        if (stompClient.isConnected) {
+            stompClient.disconnect()
+        }
+        super.onDestroy()
     }
 
 }
