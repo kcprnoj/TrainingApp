@@ -21,10 +21,8 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var viewModel: LoginViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         binding.loginViewModel = viewModel
@@ -33,6 +31,9 @@ class LoginFragment : Fragment() {
 
         binding.loginButton.setOnClickListener {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
+        }
+        binding.registerButton.setOnClickListener {
+            findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
         }
         return binding.root
     }
