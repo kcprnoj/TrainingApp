@@ -26,5 +26,12 @@
     <string name="button_back">Back</string>
     <string name="hint_email">E-mail</string>
     <string name="distance_each_day">Distance each day</string>
+    <string name="hint_change_username">Change Username</string>
+    <string name="hint_change_email">Change E-mail</string>
+    <string name="hint_old_password">Old password</string>
+    <string name="hint_new_password">New password</string>
+    <string name="button_update">Update</string>
+    <string name="hint_change_height">Change height</string>
+    <string name="hint_change_weight">Change weight</string>
 
 </resources>
