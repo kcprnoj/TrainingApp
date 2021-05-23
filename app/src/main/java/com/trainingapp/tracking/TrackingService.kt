@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.observe
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -50,9 +51,9 @@ class TrackingService : LifecycleService() {
         @SuppressLint("VisibleForTests")
         fusedLocationProviderClient = FusedLocationProviderClient(this)
 
-        isTracking.observe(this, {
+        isTracking.observe(this) {
             update(it)
-        })
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

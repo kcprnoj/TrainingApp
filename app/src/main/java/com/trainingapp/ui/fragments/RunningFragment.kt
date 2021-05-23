@@ -79,27 +79,27 @@ class RunningFragment : Fragment() {
     }
 
     private fun subToObservers() {
-        TrackingService.isTracking.observe(viewLifecycleOwner, {
+        TrackingService.isTracking.observe(viewLifecycleOwner) {
             updateTracking(it)
-        })
+        }
 
-        TrackingService.pathPoints.observe(viewLifecycleOwner, {
+        TrackingService.pathPoints.observe(viewLifecycleOwner) {
             pathPoints = it
             addLatestLocation()
             moveCamera()
-        })
+        }
 
-        TrackingService.timeInMillis.observe(viewLifecycleOwner, {
+        TrackingService.timeInMillis.observe(viewLifecycleOwner) {
             currentTime = it
             val formattedTime = formatTime(currentTime)
             time_display.text = formattedTime
 
             updateDistance()
             updateCalories()
-            val distaneInKm = distance.toDouble()/1000
-            distance_display.text = "$distaneInKm km"
+            val distanceInKm = distance.toDouble()/1000
+            distance_display.text = "$distanceInKm km"
             calories_display.text = "$calories kcal"
-        })
+        }
     }
 
     private fun formatTime(time: Long): String {
