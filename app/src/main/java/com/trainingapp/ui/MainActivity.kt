@@ -1,8 +1,10 @@
 package com.trainingapp.ui
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
@@ -12,17 +14,23 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.main.R
 import com.example.main.databinding.ActivityMainBinding
+import ua.naiksoftware.stomp.Stomp
+import ua.naiksoftware.stomp.StompClient
+import java.lang.Exception
+
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration : AppBarConfiguration
+    lateinit var stompClient: StompClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupNavigation()
+        connectToServer()
         setupNightLight()
     }
 
@@ -85,6 +93,27 @@ class MainActivity : AppCompatActivity() {
     }
     private fun setupLanguageChange(){
 
+    }
+
+    @SuppressLint("CheckResult")
+    private fun connectToServer(): Boolean {
+        try{
+            stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://10.0.2.2:8080/chat")
+            stompClient.connect()
+
+        } catch (e: Exception) {
+            Log.e("Connection", e.stackTrace.toString())
+            return false
+        }
+        Log.i("Connection", "Connected")
+        return true
+    }
+
+    override fun onDestroy() {
+        if (stompClient.isConnected) {
+            stompClient.disconnect()
+        }
+        super.onDestroy()
     }
 
 }
