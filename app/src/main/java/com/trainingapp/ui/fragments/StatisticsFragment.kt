@@ -1,6 +1,7 @@
 package com.trainingapp.ui.fragments
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -56,10 +57,12 @@ class StatisticsFragment : Fragment() {
         viewModel.allRunsByDate.observe(viewLifecycleOwner, {
             val entryList = ArrayList<Entry>()
             val stringDateList = ArrayList<String>()
-
-            for (i in it.reversed().indices) {
-                entryList.add(Entry(i.toFloat(), it[i].distance))
-                val currentDate = Instant.ofEpochMilli(it[i].timestamp)
+            Log.i("STATISTICS",it.toString())
+            val newArray = it.reversed()
+            for (i in newArray.indices) {
+                Log.i("STATISTICS",newArray[i].distance.toString())
+                entryList.add(Entry(i.toFloat(), newArray[i].distance))
+                val currentDate = Instant.ofEpochMilli(newArray[i].timestamp)
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate()
                 currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
