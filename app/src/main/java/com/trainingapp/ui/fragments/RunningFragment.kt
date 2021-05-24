@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.trainingapp.RunApplication
 import com.trainingapp.db.Run
 import com.trainingapp.tracking.TrackingService
+import com.trainingapp.ui.MainActivity
 import com.trainingapp.viewmodels.RunningViewModel
 import com.trainingapp.viewmodels.RunningViewModelFactory
 import kotlinx.android.synthetic.main.fragment_running.*
@@ -40,7 +41,6 @@ class RunningFragment : Fragment() {
     private var currentTime = 0L
     private var distance = 0
     private var calories = 0
-    private var weight = 73f
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -235,10 +235,10 @@ class RunningFragment : Fragment() {
     }
 
     private fun updateCalories() {
-        calories = calculateCalories(distance, weight)
+        calories = calculateCalories(distance, (activity as MainActivity).user.weight)
     }
 
-    fun calculateDistance(polyline: MutableList<LatLng>): Float {
+    private fun calculateDistance(polyline: MutableList<LatLng>): Float {
         var distance = 0f
         for(i in 0..polyline.size - 2) {
             val pos1 = polyline[i]
@@ -258,6 +258,6 @@ class RunningFragment : Fragment() {
     }
 
     private fun calculateCalories(distance: Int, weight: Float): Int{
-        return (distance.toFloat()/1000f/1.6f*weight*0.75).toInt()
+        return (distance.toFloat()/1000f*weight*0.8).toInt()
     }
 }
