@@ -1,4 +1,5 @@
 package com.trainingapp.ui.fragments
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,10 +11,18 @@ import com.example.main.R
 import com.example.main.databinding.FragmentStatisticsBinding
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.trainingapp.RunApplication
+import com.trainingapp.db.Run
 import com.trainingapp.viewmodels.MyValueFormatter
 import com.trainingapp.viewmodels.StatisticsViewModel
 import com.trainingapp.viewmodels.StatisticsViewModelFactory
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 
 class StatisticsFragment : Fragment() {
@@ -39,15 +48,37 @@ class StatisticsFragment : Fragment() {
         lineChart = binding.lineChart
         lineChart.isDragEnabled = true
         lineChart.setScaleEnabled(true)
-        val xAxis = lineChart.xAxis
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
         lineChart.description.text = ""
 
+        val xAxis = lineChart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+
         viewModel.allRunsByDate.observe(viewLifecycleOwner, {
-            viewModel.createChartData(it)
-            lineChart.data = viewModel.lineData
-            xAxis.labelCount = viewModel.entryList.size - 1
-            xAxis.valueFormatter = MyValueFormatter(viewModel.stringDateList)
+            val entryList = ArrayList<Entry>()
+            val stringDateList = ArrayList<String>()
+
+            for (i in it.reversed().indices) {
+                entryList.add(Entry(i.toFloat(), it[i].distance))
+                val currentDate = Instant.ofEpochMilli(it[i].timestamp)
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate()
+                currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                stringDateList.add(currentDate.toString())
+            }
+
+            val lineDataSet  = LineDataSet(entryList, "Distance")
+            lineDataSet.color = Color.RED
+            lineDataSet.axisDependency = YAxis.AxisDependency.LEFT
+            lineDataSet.setDrawValues(false)
+            lineDataSet.setDrawCircles(true)
+
+            val lineData = LineData(lineDataSet)
+            lineData.notifyDataChanged()
+            lineChart.data = lineData
+
+            xAxis.labelCount = entryList.size - 1
+            xAxis.valueFormatter = MyValueFormatter(stringDateList)
+
             lineChart.invalidate()
         })
     }
