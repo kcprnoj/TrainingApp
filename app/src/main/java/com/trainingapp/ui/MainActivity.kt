@@ -82,10 +82,10 @@ class MainActivity : AppCompatActivity() {
         val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode", false)
         if (isNightModeOn){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            //binding.switchNightLight.setIconResource(R.drawable.baseline_wb_sunny_24)
+            binding.switchNightLight.setIconResource(R.drawable.baseline_wb_sunny_24)
         }else{
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            //binding.switchNightLight.setIconResource(R.drawable.baseline_bedtime_24)
+            binding.switchNightLight.setIconResource(R.drawable.baseline_bedtime_24)
         }
 
         binding.switchNightLight.setOnClickListener{
@@ -93,12 +93,12 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 sharedPrefEdit.putBoolean("NightMode", false)
                 sharedPrefEdit.apply()
-                //binding.switchNightLight.setIconResource(R.drawable.baseline_bedtime_24)
+                binding.switchNightLight.setIconResource(R.drawable.baseline_bedtime_24)
             }else{
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 sharedPrefEdit.putBoolean("NightMode", true)
                 sharedPrefEdit.apply()
-                //binding.switchNightLight.setIconResource(R.drawable.baseline_wb_sunny_24)
+                binding.switchNightLight.setIconResource(R.drawable.baseline_wb_sunny_24)
             }
         }
     }
@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }, {})
 
-            stompClient.topic("/user/queue/register").subscribe( { topicMessage ->
+            stompClient.topic("/user/queue/modify").subscribe( { topicMessage ->
                 val reply = JSONObject(topicMessage.payload)
                 when {
                     reply.getString("Successful") == "True" -> {
@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     else -> {
                         Log.d("Register", "Failed")
-                        registerSuccess.postValue(false)
+                        modifySuccess.postValue(false)
                     }
                 }
             }, {})
