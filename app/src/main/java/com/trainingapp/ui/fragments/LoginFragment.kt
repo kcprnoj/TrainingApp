@@ -54,6 +54,7 @@ class LoginFragment : Fragment() {
         (activity as MainActivity).loginSuccess.observe(viewLifecycleOwner, Observer {
             if (it == true) {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
+                (activity as MainActivity).loginSuccess.postValue(false)
             }
         })
 

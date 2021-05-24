@@ -78,6 +78,7 @@ class RegisterFragment : Fragment() {
         (activity as MainActivity).registerSuccess.observe(viewLifecycleOwner, Observer {
             if (it == true) {
                 findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+                (activity as MainActivity).registerSuccess.postValue(false)
             }
         })
     }

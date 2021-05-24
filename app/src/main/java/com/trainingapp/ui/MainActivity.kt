@@ -118,10 +118,10 @@ class MainActivity : AppCompatActivity() {
                 when {
                     reply.getString("Successful") == "True" -> {
                         loginSuccess.postValue(true)
-                        loginSuccess.postValue(false)
                     }
                     else -> {
                         Log.d("Login", "Failed")
+                        loginSuccess.postValue(false)
                     }
                 }
             }, {})
@@ -131,10 +131,10 @@ class MainActivity : AppCompatActivity() {
                 when {
                     reply.getString("Successful") == "True" -> {
                         registerSuccess.postValue(true)
-                        registerSuccess.postValue(false)
                     }
                     else -> {
                         Log.d("Register", "Failed")
+                        registerSuccess.postValue(false)
                     }
                 }
             }, {})
@@ -144,10 +144,10 @@ class MainActivity : AppCompatActivity() {
                 when {
                     reply.getString("Successful") == "True" -> {
                         modifySuccess.postValue(true)
-                        registerSuccess.postValue(false)
                     }
                     else -> {
                         Log.d("Register", "Failed")
+                        registerSuccess.postValue(false)
                     }
                 }
             }, {})

@@ -75,9 +75,10 @@ class ModifyAccountFragment : Fragment() {
     }
 
     private fun setClientObservers() {
-        (activity as MainActivity).registerSuccess.observe(viewLifecycleOwner, Observer {
+        (activity as MainActivity).modifySuccess.observe(viewLifecycleOwner, Observer {
             if (it == true) {
                 findNavController().navigate(ModifyAccountFragmentDirections.actionModifyAccountFragmentToTrainingFragment())
+                (activity as MainActivity).modifySuccess.postValue(false)
             }
         })
     }
