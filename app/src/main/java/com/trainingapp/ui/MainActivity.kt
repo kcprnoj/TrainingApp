@@ -5,15 +5,21 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.MutableBoolean
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.main.R
 import com.example.main.databinding.ActivityMainBinding
+import com.trainingapp.ui.fragments.LoginFragmentDirections
+import com.trainingapp.ui.fragments.RegisterFragmentDirections
+import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
 import java.lang.Exception
@@ -24,6 +30,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration : AppBarConfiguration
     lateinit var stompClient: StompClient
+    var login: String = "Not logged in"
+
+    val loginSuccess = MutableLiveData<Boolean>(false)
+    val registerSuccess = MutableLiveData<Boolean>(false)
+    val modifySuccess = MutableLiveData<Boolean>(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,10 +82,10 @@ class MainActivity : AppCompatActivity() {
         val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode", false)
         if (isNightModeOn){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            binding.switchNightLight.setIconResource(R.drawable.baseline_wb_sunny_24)
+            //binding.switchNightLight.setIconResource(R.drawable.baseline_wb_sunny_24)
         }else{
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            binding.switchNightLight.setIconResource(R.drawable.baseline_bedtime_24)
+            //binding.switchNightLight.setIconResource(R.drawable.baseline_bedtime_24)
         }
 
         binding.switchNightLight.setOnClickListener{
@@ -82,12 +93,12 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 sharedPrefEdit.putBoolean("NightMode", false)
                 sharedPrefEdit.apply()
-                binding.switchNightLight.setIconResource(R.drawable.baseline_bedtime_24)
+                //binding.switchNightLight.setIconResource(R.drawable.baseline_bedtime_24)
             }else{
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 sharedPrefEdit.putBoolean("NightMode", true)
                 sharedPrefEdit.apply()
-                binding.switchNightLight.setIconResource(R.drawable.baseline_wb_sunny_24)
+                //binding.switchNightLight.setIconResource(R.drawable.baseline_wb_sunny_24)
             }
         }
     }
@@ -100,6 +111,46 @@ class MainActivity : AppCompatActivity() {
         try{
             stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://10.0.2.2:8080/chat")
             stompClient.connect()
+
+
+            stompClient.topic("/user/queue/login").subscribe( { topicMessage ->
+                val reply = JSONObject(topicMessage.payload)
+                when {
+                    reply.getString("Successful") == "True" -> {
+                        loginSuccess.postValue(true)
+                        loginSuccess.postValue(false)
+                    }
+                    else -> {
+                        Log.d("Login", "Failed")
+                    }
+                }
+            }, {})
+
+            stompClient.topic("/user/queue/register").subscribe( { topicMessage ->
+                val reply = JSONObject(topicMessage.payload)
+                when {
+                    reply.getString("Successful") == "True" -> {
+                        registerSuccess.postValue(true)
+                        registerSuccess.postValue(false)
+                    }
+                    else -> {
+                        Log.d("Register", "Failed")
+                    }
+                }
+            }, {})
+
+            stompClient.topic("/user/queue/register").subscribe( { topicMessage ->
+                val reply = JSONObject(topicMessage.payload)
+                when {
+                    reply.getString("Successful") == "True" -> {
+                        modifySuccess.postValue(true)
+                        registerSuccess.postValue(false)
+                    }
+                    else -> {
+                        Log.d("Register", "Failed")
+                    }
+                }
+            }, {})
 
         } catch (e: Exception) {
             Log.e("Connection", e.stackTrace.toString())

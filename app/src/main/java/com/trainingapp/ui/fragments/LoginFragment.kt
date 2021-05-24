@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.main.R
@@ -34,10 +35,10 @@ class LoginFragment : Fragment() {
         binding.lifecycleOwner = this
 
         //TODO REMOVE WHEN PRODUCTION
-        if (!(activity as MainActivity).stompClient.isConnected) {
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
-        }
-
+        //if (!(activity as MainActivity).stompClient.isConnected) {
+       //     findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
+       // }
+/*
         (activity as MainActivity).stompClient.topic("/user/queue/login").subscribe( { topicMessage ->
             val reply = JSONObject(topicMessage.payload)
             when {
@@ -48,7 +49,13 @@ class LoginFragment : Fragment() {
                     Log.d("Login", "Failed")
                 }
             }
-        }, {})
+        }, {})*/
+
+        (activity as MainActivity).loginSuccess.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
+            }
+        })
 
         binding.loginButton.setOnClickListener {
 
@@ -58,6 +65,9 @@ class LoginFragment : Fragment() {
             val jsonObject = JSONObject()
             jsonObject.put("login", username)
             jsonObject.put("password", password)
+
+            (activity as MainActivity).login = username
+            Log.d("Login", username)
 
             (activity as MainActivity).stompClient.send("/app/login",  jsonObject.toString()).subscribe({ }, {
                 Log.d("Login", "Server Error")

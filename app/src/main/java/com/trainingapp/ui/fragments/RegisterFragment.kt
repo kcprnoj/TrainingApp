@@ -1,6 +1,5 @@
 package com.trainingapp.ui.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,17 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.main.R
-
 import com.example.main.databinding.FragmentRegisterBinding
 import com.trainingapp.ui.MainActivity
-
-import com.trainingapp.viewmodels.RegisterViewModel
-import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_register.username_text_input_layout
 import org.json.JSONObject
@@ -79,18 +73,12 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    @SuppressLint("CheckResult")
+
     private fun setClientObservers() {
-        (activity as MainActivity).stompClient.topic("/user/queue/register").subscribe( { topicMessage ->
-            val reply = JSONObject(topicMessage.payload)
-            when {
-                reply.getString("Successful") == "True" -> {
-                    findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
-                }
-                else -> {
-                    Log.d("Register", "Failed")
-                }
+        (activity as MainActivity).registerSuccess.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
             }
-        }, {})
+        })
     }
 }
