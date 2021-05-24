@@ -25,6 +25,7 @@
     <string name="button_back">Back</string>
     <string name="hint_email">E-mail</string>
     <string name="hint_weight">Weight</string>
+    <string name="hint_height">Height</string>
     <string name="distance_each_day">Distance each day</string>
     <string name="hint_change_username">Change Username</string>
     <string name="hint_change_email">Change E-mail</string>
@@ -37,4 +38,8 @@
     <string name="set_notification">Set Notification</string>
     <string name="change_application_appearance">Change Application Appearance</string>
     <string name="modify_account">Modify Account</string>
+    <string name="label_sex">Sex</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
 </resources>

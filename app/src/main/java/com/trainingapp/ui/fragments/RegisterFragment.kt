@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -25,39 +27,46 @@ import org.json.JSONObject
 class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
-    private lateinit var viewModel: RegisterViewModel
 
-    @SuppressLint("CheckResult")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
-        viewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
-        binding.registerViewModel = viewModel
         binding.lifecycleOwner = this
 
-        (activity as MainActivity).stompClient.topic("/user/queue/register").subscribe( { topicMessage ->
-            val reply = JSONObject(topicMessage.payload)
-            when {
-                reply.getString("Successful") == "True" -> {
-                    findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
-                }
-                else -> {
-                    Log.d("Login", "Failed")
-                }
-            }
-        }, {})
+        setClientObservers()
+        setListeners()
 
+        val items = listOf(resources.getString(R.string.male), resources.getString(R.string.female), resources.getString(R.string.other))
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
+        binding.sexAuto.setAdapter(adapter)
+
+        return binding.root
+    }
+
+    private fun setListeners() {
         binding.registerButton.setOnClickListener {
             val username = username_text_input_layout.editText?.text.toString()
             val password = password_text_input_layout.editText?.text.toString()
             val weight = weight_text_input_layout.editText?.text.toString()
+            val height = height_text_input_layout.editText?.text.toString()
+            var sex = sex_text_input_layout.editText?.text.toString()
+
+            sex = if (sex == resources.getString(R.string.male)) {
+                "male"
+            } else if (sex == resources.getString(R.string.female)) {
+                "female"
+            } else {
+                "other"
+            }
 
             val jsonObject = JSONObject()
             jsonObject.put("login", username)
             jsonObject.put("password", password)
             jsonObject.put("weight", weight)
+            jsonObject.put("height", height)
+            jsonObject.put("sex", sex)
 
             (activity as MainActivity).stompClient.send("/app/register",  jsonObject.toString()).subscribe({ }, {
                 Log.d("Login", "Server Error")
@@ -68,7 +77,20 @@ class RegisterFragment : Fragment() {
         binding.backButton.setOnClickListener{
             findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
         }
+    }
 
-        return binding.root
+    @SuppressLint("CheckResult")
+    private fun setClientObservers() {
+        (activity as MainActivity).stompClient.topic("/user/queue/register").subscribe( { topicMessage ->
+            val reply = JSONObject(topicMessage.payload)
+            when {
+                reply.getString("Successful") == "True" -> {
+                    findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+                }
+                else -> {
+                    Log.d("Register", "Failed")
+                }
+            }
+        }, {})
     }
 }
