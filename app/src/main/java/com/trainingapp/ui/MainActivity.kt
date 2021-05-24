@@ -103,16 +103,44 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    
     private fun setupLanguageChange(){
 
     }
 
-    @SuppressLint("CheckResult")
     private fun connectToServer(): Boolean {
         stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://10.0.2.2:8080/chat")
         stompClient.connect()
 
+        subscribeTopicModify()
+        subscribeTopicLogin()
+        subscribeTopicRegister()
 
+        Log.i("Server", "Connected")
+        return true
+    }
+
+    @SuppressLint("CheckResult")
+    private fun subscribeTopicRegister() {
+        stompClient.topic("/user/queue/register").subscribe({ topicMessage ->
+            val reply = JSONObject(topicMessage.payload)
+            when {
+                reply.getString("Successful") == "True" -> {
+                    registerSuccess.postValue(true)
+                }
+                else -> {
+                    Log.d("Register", "Failed")
+                    registerSuccess.postValue(false)
+                }
+            }
+        }, {
+            Log.d("Server", "Topic failed")
+            subscribeTopicRegister()
+        })
+    }
+
+    @SuppressLint("CheckResult")
+    private fun subscribeTopicLogin() {
         stompClient.topic("/user/queue/login").subscribe({ topicMessage ->
             val reply = JSONObject(topicMessage.payload)
             when {
@@ -129,21 +157,14 @@ class MainActivity : AppCompatActivity() {
                     loginSuccess.postValue(false)
                 }
             }
-        }, {Log.d("Server", "Topic failed")})
+        }, {
+            Log.d("Server", "Topic failed")
+            subscribeTopicLogin()
+        })
+    }
 
-        stompClient.topic("/user/queue/register").subscribe({ topicMessage ->
-            val reply = JSONObject(topicMessage.payload)
-            when {
-                reply.getString("Successful") == "True" -> {
-                    registerSuccess.postValue(true)
-                }
-                else -> {
-                    Log.d("Register", "Failed")
-                    registerSuccess.postValue(false)
-                }
-            }
-        }, {Log.d("Server", "Topic failed")})
-
+    @SuppressLint("CheckResult")
+    private fun subscribeTopicModify() {
         stompClient.topic("/user/queue/modify").subscribe({ topicMessage ->
             val reply = JSONObject(topicMessage.payload)
             when {
@@ -159,10 +180,10 @@ class MainActivity : AppCompatActivity() {
                     modifySuccess.postValue(false)
                 }
             }
-        }, {Log.d("Server", "Topic failed")})
-
-        Log.i("Connection", "Connected")
-        return true
+        }, {
+            Log.d("Server", "Topic failed")
+            subscribeTopicModify()
+        })
     }
 
     override fun onDestroy() {
