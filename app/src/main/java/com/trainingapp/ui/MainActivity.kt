@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         stompClient.connect()
 
 
-        stompClient.topic("/user/queue/login").subscribe{ topicMessage ->
+        stompClient.topic("/user/queue/login").subscribe({ topicMessage ->
             val reply = JSONObject(topicMessage.payload)
             when {
                 reply.getString("Successful") == "True" -> {
@@ -129,9 +129,9 @@ class MainActivity : AppCompatActivity() {
                     loginSuccess.postValue(false)
                 }
             }
-        }
+        }, {Log.d("Server", "Topic failed")})
 
-        stompClient.topic("/user/queue/register").subscribe{ topicMessage ->
+        stompClient.topic("/user/queue/register").subscribe({ topicMessage ->
             val reply = JSONObject(topicMessage.payload)
             when {
                 reply.getString("Successful") == "True" -> {
@@ -142,9 +142,9 @@ class MainActivity : AppCompatActivity() {
                     registerSuccess.postValue(false)
                 }
             }
-        }
+        }, {Log.d("Server", "Topic failed")})
 
-        stompClient.topic("/user/queue/modify").subscribe{ topicMessage ->
+        stompClient.topic("/user/queue/modify").subscribe({ topicMessage ->
             val reply = JSONObject(topicMessage.payload)
             when {
                 reply.getString("Successful") == "True" -> {
@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
                     modifySuccess.postValue(false)
                 }
             }
-        }
+        }, {Log.d("Server", "Topic failed")})
 
         Log.i("Connection", "Connected")
         return true
