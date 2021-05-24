@@ -34,7 +34,11 @@
         android:id="@+id/modifyAccountFragment"
         android:name="com.trainingapp.ui.fragments.ModifyAccountFragment"
         android:label="fragment_modify_account"
-        tools:layout="@layout/fragment_modify_account" />
+        tools:layout="@layout/fragment_modify_account" >
+        <action
+            android:id="@+id/action_modifyAccountFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.trainingapp.ui.fragments.LoginFragment"
