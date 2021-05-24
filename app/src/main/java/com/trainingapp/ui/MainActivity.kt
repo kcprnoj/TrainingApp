@@ -19,6 +19,7 @@ import com.example.main.R
 import com.example.main.databinding.ActivityMainBinding
 import com.trainingapp.ui.fragments.LoginFragmentDirections
 import com.trainingapp.ui.fragments.RegisterFragmentDirections
+import com.trainingapp.utility.User
 import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration : AppBarConfiguration
     lateinit var stompClient: StompClient
-    var login: String = "Not logged in"
+    val user = User()
 
     val loginSuccess = MutableLiveData<Boolean>(false)
     val registerSuccess = MutableLiveData<Boolean>(false)
@@ -108,54 +109,58 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     private fun connectToServer(): Boolean {
-        try{
-            stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://10.0.2.2:8080/chat")
-            stompClient.connect()
+        stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://10.0.2.2:8080/chat")
+        stompClient.connect()
 
 
-            stompClient.topic("/user/queue/login").subscribe( { topicMessage ->
-                val reply = JSONObject(topicMessage.payload)
-                when {
-                    reply.getString("Successful") == "True" -> {
-                        loginSuccess.postValue(true)
-                    }
-                    else -> {
-                        Log.d("Login", "Failed")
-                        loginSuccess.postValue(false)
-                    }
+        stompClient.topic("/user/queue/login").subscribe{ topicMessage ->
+            val reply = JSONObject(topicMessage.payload)
+            when {
+                reply.getString("Successful") == "True" -> {
+                    user.login = reply.getString("login")
+                    user.weight = reply.getString("weight").toFloat()
+                    user.height = reply.getString("height").toFloat()
+                    user.sex = reply.getString("sex")
+
+                    loginSuccess.postValue(true)
                 }
-            }, {})
-
-            stompClient.topic("/user/queue/register").subscribe( { topicMessage ->
-                val reply = JSONObject(topicMessage.payload)
-                when {
-                    reply.getString("Successful") == "True" -> {
-                        registerSuccess.postValue(true)
-                    }
-                    else -> {
-                        Log.d("Register", "Failed")
-                        registerSuccess.postValue(false)
-                    }
+                else -> {
+                    Log.d("Login", "Failed")
+                    loginSuccess.postValue(false)
                 }
-            }, {})
-
-            stompClient.topic("/user/queue/modify").subscribe( { topicMessage ->
-                val reply = JSONObject(topicMessage.payload)
-                when {
-                    reply.getString("Successful") == "True" -> {
-                        modifySuccess.postValue(true)
-                    }
-                    else -> {
-                        Log.d("Register", "Failed")
-                        modifySuccess.postValue(false)
-                    }
-                }
-            }, {})
-
-        } catch (e: Exception) {
-            Log.e("Connection", e.stackTrace.toString())
-            return false
+            }
         }
+
+        stompClient.topic("/user/queue/register").subscribe{ topicMessage ->
+            val reply = JSONObject(topicMessage.payload)
+            when {
+                reply.getString("Successful") == "True" -> {
+                    registerSuccess.postValue(true)
+                }
+                else -> {
+                    Log.d("Register", "Failed")
+                    registerSuccess.postValue(false)
+                }
+            }
+        }
+
+        stompClient.topic("/user/queue/modify").subscribe{ topicMessage ->
+            val reply = JSONObject(topicMessage.payload)
+            when {
+                reply.getString("Successful") == "True" -> {
+                    user.login = reply.getString("login")
+                    user.weight = reply.getString("weight").toFloat()
+                    user.height = reply.getString("height").toFloat()
+                    user.sex = reply.getString("sex")
+                    modifySuccess.postValue(true)
+                }
+                else -> {
+                    Log.d("Modify", "Failed")
+                    modifySuccess.postValue(false)
+                }
+            }
+        }
+
         Log.i("Connection", "Connected")
         return true
     }

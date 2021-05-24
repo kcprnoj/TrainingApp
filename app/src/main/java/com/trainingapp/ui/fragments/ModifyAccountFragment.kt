@@ -49,14 +49,13 @@ class ModifyAccountFragment : Fragment() {
                 val newHeight = binding.heightTextInputLayout.editText?.text.toString()
                 var newSex = binding.sexTextInputLayout.editText?.text.toString()
                 val password = binding.oldPasswordTextInputLayout.editText?.text.toString()
-                val username = (activity as MainActivity).login
+                val username = (activity as MainActivity).user.login
 
-                newSex = if (newSex == resources.getString(R.string.male)) {
-                    "male"
-                } else if (newSex == resources.getString(R.string.female)) {
-                    "female"
-                } else {
-                    "other"
+                newSex = when(newSex) {
+                    resources.getString(R.string.male) -> "male"
+                    resources.getString(R.string.female) -> "female"
+                    resources.getString(R.string.other) -> "other"
+                    else -> ""
                 }
 
                 val jsonObject = JSONObject()

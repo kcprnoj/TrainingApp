@@ -53,6 +53,7 @@ class LoginFragment : Fragment() {
 
         (activity as MainActivity).loginSuccess.observe(viewLifecycleOwner, Observer {
             if (it == true) {
+                Log.d("Login", "Logged in")
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
                 (activity as MainActivity).loginSuccess.postValue(false)
             }
@@ -66,9 +67,6 @@ class LoginFragment : Fragment() {
             val jsonObject = JSONObject()
             jsonObject.put("login", username)
             jsonObject.put("password", password)
-
-            (activity as MainActivity).login = username
-            Log.d("Login", username)
 
             (activity as MainActivity).stompClient.send("/app/login",  jsonObject.toString()).subscribe({ }, {
                 Log.d("Login", "Server Error")
