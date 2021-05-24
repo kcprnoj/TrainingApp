@@ -1,10 +1,12 @@
 package com.trainingapp.ui
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupNavigation()
         connectToServer()
+        setupNightLight()
     }
 
     private fun setupNavigation(){
@@ -37,8 +40,8 @@ class MainActivity : AppCompatActivity() {
         val bottomNavView = binding.bottomNavigation
         bottomNavView.visibility = View.GONE
         val topNavigation = binding.topNavigation
-        NavigationUI.setupActionBarWithNavController(this,navController,drawerLayout)
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+        //NavigationUI.setupActionBarWithNavController(this,navController,drawerLayout)
+        //appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
 
 
         navController.addOnDestinationChangedListener{ _, destination, _ ->
@@ -57,10 +60,39 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(bottomNavView, navController)
         NavigationUI.setupWithNavController(topNavigation, navController)
     }
+//    override fun onSupportNavigateUp(): Boolean {
+//        val navController = this.findNavController(R.id.myNavHostFragment)
+//        return NavigationUI.navigateUp(navController, appBarConfiguration)
+//    }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = this.findNavController(R.id.myNavHostFragment)
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
+    private fun setupNightLight(){
+        val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
+        val sharedPrefEdit : SharedPreferences.Editor = appSettingPrefs.edit()
+        val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode", false)
+        if (isNightModeOn){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            binding.switchNightLight.setIconResource(R.drawable.baseline_wb_sunny_24)
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            binding.switchNightLight.setIconResource(R.drawable.baseline_bedtime_24)
+        }
+
+        binding.switchNightLight.setOnClickListener{
+            if (isNightModeOn){
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                sharedPrefEdit.putBoolean("NightMode", false)
+                sharedPrefEdit.apply()
+                binding.switchNightLight.setIconResource(R.drawable.baseline_bedtime_24)
+            }else{
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                sharedPrefEdit.putBoolean("NightMode", true)
+                sharedPrefEdit.apply()
+                binding.switchNightLight.setIconResource(R.drawable.baseline_wb_sunny_24)
+            }
+        }
+    }
+    private fun setupLanguageChange(){
+
     }
 
     @SuppressLint("CheckResult")
