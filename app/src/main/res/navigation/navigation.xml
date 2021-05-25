@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_trainingFragment_to_runningFragment"
             app:destination="@id/runningFragment" />
+        <action
+            android:id="@+id/action_trainingFragment_to_atHomeTrainingFragment"
+            app:destination="@id/atHomeTrainingFragment" />
     </fragment>
     <fragment
         android:id="@+id/runningFragment"
@@ -62,8 +65,28 @@
             app:destination="@id/loginFragment" />
     </fragment>
     <fragment
+<<<<<<< Updated upstream
         android:id="@+id/createReminderFragment"
         android:name="com.trainingapp.ui.fragments.CreateReminderFragment"
         android:label="fragment_create_reminder"
         tools:layout="@layout/fragment_create_reminder" />
+=======
+        android:id="@+id/changeAppearanceFragment"
+        android:name="com.trainingapp.ui.fragments.ChangeAppearanceFragment"
+        android:label="fragment_change_appearance"
+        tools:layout="@layout/fragment_change_appearance" />
+    <fragment
+        android:id="@+id/createNotificationFragment"
+        android:name="com.trainingapp.ui.fragments.CreateNotificationFragment"
+        android:label="fragment_create_notification"
+        tools:layout="@layout/fragment_create_notification" />
+    <fragment
+        android:id="@+id/atHomeTrainingFragment"
+        android:name="com.trainingapp.ui.fragments.AtHomeTrainingFragment"
+        android:label="AtHomeTrainingFragment" >
+        <action
+            android:id="@+id/action_atHomeTrainingFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
+>>>>>>> Stashed changes
 </navigation>
