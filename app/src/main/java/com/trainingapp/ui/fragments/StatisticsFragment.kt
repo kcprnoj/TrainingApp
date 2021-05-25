@@ -50,17 +50,22 @@ class StatisticsFragment : Fragment() {
         lineChart.isDragEnabled = true
         lineChart.setScaleEnabled(true)
         lineChart.description.text = ""
+        //TODO kolory
+        lineChart.description.textColor = R.color.primaryTextColorLight
+        lineChart.axisLeft.textColor = R.color.primaryTextColorLight
+        lineChart.axisRight.textColor = R.color.primaryTextColorLight
+        lineChart.legend.textColor = R.color.primaryTextColorLight
 
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        //TODO KOLOR
+        xAxis.textColor = R.color.primaryTextColorLight
 
         viewModel.allRunsByDate.observe(viewLifecycleOwner, {
             val entryList = ArrayList<Entry>()
             val stringDateList = ArrayList<String>()
-            Log.i("STATISTICS",it.toString())
             val newArray = it.reversed()
             for (i in newArray.indices) {
-                Log.i("STATISTICS",newArray[i].distance.toString())
                 entryList.add(Entry(i.toFloat(), newArray[i].distance))
                 val currentDate = Instant.ofEpochMilli(newArray[i].timestamp)
                     .atZone(ZoneId.systemDefault())
@@ -78,11 +83,12 @@ class StatisticsFragment : Fragment() {
             val lineData = LineData(lineDataSet)
             lineData.notifyDataChanged()
             lineChart.data = lineData
-
-            xAxis.labelCount = entryList.size - 1
+            xAxis.labelCount = 3
             xAxis.valueFormatter = MyValueFormatter(stringDateList)
 
             lineChart.invalidate()
+            lineChart.setVisibleXRangeMaximum(3F)
+
         })
     }
 }
