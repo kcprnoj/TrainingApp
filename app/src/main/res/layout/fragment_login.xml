@@ -26,13 +26,14 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/logo_pic"
-            android:layout_width="0dp"
-            android:layout_height="350dp"
+            android:layout_width="342dp"
+            android:layout_height="134dp"
+            android:background="@drawable/run_light"
             app:layout_constraintBottom_toTopOf="@+id/username_text_input_layout"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintEnd_toEndOf="@+id/guideline_right"
-            android:background="@drawable/bieg2"/>
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.39" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/username_text_input_layout"

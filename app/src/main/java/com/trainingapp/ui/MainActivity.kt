@@ -5,25 +5,20 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.util.MutableBoolean
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.main.R
 import com.example.main.databinding.ActivityMainBinding
-import com.trainingapp.ui.fragments.LoginFragmentDirections
-import com.trainingapp.ui.fragments.RegisterFragmentDirections
 import com.trainingapp.utility.User
 import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
-import java.lang.Exception
 
 
 
@@ -31,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration : AppBarConfiguration
     lateinit var stompClient: StompClient
-    val user = User()
 
     val loginSuccess = MutableLiveData<Boolean>(false)
     val registerSuccess = MutableLiveData<Boolean>(false)
@@ -135,7 +129,9 @@ class MainActivity : AppCompatActivity() {
             }
         }, {
             Log.d("Server", "Topic failed")
-            subscribeTopicRegister()
+            if (stompClient.isConnected) {
+                subscribeTopicRegister()
+            }
         })
     }
 
@@ -145,10 +141,14 @@ class MainActivity : AppCompatActivity() {
             val reply = JSONObject(topicMessage.payload)
             when {
                 reply.getString("Successful") == "True" -> {
-                    user.login = reply.getString("login")
-                    user.weight = reply.getString("weight").toFloat()
-                    user.height = reply.getString("height").toFloat()
-                    user.sex = reply.getString("sex")
+
+                    val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
+                    val sharedPrefEdit : SharedPreferences.Editor = appSettingPrefs.edit()
+                    sharedPrefEdit.putString("userLogin", reply.getString("login"))
+                    sharedPrefEdit.putFloat("userWeight", reply.getString("weight").toFloat())
+                    sharedPrefEdit.putFloat("userHeight", reply.getString("height").toFloat())
+                    sharedPrefEdit.putString("userSex", reply.getString("sex"))
+                    sharedPrefEdit.apply()
 
                     loginSuccess.postValue(true)
                 }
@@ -159,7 +159,10 @@ class MainActivity : AppCompatActivity() {
             }
         }, {
             Log.d("Server", "Topic failed")
-            subscribeTopicLogin()
+
+            if (stompClient.isConnected) {
+                subscribeTopicLogin()
+            }
         })
     }
 
@@ -169,10 +172,15 @@ class MainActivity : AppCompatActivity() {
             val reply = JSONObject(topicMessage.payload)
             when {
                 reply.getString("Successful") == "True" -> {
-                    user.login = reply.getString("login")
-                    user.weight = reply.getString("weight").toFloat()
-                    user.height = reply.getString("height").toFloat()
-                    user.sex = reply.getString("sex")
+
+                    val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
+                    val sharedPrefEdit : SharedPreferences.Editor = appSettingPrefs.edit()
+                    sharedPrefEdit.putString("userLogin", reply.getString("login"))
+                    sharedPrefEdit.putFloat("userWeight", reply.getString("weight").toFloat())
+                    sharedPrefEdit.putFloat("userHeight", reply.getString("height").toFloat())
+                    sharedPrefEdit.putString("userSex", reply.getString("sex"))
+                    sharedPrefEdit.apply()
+
                     modifySuccess.postValue(true)
                 }
                 else -> {
@@ -182,7 +190,9 @@ class MainActivity : AppCompatActivity() {
             }
         }, {
             Log.d("Server", "Topic failed")
-            subscribeTopicModify()
+            if (stompClient.isConnected) {
+                subscribeTopicModify()
+            }
         })
     }
 

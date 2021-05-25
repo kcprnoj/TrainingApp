@@ -13,11 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentLoginBinding
-import com.google.android.material.textfield.TextInputEditText
 import com.trainingapp.ui.MainActivity
 import com.trainingapp.viewmodels.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_register.username_text_input_layout
 import org.json.JSONObject
 

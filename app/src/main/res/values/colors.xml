@@ -10,5 +10,13 @@
     <color name="grey">#88888888</color>
     <color name="royal_blue">#4169E1</color>
 
+    <color name="primaryColorLight">#f9f9f9</color>
+    <color name="primaryLightColorLight">#ffffff</color>
+    <color name="primaryDarkColorLight">#c6c6c6</color>
+    <color name="secondaryColorLight">#383a42</color>
+    <color name="secondaryLightColorLight">#62646d</color>
+    <color name="secondaryDarkColorLight">#12141b</color>
+    <color name="primaryTextColorLight">#c6c6c6</color>
+    <color name="secondaryTextColorLight">#f9f9f9</color>
 
 </resources>
