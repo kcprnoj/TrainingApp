@@ -12,6 +12,68 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/picture_of_exercise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PIC"
+                app:layout_constraintBottom_toTopOf="@id/time_display"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/time_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00:00"
+                app:layout_constraintBottom_toTopOf="@+id/number_of_exercises_display"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/picture_of_exercise" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/number_of_exercises_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"
+                app:layout_constraintBottom_toTopOf="@+id/start_stop"
+                app:layout_constraintEnd_toStartOf="@+id/calories_display"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/time_display" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/calories_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 kcal"
+                app:layout_constraintBottom_toTopOf="@+id/start_stop"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toEndOf="@+id/number_of_exercises_display"
+                app:layout_constraintTop_toBottomOf="@+id/time_display" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/start_stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="START"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

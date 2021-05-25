@@ -25,6 +25,7 @@ class CreateReminderFragment : Fragment() {
             }, 12,0,true)
             startTimePicker.show();
         }
+        // TODO aktualna data
         binding.pickDateButton.setOnClickListener{
             val startDatePicker = DatePickerDialog(requireActivity(), DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                 val formatMonth = if(month < 9) "0"+(month+1) else (month+1)
