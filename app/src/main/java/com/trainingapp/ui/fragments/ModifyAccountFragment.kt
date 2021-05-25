@@ -1,6 +1,7 @@
 package com.trainingapp.ui.fragments
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -43,13 +44,14 @@ class ModifyAccountFragment : Fragment() {
         }
 
         binding.registerButton.setOnClickListener{
+                val appSettingPrefs: SharedPreferences = (activity as MainActivity).getSharedPreferences("AppSettingPrefs",0)
                 val newUsername = binding.usernameTextInputLayout.editText?.text.toString()
                 val newPassword = binding.newPasswordTextInputLayout.editText?.text.toString()
                 val newWeight = binding.weightTextInputLayout.editText?.text.toString()
                 val newHeight = binding.heightTextInputLayout.editText?.text.toString()
                 var newSex = binding.sexTextInputLayout.editText?.text.toString()
                 val password = binding.oldPasswordTextInputLayout.editText?.text.toString()
-                val username = (activity as MainActivity).user.login
+                val username = appSettingPrefs.getString("userLogin", "Kacper")
 
                 newSex = when(newSex) {
                     resources.getString(R.string.male) -> "male"

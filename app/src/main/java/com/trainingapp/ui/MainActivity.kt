@@ -5,25 +5,20 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.util.MutableBoolean
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.main.R
 import com.example.main.databinding.ActivityMainBinding
-import com.trainingapp.ui.fragments.LoginFragmentDirections
-import com.trainingapp.ui.fragments.RegisterFragmentDirections
 import com.trainingapp.utility.User
 import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
-import java.lang.Exception
 
 
 
@@ -31,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration : AppBarConfiguration
     lateinit var stompClient: StompClient
-    val user = User()
 
     val loginSuccess = MutableLiveData<Boolean>(false)
     val registerSuccess = MutableLiveData<Boolean>(false)
@@ -103,34 +97,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    
     private fun setupLanguageChange(){
 
     }
 
-    @SuppressLint("CheckResult")
     private fun connectToServer(): Boolean {
         stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://10.0.2.2:8080/chat")
         stompClient.connect()
 
+        subscribeTopicModify()
+        subscribeTopicLogin()
+        subscribeTopicRegister()
 
-        stompClient.topic("/user/queue/login").subscribe({ topicMessage ->
-            val reply = JSONObject(topicMessage.payload)
-            when {
-                reply.getString("Successful") == "True" -> {
-                    user.login = reply.getString("login")
-                    user.weight = reply.getString("weight").toFloat()
-                    user.height = reply.getString("height").toFloat()
-                    user.sex = reply.getString("sex")
+        Log.i("Server", "Connected")
+        return true
+    }
 
-                    loginSuccess.postValue(true)
-                }
-                else -> {
-                    Log.d("Login", "Failed")
-                    loginSuccess.postValue(false)
-                }
-            }
-        }, {Log.d("Server", "Topic failed")})
-
+    @SuppressLint("CheckResult")
+    private fun subscribeTopicRegister() {
         stompClient.topic("/user/queue/register").subscribe({ topicMessage ->
             val reply = JSONObject(topicMessage.payload)
             when {
@@ -142,16 +127,60 @@ class MainActivity : AppCompatActivity() {
                     registerSuccess.postValue(false)
                 }
             }
-        }, {Log.d("Server", "Topic failed")})
+        }, {
+            Log.d("Server", "Topic failed")
+            if (stompClient.isConnected) {
+                subscribeTopicRegister()
+            }
+        })
+    }
 
+    @SuppressLint("CheckResult")
+    private fun subscribeTopicLogin() {
+        stompClient.topic("/user/queue/login").subscribe({ topicMessage ->
+            val reply = JSONObject(topicMessage.payload)
+            when {
+                reply.getString("Successful") == "True" -> {
+
+                    val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
+                    val sharedPrefEdit : SharedPreferences.Editor = appSettingPrefs.edit()
+                    sharedPrefEdit.putString("userLogin", reply.getString("login"))
+                    sharedPrefEdit.putFloat("userWeight", reply.getString("weight").toFloat())
+                    sharedPrefEdit.putFloat("userHeight", reply.getString("height").toFloat())
+                    sharedPrefEdit.putString("userSex", reply.getString("sex"))
+                    sharedPrefEdit.apply()
+
+                    loginSuccess.postValue(true)
+                }
+                else -> {
+                    Log.d("Login", "Failed")
+                    loginSuccess.postValue(false)
+                }
+            }
+        }, {
+            Log.d("Server", "Topic failed")
+
+            if (stompClient.isConnected) {
+                subscribeTopicLogin()
+            }
+        })
+    }
+
+    @SuppressLint("CheckResult")
+    private fun subscribeTopicModify() {
         stompClient.topic("/user/queue/modify").subscribe({ topicMessage ->
             val reply = JSONObject(topicMessage.payload)
             when {
                 reply.getString("Successful") == "True" -> {
-                    user.login = reply.getString("login")
-                    user.weight = reply.getString("weight").toFloat()
-                    user.height = reply.getString("height").toFloat()
-                    user.sex = reply.getString("sex")
+
+                    val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
+                    val sharedPrefEdit : SharedPreferences.Editor = appSettingPrefs.edit()
+                    sharedPrefEdit.putString("userLogin", reply.getString("login"))
+                    sharedPrefEdit.putFloat("userWeight", reply.getString("weight").toFloat())
+                    sharedPrefEdit.putFloat("userHeight", reply.getString("height").toFloat())
+                    sharedPrefEdit.putString("userSex", reply.getString("sex"))
+                    sharedPrefEdit.apply()
+
                     modifySuccess.postValue(true)
                 }
                 else -> {
@@ -159,10 +188,12 @@ class MainActivity : AppCompatActivity() {
                     modifySuccess.postValue(false)
                 }
             }
-        }, {Log.d("Server", "Topic failed")})
-
-        Log.i("Connection", "Connected")
-        return true
+        }, {
+            Log.d("Server", "Topic failed")
+            if (stompClient.isConnected) {
+                subscribeTopicModify()
+            }
+        })
     }
 
     override fun onDestroy() {

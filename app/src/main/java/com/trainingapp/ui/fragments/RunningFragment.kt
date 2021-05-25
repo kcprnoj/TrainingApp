@@ -1,6 +1,7 @@
 package com.trainingapp.ui.fragments
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
@@ -235,7 +236,9 @@ class RunningFragment : Fragment() {
     }
 
     private fun updateCalories() {
-        calories = calculateCalories(distance, (activity as MainActivity).user.weight)
+        val appSettingPrefs: SharedPreferences = (activity as MainActivity).getSharedPreferences("AppSettingPrefs",0)
+
+        calories = calculateCalories(distance, appSettingPrefs.getFloat("userWeight", 60.0f))
     }
 
     private fun calculateDistance(polyline: MutableList<LatLng>): Float {
