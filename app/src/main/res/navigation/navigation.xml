@@ -72,5 +72,10 @@
             android:id="@+id/action_atHomeTrainingFragment_to_trainingFragment"
             app:destination="@id/trainingFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/createReminderFragment2"
+        android:name="com.trainingapp.ui.fragments.CreateReminderFragment"
+        android:label="fragment_create_reminder"
+        tools:layout="@layout/fragment_create_reminder" />
 
 </navigation>
