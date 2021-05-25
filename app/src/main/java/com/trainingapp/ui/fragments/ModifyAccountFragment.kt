@@ -43,35 +43,49 @@ class ModifyAccountFragment : Fragment() {
             findNavController().navigate(ModifyAccountFragmentDirections.actionModifyAccountFragmentToTrainingFragment())
         }
 
+        binding.deleteAccountButton.setOnClickListener{
+            val appSettingPrefs: SharedPreferences = (activity as MainActivity).getSharedPreferences("AppSettingPrefs",0)
+            val username = appSettingPrefs.getString("userLogin", "Kacper")
+            val password = binding.oldPasswordTextInputLayout.editText?.text.toString()
+
+            val jsonObject = JSONObject()
+            jsonObject.put("login", username)
+            jsonObject.put("password", password)
+
+            (activity as MainActivity).stompClient.send("/app/delete",  jsonObject.toString()).subscribe({ }, {
+                Log.d("Login", "Server Error")
+            })
+        }
+
         binding.registerButton.setOnClickListener{
-                val appSettingPrefs: SharedPreferences = (activity as MainActivity).getSharedPreferences("AppSettingPrefs",0)
-                val newUsername = binding.usernameTextInputLayout.editText?.text.toString()
-                val newPassword = binding.newPasswordTextInputLayout.editText?.text.toString()
-                val newWeight = binding.weightTextInputLayout.editText?.text.toString()
-                val newHeight = binding.heightTextInputLayout.editText?.text.toString()
-                var newSex = binding.sexTextInputLayout.editText?.text.toString()
-                val password = binding.oldPasswordTextInputLayout.editText?.text.toString()
-                val username = appSettingPrefs.getString("userLogin", "Kacper")
+            val appSettingPrefs: SharedPreferences = (activity as MainActivity).getSharedPreferences("AppSettingPrefs",0)
+            val newUsername = binding.usernameTextInputLayout.editText?.text.toString()
+            val newPassword = binding.newPasswordTextInputLayout.editText?.text.toString()
+            val newWeight = binding.weightTextInputLayout.editText?.text.toString()
+            val newHeight = binding.heightTextInputLayout.editText?.text.toString()
+            var newSex = binding.sexTextInputLayout.editText?.text.toString()
+            val password = binding.oldPasswordTextInputLayout.editText?.text.toString()
+            val username = appSettingPrefs.getString("userLogin", "Kacper")
 
-                newSex = when(newSex) {
-                    resources.getString(R.string.male) -> "male"
-                    resources.getString(R.string.female) -> "female"
-                    resources.getString(R.string.other) -> "other"
-                    else -> ""
-                }
+            newSex = when(newSex) {
+                resources.getString(R.string.male) -> "male"
+                resources.getString(R.string.female) -> "female"
+                resources.getString(R.string.other) -> "other"
+                else -> ""
+            }
 
-                val jsonObject = JSONObject()
-                jsonObject.put("new login", newUsername)
-                jsonObject.put("new password", newPassword)
-                jsonObject.put("new weight", newWeight)
-                jsonObject.put("new height", newHeight)
-                jsonObject.put("new sex", newSex)
-                jsonObject.put("login", username)
-                jsonObject.put("password", password)
+            val jsonObject = JSONObject()
+            jsonObject.put("new login", newUsername)
+            jsonObject.put("new password", newPassword)
+            jsonObject.put("new weight", newWeight)
+            jsonObject.put("new height", newHeight)
+            jsonObject.put("new sex", newSex)
+            jsonObject.put("login", username)
+            jsonObject.put("password", password)
 
-                (activity as MainActivity).stompClient.send("/app/modify",  jsonObject.toString()).subscribe({ }, {
-                    Log.d("Login", "Server Error")
-                })
+            (activity as MainActivity).stompClient.send("/app/modify",  jsonObject.toString()).subscribe({ }, {
+                Log.d("Login", "Server Error")
+            })
         }
     }
 
@@ -80,6 +94,13 @@ class ModifyAccountFragment : Fragment() {
             if (it == true) {
                 findNavController().navigate(ModifyAccountFragmentDirections.actionModifyAccountFragmentToTrainingFragment())
                 (activity as MainActivity).modifySuccess.postValue(false)
+            }
+        })
+
+        (activity as MainActivity).deleteSuccess.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                findNavController().navigate(ModifyAccountFragmentDirections.actionModifyAccountFragmentToLoginFragment())
+                (activity as MainActivity).deleteSuccess.postValue(false)
             }
         })
     }

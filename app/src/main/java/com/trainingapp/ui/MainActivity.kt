@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     val loginSuccess = MutableLiveData<Boolean>(false)
     val registerSuccess = MutableLiveData<Boolean>(false)
     val modifySuccess = MutableLiveData<Boolean>(false)
+    val deleteSuccess = MutableLiveData<Boolean>(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,6 +110,7 @@ class MainActivity : AppCompatActivity() {
         subscribeTopicModify()
         subscribeTopicLogin()
         subscribeTopicRegister()
+        subscribeTopicDelete()
 
         Log.i("Server", "Connected")
         return true
@@ -192,6 +194,29 @@ class MainActivity : AppCompatActivity() {
             Log.d("Server", "Topic failed")
             if (stompClient.isConnected) {
                 subscribeTopicModify()
+            }
+        })
+    }
+
+    @SuppressLint("CheckResult")
+    private fun subscribeTopicDelete() {
+        stompClient.topic("/user/queue/delete").subscribe({ topicMessage ->
+            val reply = JSONObject(topicMessage.payload)
+            when {
+                reply.getString("Successful") == "True" -> {
+
+                    deleteSuccess.postValue(true)
+                }
+                else -> {
+                    Log.d("Login", "Failed")
+                    deleteSuccess.postValue(false)
+                }
+            }
+        }, {
+            Log.d("Server", "Topic failed")
+
+            if (stompClient.isConnected) {
+                subscribeTopicLogin()
             }
         })
     }
