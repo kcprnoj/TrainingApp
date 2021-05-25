@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_modifyAccountFragment_to_trainingFragment"
             app:destination="@id/trainingFragment" />
+        <action
+            android:id="@+id/action_modifyAccountFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
