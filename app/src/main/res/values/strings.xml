@@ -35,7 +35,7 @@
     <string name="hint_change_height">Change height</string>
     <string name="hint_change_weight">Change weight</string>
     <string name="button_delete_account">Delete Account</string>
-    <string name="set_notification">Set Notification</string>
+    <string name="create_reminder">Create Reminder</string>
     <string name="change_application_appearance">Change Application Appearance</string>
     <string name="modify_account">Modify Account</string>
     <string name="label_sex">Sex</string>

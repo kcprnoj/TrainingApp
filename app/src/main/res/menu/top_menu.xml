@@ -7,15 +7,10 @@
         android:icon="@drawable/baseline_settings_24"
         android:title="@string/modify_account"
         />
-    <item
-        android:id="@+id/changeAppearanceFragment"
-        android:icon="@drawable/baseline_settings_24"
-        android:title="@string/change_application_appearance"
-        />
 
     <item
-        android:id="@+id/createNotificationFragment"
-        android:icon="@drawable/baseline_settings_24"
-        android:title="@string/set_notification"
+        android:id="@+id/createReminderFragment"
+        android:icon="@drawable/baseline_notifications_24"
+        android:title="@string/create_reminder"
         />
 </menu>
