@@ -57,13 +57,14 @@ class RunningFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapView.onCreate(savedInstanceState)
+
         start_stop.setOnClickListener{
             toggleRun()
         }
 
         button_end.setOnClickListener {
-            endRun()
             button_end.visibility = View.GONE
+            endRun()
         }
 
         mapView.getMapAsync {
@@ -145,7 +146,8 @@ class RunningFragment : Fragment() {
             button_end.visibility = View.GONE
         } else {
             start_stop.text = getString(R.string.start)
-            button_end.visibility = View.VISIBLE
+            if (currentTime != 0L)
+                button_end.visibility = View.VISIBLE
         }
     }
 
@@ -195,6 +197,7 @@ class RunningFragment : Fragment() {
         )
         viewModel.insert(run)
         sendCommandToService("STOP")
+        button_end.visibility = View.GONE
         findNavController().navigate(RunningFragmentDirections.actionRunningFragmentToTrainingFragment())
     }
 
