@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        //TODO
+        binding.switchPlEng.visibility = View.GONE
         setupNavigation()
         connectToServer()
         setupNightLight()

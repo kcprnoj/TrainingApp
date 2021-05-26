@@ -69,12 +69,29 @@
         android:name="com.trainingapp.ui.fragments.AtHomeTrainingFragment"
         android:label="AtHomeTrainingFragment" >
         <action
-            android:id="@+id/action_atHomeTrainingFragment_to_trainingFragment"
-            app:destination="@id/trainingFragment" />
+            android:id="@+id/action_atHomeTrainingFragment_to_atHomeTrainingSummaryFragment"
+            app:destination="@id/atHomeTrainingSummaryFragment" />
     </fragment>
     <fragment
         android:id="@+id/createReminderFragment"
         android:name="com.trainingapp.ui.fragments.CreateReminderFragment"
         android:label="CreateReminderFragment" />
+    <fragment
+        android:id="@+id/atHomeTrainingSummaryFragment"
+        android:name="com.trainingapp.ui.fragments.AtHomeTrainingSummaryFragment"
+        android:label="AtHomeTrainingSummaryFragment" >
+        <action
+            android:id="@+id/action_atHomeTrainingSummaryFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+        <argument
+            android:name="exercisesNumber"
+            app:argType="integer" />
+        <argument
+            android:name="calories"
+            app:argType="integer" />
+        <argument
+            android:name="time"
+            app:argType="long" />
+    </fragment>
 
 </navigation>
