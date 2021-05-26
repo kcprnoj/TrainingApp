@@ -1,12 +1,17 @@
 package com.trainingapp.ui
 
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.MutableLiveData
@@ -39,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         setupNavigation()
         connectToServer()
         setupNightLight()
+        createNotificationChannel()
     }
 
     private fun setupNavigation(){
@@ -226,6 +232,21 @@ class MainActivity : AppCompatActivity() {
             stompClient.disconnect()
         }
         super.onDestroy()
+    }
+
+    private val CHANNEL_ID = "0"
+
+    private fun createNotificationChannel() {
+        val name = "Alarm"
+        val descriptionText = "Notification of running app"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+            description = descriptionText
+        }
+        // Register the channel with the system
+        val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 
 }

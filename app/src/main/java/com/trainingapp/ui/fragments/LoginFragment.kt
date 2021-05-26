@@ -33,9 +33,9 @@ class LoginFragment : Fragment() {
         binding.lifecycleOwner = this
 
         //TODO REMOVE WHEN PRODUCTION
-        //if (!(activity as MainActivity).stompClient.isConnected) {
-       //     findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
-       // }
+        if (!(activity as MainActivity).stompClient.isConnected) {
+           findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
+        }
 /*
         (activity as MainActivity).stompClient.topic("/user/queue/login").subscribe( { topicMessage ->
             val reply = JSONObject(topicMessage.payload)

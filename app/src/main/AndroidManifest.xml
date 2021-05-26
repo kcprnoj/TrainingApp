@@ -18,6 +18,8 @@
         android:usesCleartextTraffic="true"
         >
 
+        <receiver android:name="com.trainingapp.utility.AlarmReceiver" />
+
         <activity android:name="com.trainingapp.ui.MainActivity" android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

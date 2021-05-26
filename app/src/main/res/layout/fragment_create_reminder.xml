@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="registerViewModel"
-            type="com.trainingapp.viewmodels.RegisterViewModel" />
+            name="createReminderViewModel"
+            type="com.trainingapp.viewmodels.CreateReminderViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,20 +24,17 @@
             app:layout_constraintGuide_end="16dp"
             android:orientation="vertical"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/time_input_layout"
+        <TextView
+            android:id="@+id/time_text_view"
+            android:textSize="20sp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/hint_pick_time_message"
-            app:layout_constraintBottom_toTopOf="@+id/pick_date_text_input_layout"
+            app:layout_constraintBottom_toTopOf="@+id/date_text_view"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-            app:layout_constraintEnd_toStartOf="@+id/pick_time_button">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/time_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintEnd_toStartOf="@+id/pick_time_button"/>
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/pick_time_button"
@@ -46,27 +43,25 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="@dimen/big_margin"
-            app:layout_constraintBottom_toTopOf="@+id/pick_date_text_input_layout"
-            app:layout_constraintStart_toEndOf="@+id/time_input_layout"
+            app:layout_constraintBottom_toTopOf="@+id/date_text_view"
+            app:layout_constraintStart_toEndOf="@+id/time_text_view"
             app:layout_constraintEnd_toEndOf="@+id/guideline_right"
             android:text="@string/pick_time_button"
-            app:layout_constraintBaseline_toBaselineOf="@+id/time_input_layout"
+            app:layout_constraintBaseline_toBaselineOf="@+id/time_text_view"
             android:layout_marginBottom="@dimen/big_margin"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/pick_date_text_input_layout"
+        <TextView
+            android:id="@+id/date_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_pick_date_message"
+            android:textSize="20sp"
+            android:layout_marginBottom="136dp"
+            android:hint="01.01.2021"
             app:layout_constraintBottom_toTopOf="@+id/create_notification_button"
-            app:layout_constraintTop_toBottomOf="@+id/time_input_layout"
+            app:layout_constraintEnd_toStartOf="@+id/pick_date_button"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-            app:layout_constraintEnd_toStartOf="@+id/pick_date_button">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/message_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/time_text_view" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/pick_date_button"
@@ -76,10 +71,10 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="@dimen/big_margin"
             app:layout_constraintBottom_toTopOf="@+id/create_notification_button"
-            app:layout_constraintStart_toEndOf="@+id/pick_date_text_input_layout"
+            app:layout_constraintStart_toEndOf="@+id/date_text_view"
             app:layout_constraintEnd_toEndOf="@+id/guideline_right"
             android:text="@string/pick_date_button"
-            app:layout_constraintBaseline_toBaselineOf="@+id/pick_date_text_input_layout"
+            app:layout_constraintBaseline_toBaselineOf="@+id/date_text_view"
             android:layout_marginBottom="@dimen/big_margin"/>
 
         <com.google.android.material.button.MaterialButton
@@ -88,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pick_date_text_input_layout"
+            app:layout_constraintTop_toBottomOf="@+id/date_text_view"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintEnd_toEndOf="@+id/guideline_right"
             android:text="@string/create_notification"
