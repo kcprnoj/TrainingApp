@@ -51,15 +51,15 @@ class StatisticsFragment : Fragment() {
         lineChart.setScaleEnabled(true)
         lineChart.description.text = ""
         //TODO kolory
-        lineChart.description.textColor = R.color.primaryTextColorLight
-        lineChart.axisLeft.textColor = R.color.primaryTextColorLight
-        lineChart.axisRight.textColor = R.color.primaryTextColorLight
-        lineChart.legend.textColor = R.color.primaryTextColorLight
+        lineChart.description.textColor = Color.RED
+        lineChart.axisLeft.textColor = Color.RED
+        lineChart.axisRight.textColor = Color.RED
+        lineChart.legend.textColor = Color.RED
 
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         //TODO KOLOR
-        xAxis.textColor = R.color.primaryTextColorLight
+        xAxis.textColor = Color.RED
 
         viewModel.allRunsByDate.observe(viewLifecycleOwner, {
             val entryList = ArrayList<Entry>()
