@@ -26,16 +26,17 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="16dp" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/congratulations_text"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="CONGRATULATIONS"
-            android:gravity="center"
+            android:layout_width="342dp"
+            android:layout_height="134dp"
+            android:background="?attr/congrats_pic"
             app:layout_constraintBottom_toTopOf="@id/time_display"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/big_margin"/>
+
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/time_display"

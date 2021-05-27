@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="logo_run" format="reference"/>
+    <attr name="congrats_pic" format="reference"/>
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
 
@@ -28,6 +29,7 @@
     <style name="Theme.Training_app" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="logo_run">@drawable/run_dark</item>
+        <item name="congrats_pic">@drawable/cong2</item>
         <item name="colorPrimary">@color/secondaryColorLight</item>
         <item name="colorPrimaryVariant">@color/secondaryLightColorLight</item>
         <item name="colorOnPrimary">@color/primaryColorLight</item>

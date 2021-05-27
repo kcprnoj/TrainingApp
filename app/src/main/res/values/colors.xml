@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#88888888</color>
     <color name="royal_blue">#4169E1</color>
+    <color name="red">#FF0000</color>
 
     <color name="primaryColorLight">#f9f9f9</color>
     <color name="primaryLightColorLight">#ffffff</color>

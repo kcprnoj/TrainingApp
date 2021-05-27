@@ -1,5 +1,6 @@
 <resources>
     <attr name="logo_run" format="reference"/>
+    <attr name="congrats_pic" format="reference"/>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -27,6 +28,7 @@
     <style name="Theme.Training_app" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="logo_run">@drawable/run_light</item>
+        <item name="congrats_pic">@drawable/cong1</item>
         <item name="colorPrimary">@color/primaryDarkColorLight</item>
         <item name="colorPrimaryVariant">@color/primaryLightColorLight</item>
         <item name="colorOnPrimary">@color/secondaryDarkColorLight</item>
