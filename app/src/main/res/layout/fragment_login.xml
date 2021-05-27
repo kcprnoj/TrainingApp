@@ -28,7 +28,7 @@
             android:id="@+id/logo_pic"
             android:layout_width="342dp"
             android:layout_height="134dp"
-            android:background="@drawable/run_light"
+            android:background="?attr/logo_run"
             app:layout_constraintBottom_toTopOf="@+id/username_text_input_layout"
             app:layout_constraintEnd_toEndOf="@+id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
