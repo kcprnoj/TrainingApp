@@ -11,6 +11,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.MutableLiveData
@@ -117,6 +119,7 @@ class MainActivity : AppCompatActivity() {
         subscribeTopicLogin()
         subscribeTopicRegister()
         subscribeTopicDelete()
+        subscribeTopicAdmin()
 
         Log.i("Server", "Connected")
         return true
@@ -227,6 +230,25 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    @SuppressLint("CheckResult")
+    private fun subscribeTopicAdmin() {
+        stompClient.topic("/topic/admin").subscribe({ topicMessage ->
+            val reply = topicMessage.payload
+            if (reply != null && reply != ""){
+                notifyMessage(reply)
+            }
+            else {
+                Log.d("Server", "No msg")
+            }
+        }, {
+            Log.d("Server", "Topic failed")
+
+            if (stompClient.isConnected) {
+                subscribeTopicLogin()
+            }
+        })
+    }
+
     override fun onDestroy() {
         if (stompClient.isConnected) {
             stompClient.disconnect()
@@ -247,6 +269,20 @@ class MainActivity : AppCompatActivity() {
         val notificationManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
+    }
+
+    private fun notifyMessage(message: String) {
+        Log.d("notify", "message")
+
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.baseline_directions_run_24)
+                .setContentTitle("Message from admin")
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(this)) {
+            notify(0, builder.build())
+        }
     }
 
 }
