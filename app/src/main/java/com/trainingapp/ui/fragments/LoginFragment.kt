@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +24,7 @@ import org.json.JSONObject
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var viewModel: LoginViewModel
+    private var skip = true
 
     @SuppressLint("CheckResult")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -33,27 +35,21 @@ class LoginFragment : Fragment() {
         binding.lifecycleOwner = this
 
         //TODO REMOVE WHEN PRODUCTION
-        if (!(activity as MainActivity).stompClient.isConnected) {
-           findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
-        }
-/*
-        (activity as MainActivity).stompClient.topic("/user/queue/login").subscribe( { topicMessage ->
-            val reply = JSONObject(topicMessage.payload)
-            when {
-                reply.getString("Successful") == "True" -> {
-                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
-                }
-                else -> {
-                    Log.d("Login", "Failed")
-                }
-            }
-        }, {})*/
+        //if (!(activity as MainActivity).stompClient.isConnected) {
+        //   findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
+        //}
 
         (activity as MainActivity).loginSuccess.observe(viewLifecycleOwner, Observer {
             if (it == true) {
                 Log.d("Login", "Logged in")
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
+                skip = true
                 (activity as MainActivity).loginSuccess.postValue(false)
+            } else {
+                if (!skip)
+                    Toast.makeText(requireActivity(), getString(R.string.failed_login), Toast.LENGTH_SHORT).show()
+                else
+                    skip = false
             }
         })
 

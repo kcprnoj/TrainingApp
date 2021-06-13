@@ -1,6 +1,8 @@
 package com.trainingapp.ui.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -19,6 +24,9 @@ import org.json.JSONObject
 
 class ModifyAccountFragment : Fragment() {
     private lateinit var binding: FragmentModifyAccountBinding
+    private val CHANNEL_ID = "0"
+    private var skipDelete = true
+    private var skipModify = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,16 +101,43 @@ class ModifyAccountFragment : Fragment() {
         (activity as MainActivity).modifySuccess.observe(viewLifecycleOwner, Observer {
             if (it == true) {
                 findNavController().navigate(ModifyAccountFragmentDirections.actionModifyAccountFragmentToTrainingFragment())
+                skipModify = true
                 (activity as MainActivity).modifySuccess.postValue(false)
+            } else {
+                if (!skipModify)
+                    Toast.makeText(requireActivity(), getString(R.string.failed_modify), Toast.LENGTH_SHORT).show()
+                else
+                    skipModify = false
             }
         })
 
         (activity as MainActivity).deleteSuccess.observe(viewLifecycleOwner, Observer {
             if (it == true) {
                 findNavController().navigate(ModifyAccountFragmentDirections.actionModifyAccountFragmentToLoginFragment())
+                skipDelete = true
+                notifyDelete()
                 (activity as MainActivity).deleteSuccess.postValue(false)
+            } else {
+                if (!skipDelete)
+                    Toast.makeText(requireActivity(), getString(R.string.failed_delete), Toast.LENGTH_SHORT).show()
+                else
+                    skipDelete = false
             }
         })
+    }
+
+    private fun notifyDelete() {
+        Log.d("notify", "delete")
+
+        val builder = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.baseline_directions_run_24)
+                .setContentTitle("Success")
+                .setContentText("Successfully deleted account")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(requireContext())) {
+            notify(0, builder.build())
+        }
     }
 
 }

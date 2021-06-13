@@ -47,8 +47,6 @@
     <string name="hint_pick_time_message">12:00</string>
     <string name="pick_time_button">Pick Time</string>
     <string name="pick_date_button">Pick Date</string>
-
-
     <string name="exercise1">Jumping jacks</string>
     <string name="exercise2">Wall sit</string>
     <string name="exercise3">Push-up</string>
@@ -62,9 +60,11 @@
     <string name="exercise11">Push-up and rotation</string>
     <string name="exercise12">Side plank</string>
     <string name="numberOfExercises">10</string>
-
-
     <string name="summary_calories">Calories : %s</string>
     <string name="summary_exercisesNumber">Number of exercises : %s</string>
     <string name="summary_time">Time : %s seconds</string>
+    <string name="failed_register">Failed to register</string>
+    <string name="failed_login">Failed to login</string>
+    <string name="failed_modify">Failed to modify</string>
+    <string name="failed_delete">Failed to delete</string>
 </resources>

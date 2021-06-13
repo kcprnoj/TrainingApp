@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -21,6 +22,7 @@ import org.json.JSONObject
 class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
+    private var skip = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,7 +80,13 @@ class RegisterFragment : Fragment() {
         (activity as MainActivity).registerSuccess.observe(viewLifecycleOwner, Observer {
             if (it == true) {
                 findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+                skip = true
                 (activity as MainActivity).registerSuccess.postValue(false)
+            } else {
+                if (!skip)
+                    Toast.makeText(requireActivity(), getString(R.string.failed_register), Toast.LENGTH_SHORT).show()
+                else
+                    skip = false
             }
         })
     }
