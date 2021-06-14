@@ -5,11 +5,11 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -17,35 +17,34 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.main.R
 import com.example.main.databinding.ActivityMainBinding
+import com.trainingapp.utility.LocaleHelper
 import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var appBarConfiguration : AppBarConfiguration
     lateinit var stompClient: StompClient
+
 
     val loginSuccess = MutableLiveData<Boolean>(false)
     val registerSuccess = MutableLiveData<Boolean>(false)
     val modifySuccess = MutableLiveData<Boolean>(false)
     val deleteSuccess = MutableLiveData<Boolean>(false)
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        //TODO
-        binding.switchPlEng.visibility = View.GONE
         setupNavigation()
         connectToServer()
         setupNightLight()
+        setupLanguageChange()
         createNotificationChannel()
     }
 
@@ -55,9 +54,6 @@ class MainActivity : AppCompatActivity() {
         val bottomNavView = binding.bottomNavigation
         bottomNavView.visibility = View.GONE
         val topNavigation = binding.topNavigation
-        //NavigationUI.setupActionBarWithNavController(this,navController,drawerLayout)
-        //appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
-
 
         navController.addOnDestinationChangedListener{ _, destination, _ ->
             when(destination.id){
@@ -75,13 +71,9 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(bottomNavView, navController)
         NavigationUI.setupWithNavController(topNavigation, navController)
     }
-//    override fun onSupportNavigateUp(): Boolean {
-//        val navController = this.findNavController(R.id.myNavHostFragment)
-//        return NavigationUI.navigateUp(navController, appBarConfiguration)
-//    }
 
     private fun setupNightLight(){
-        val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
+        val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs", 0)
         val sharedPrefEdit : SharedPreferences.Editor = appSettingPrefs.edit()
         val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode", false)
         if (isNightModeOn){
@@ -108,8 +100,25 @@ class MainActivity : AppCompatActivity() {
     }
     
     private fun setupLanguageChange(){
-
+        val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs", 0)
+        val sharedPrefEdit : SharedPreferences.Editor = appSettingPrefs.edit()
+        binding.switchPlEng.setOnClickListener {
+            if (LocaleHelper.getActualLanguage(appSettingPrefs) == "pl"){
+                LocaleHelper.setLang(sharedPrefEdit, "en")
+            }else{
+                LocaleHelper.setLang(sharedPrefEdit, "pl")
+            }
+            this.recreate()
+        }
     }
+
+    override fun attachBaseContext(newBase: Context?) {
+        val appSettingPrefs: SharedPreferences = newBase!!.getSharedPreferences("AppSettingPrefs", 0)
+        val lang = LocaleHelper.getActualLanguage(appSettingPrefs)
+        val context = LocaleHelper.changeLang(newBase, lang)
+        super.attachBaseContext(context)
+    }
+
 
     private fun connectToServer(): Boolean {
         stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://10.0.2.2:8080/chat")
@@ -153,8 +162,8 @@ class MainActivity : AppCompatActivity() {
             when {
                 reply.getString("Successful") == "True" -> {
 
-                    val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
-                    val sharedPrefEdit : SharedPreferences.Editor = appSettingPrefs.edit()
+                    val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs", 0)
+                    val sharedPrefEdit: SharedPreferences.Editor = appSettingPrefs.edit()
                     sharedPrefEdit.putString("userLogin", reply.getString("login"))
                     sharedPrefEdit.putFloat("userWeight", reply.getString("weight").toFloat())
                     sharedPrefEdit.putFloat("userHeight", reply.getString("height").toFloat())
@@ -184,8 +193,8 @@ class MainActivity : AppCompatActivity() {
             when {
                 reply.getString("Successful") == "True" -> {
 
-                    val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
-                    val sharedPrefEdit : SharedPreferences.Editor = appSettingPrefs.edit()
+                    val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs", 0)
+                    val sharedPrefEdit: SharedPreferences.Editor = appSettingPrefs.edit()
                     sharedPrefEdit.putString("userLogin", reply.getString("login"))
                     sharedPrefEdit.putFloat("userWeight", reply.getString("weight").toFloat())
                     sharedPrefEdit.putFloat("userHeight", reply.getString("height").toFloat())
@@ -234,10 +243,9 @@ class MainActivity : AppCompatActivity() {
     private fun subscribeTopicAdmin() {
         stompClient.topic("/topic/admin").subscribe({ topicMessage ->
             val reply = topicMessage.payload
-            if (reply != null && reply != ""){
+            if (reply != null && reply != "") {
                 notifyMessage(reply)
-            }
-            else {
+            } else {
                 Log.d("Server", "No msg")
             }
         }, {

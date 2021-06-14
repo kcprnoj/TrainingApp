@@ -26,6 +26,7 @@
                 android:id="@+id/switch_pl_eng"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/language"
                 app:layout_constraintBottom_toTopOf="@+id/myNavHostFragment"
                 app:layout_constraintStart_toEndOf="@+id/switch_night_light"
                 app:layout_constraintTop_toTopOf="parent" />
