@@ -69,4 +69,10 @@
     <string name="failed_delete">Nie udało się usunąć</string>
     <string name="language">ENG</string>
     <string name="distance">Dystans</string>
+    <string name="success">Sukces</string>
+    <string name="notification_delete">Usunięcie konta powiodło się</string>
+    <string name="alarm">Alarm</string>
+    <string name="alarm_notification">Czas na bieganie!</string>
+    <string name="running">BIEGANIE</string>
+    <string name="admin_mess">Wiadomość od administratora</string>
 </resources>

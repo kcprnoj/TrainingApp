@@ -128,8 +128,8 @@ class ModifyAccountFragment : Fragment() {
 
         val builder = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.baseline_directions_run_24)
-                .setContentTitle("Success")
-                .setContentText("Successfully deleted account")
+                .setContentTitle(getString(R.string.success))
+                .setContentText(getString(R.string.notification_delete))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         with(NotificationManagerCompat.from(requireContext())) {

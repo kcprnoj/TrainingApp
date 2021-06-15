@@ -68,4 +68,10 @@
     <string name="failed_delete">Failed to delete</string>
     <string name="language">PL</string>
     <string name="distance">Distance</string>
+    <string name="success">Success</string>
+    <string name="notification_delete">Successfully deleted account</string>
+    <string name="alarm">Alarm</string>
+    <string name="alarm_notification">Time for run!</string>
+    <string name="running">RUNNING</string>
+    <string name="admin_mess">Message from admin</string>
 </resources>

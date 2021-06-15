@@ -50,7 +50,7 @@
                 android:id="@+id/text_running"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RUNNING"
+                android:text="@string/running"
                 app:layout_constraintBottom_toTopOf="@id/time_display"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"

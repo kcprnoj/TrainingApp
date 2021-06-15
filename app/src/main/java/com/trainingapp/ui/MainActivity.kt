@@ -6,7 +6,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -284,7 +283,7 @@ class MainActivity : AppCompatActivity() {
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.baseline_directions_run_24)
-                .setContentTitle("Message from admin")
+                .setContentTitle(getString(R.string.admin_mess))
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 

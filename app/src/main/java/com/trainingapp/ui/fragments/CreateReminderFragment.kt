@@ -116,6 +116,8 @@ class CreateReminderFragment : Fragment() {
     private fun setAlarm(timeInMillis: Long) {
         val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(requireActivity(), AlarmReceiver::class.java)
+        intent.putExtra("title", getString(R.string.alarm))
+        intent.putExtra("text", getString(R.string.alarm_notification))
         val pendingIntent = PendingIntent.getBroadcast(requireActivity(), 0, intent, 0)
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent)
 
