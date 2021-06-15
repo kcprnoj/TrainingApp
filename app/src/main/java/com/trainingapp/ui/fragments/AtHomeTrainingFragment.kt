@@ -38,9 +38,6 @@ class AtHomeTrainingFragment : Fragment() {
         viewModel.eventTrainingFinished.observe(viewLifecycleOwner, Observer { hasFinished ->
             if (hasFinished){
                 viewModel.onTrainingFinished()
-                Log.i("VIEW_OUT",viewModel.calories.value.toString())
-                Log.i("VIEW_OUT",viewModel.repeatsSum.value.toString())
-                Log.i("VIEW_OUT",viewModel.duration.value.toString())
                 findNavController().navigate(AtHomeTrainingFragmentDirections
                     .actionAtHomeTrainingFragmentToAtHomeTrainingSummaryFragment
                         (viewModel.repeatsSum.value ?: 0,
@@ -48,7 +45,6 @@ class AtHomeTrainingFragment : Fragment() {
                     viewModel.duration.value ?: 0))
             }
         })
-
         return binding.root
     }
 

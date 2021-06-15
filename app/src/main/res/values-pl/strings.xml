@@ -67,5 +67,6 @@
     <string name="failed_login">Nie udało się zalogować</string>
     <string name="failed_modify">Nie udało się zmodyfikować</string>
     <string name="failed_delete">Nie udało się usunąć</string>
-    <string name="language">PL</string>
+    <string name="language">ENG</string>
+    <string name="distance">Dystans</string>
 </resources>

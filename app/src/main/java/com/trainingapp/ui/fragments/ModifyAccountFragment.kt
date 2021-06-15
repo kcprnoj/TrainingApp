@@ -28,11 +28,8 @@ class ModifyAccountFragment : Fragment() {
     private var skipDelete = true
     private var skipModify = true
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_modify_account, container, false)
         binding.lifecycleOwner = this
 

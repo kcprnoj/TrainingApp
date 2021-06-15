@@ -50,7 +50,6 @@ class StatisticsFragment : Fragment() {
         lineChart.isDragEnabled = true
         lineChart.setScaleEnabled(true)
         lineChart.description.text = ""
-        //TODO kolory
         lineChart.description.textColor = Color.RED
         lineChart.axisLeft.textColor = Color.RED
         lineChart.axisRight.textColor = Color.RED
@@ -58,7 +57,6 @@ class StatisticsFragment : Fragment() {
 
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        //TODO KOLOR
         xAxis.textColor = Color.RED
 
         viewModel.allRunsByDate.observe(viewLifecycleOwner, {
@@ -74,7 +72,7 @@ class StatisticsFragment : Fragment() {
                 stringDateList.add(currentDate.toString())
             }
 
-            val lineDataSet  = LineDataSet(entryList, "Distance")
+            val lineDataSet  = LineDataSet(entryList, resources.getString(R.string.distance))
             lineDataSet.color = Color.RED
             lineDataSet.axisDependency = YAxis.AxisDependency.LEFT
             lineDataSet.setDrawValues(false)

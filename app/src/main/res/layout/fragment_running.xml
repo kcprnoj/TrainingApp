@@ -30,8 +30,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mapView"
             app:layout_constraintVertical_chainStyle="spread"
-            app:layout_constraintVertical_weight="1"
-            tools:layout_editor_absoluteX="0dp">
+            app:layout_constraintVertical_weight="1">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_left"
@@ -72,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0.0 km"
-                app:layout_constraintBottom_toTopOf="@+id/start_stop"
+                app:layout_constraintBottom_toTopOf="@+id/next_exercise"
                 app:layout_constraintEnd_toStartOf="@+id/calories_display"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
                 app:layout_constraintTop_toBottomOf="@+id/time_display" />
@@ -82,13 +81,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0 kcal"
-                app:layout_constraintBottom_toTopOf="@+id/start_stop"
+                app:layout_constraintBottom_toTopOf="@+id/next_exercise"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toEndOf="@+id/distance_display"
                 app:layout_constraintTop_toBottomOf="@+id/time_display" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/start_stop"
+                android:id="@+id/next_exercise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="START"

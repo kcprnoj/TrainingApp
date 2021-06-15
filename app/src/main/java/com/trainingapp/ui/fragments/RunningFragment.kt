@@ -58,7 +58,7 @@ class RunningFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mapView.onCreate(savedInstanceState)
 
-        start_stop.setOnClickListener{
+        next_exercise.setOnClickListener{
             toggleRun()
         }
 
@@ -142,10 +142,10 @@ class RunningFragment : Fragment() {
     private fun updateTracking(isTracking: Boolean) {
         this.isTracking = isTracking
         if (isTracking) {
-            start_stop.text = getString(R.string.stop)
+            next_exercise.text = getString(R.string.stop)
             button_end.visibility = View.GONE
         } else {
-            start_stop.text = getString(R.string.start)
+            next_exercise.text = getString(R.string.start)
             if (currentTime != 0L)
                 button_end.visibility = View.VISIBLE
         }

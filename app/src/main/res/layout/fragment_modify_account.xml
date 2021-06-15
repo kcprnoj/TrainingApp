@@ -145,13 +145,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_back"
-            app:layout_constraintBottom_toTopOf="@+id/delete_account_button"
+            app:layout_constraintBottom_toTopOf="@+id/deleteAccountButton"
             app:layout_constraintEnd_toEndOf="@+id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/register_button" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/delete_account_button"
+            android:id="@+id/deleteAccountButton"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
