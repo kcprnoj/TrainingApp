@@ -3,4 +3,5 @@
     <dimen name="big_padding">16dp</dimen>
     <dimen name="normal_margin" />
     <dimen name="big_margin">32dp</dimen>
+    <dimen name="small_margin">16dp</dimen>
 </resources>

@@ -12,23 +12,45 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/switch_night_light"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/open_drawer_button"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                app:icon="@drawable/baseline_menu_white_24"
+                app:layout_constraintBottom_toTopOf="@+id/myNavHostFragment"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/switch_night_light"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="@dimen/small_margin"
                 app:layout_constraintBottom_toTopOf="@+id/myNavHostFragment"
                 app:layout_constraintEnd_toStartOf="@+id/switch_pl_eng"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/switch_pl_eng"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
                 android:text="@string/language"
                 app:layout_constraintBottom_toTopOf="@+id/myNavHostFragment"
-                app:layout_constraintStart_toEndOf="@+id/switch_night_light"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_right"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <fragment

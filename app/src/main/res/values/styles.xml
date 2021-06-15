@@ -1,18 +1,15 @@
 <resources>
     <attr name="logo_run" format="reference"/>
     <attr name="congrats_pic" format="reference"/>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
 
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:background">@color/secondaryColorLight</item>
     </style>
 
-    <!-- The default font for RecyclerView items is too small.
-    The margin is a simple delimiter between the words. -->
+
     <style name="training_title">
         <item name="android:paddingLeft">8dp</item>
         <item name="android:background">@color/grey</item>
@@ -26,19 +23,18 @@
     </style>
 
     <style name="Theme.Training_app" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Primary brand color. -->
         <item name="logo_run">@drawable/run_light</item>
         <item name="congrats_pic">@drawable/cong1</item>
         <item name="colorPrimary">@color/primaryDarkColorLight</item>
         <item name="colorPrimaryVariant">@color/primaryLightColorLight</item>
         <item name="colorOnPrimary">@color/secondaryDarkColorLight</item>
-        <!-- Secondary brand color. -->
+
         <item name="colorSecondary">@color/secondaryDarkColorLight</item>
         <item name="colorSecondaryVariant">@color/secondaryLightColorLight</item>
         <item name="colorOnSecondary">@color/primaryColorLight</item>
-        <!-- Status bar color. -->
+
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.App.CornerSize10Percent" parent="">

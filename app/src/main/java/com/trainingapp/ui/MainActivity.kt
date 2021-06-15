@@ -7,11 +7,13 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.MutableLiveData
@@ -51,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         val navController = this.findNavController(R.id.myNavHostFragment)
         val drawerLayout = binding.drawerLayout
         val bottomNavView = binding.bottomNavigation
+        val openDrawerButton = binding.openDrawerButton
         bottomNavView.visibility = View.GONE
         val topNavigation = binding.topNavigation
 
@@ -58,15 +61,22 @@ class MainActivity : AppCompatActivity() {
             when(destination.id){
                 R.id.trainingFragment, R.id.historyFragment, R.id.statisticsFragment -> {
                     bottomNavView.visibility = View.VISIBLE
+                    openDrawerButton.visibility = View.VISIBLE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                     navController.graph.startDestination = R.id.trainingFragment
                 }
                 else -> {
                     bottomNavView.visibility = View.GONE
+                    binding.openDrawerButton.visibility = View.GONE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                 }
             }
         }
+        openDrawerButton.setOnClickListener {
+            if (!drawerLayout.isDrawerOpen(GravityCompat.START)) drawerLayout.openDrawer(GravityCompat.START)
+            else drawerLayout.closeDrawer(GravityCompat.END)
+        }
+
         NavigationUI.setupWithNavController(bottomNavView, navController)
         NavigationUI.setupWithNavController(topNavigation, navController)
     }
