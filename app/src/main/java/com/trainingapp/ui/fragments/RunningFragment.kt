@@ -93,7 +93,7 @@ class RunningFragment : Fragment() {
 
         TrackingService.timeInMillis.observe(viewLifecycleOwner) {
             currentTime = it
-            val formattedTime = formatTime(currentTime)
+            val formattedTime = viewModel.formatTime(currentTime)
             time_display.text = formattedTime
 
             updateDistance()
@@ -102,33 +102,6 @@ class RunningFragment : Fragment() {
             distance_display.text = "$distanceInKm km"
             calories_display.text = "$calories kcal"
         }
-    }
-
-    private fun formatTime(time: Long): String {
-        var seconds = time/1000
-        var minutes = seconds/60
-        var hours = minutes/60
-
-        seconds %= 60
-        minutes %= 60
-        hours %= 60
-
-        val secondsString: String = if (seconds < 10)
-            "0$seconds"
-        else
-            "$seconds"
-
-        val minutesString: String = if (minutes < 10)
-            "0$minutes"
-        else
-            "$minutes"
-
-        val hoursString : String = if (hours < 10)
-            "0$hours"
-        else
-            "$hours"
-
-        return "$hoursString:$minutesString:$secondsString"
     }
 
     private fun toggleRun() {
@@ -234,36 +207,13 @@ class RunningFragment : Fragment() {
     private fun updateDistance() {
         distance = 0;
         for (locations in pathPoints) {
-            distance += calculateDistance(locations).toInt()
+            distance += viewModel.calculateDistance(locations).toInt()
         }
     }
 
     private fun updateCalories() {
         val appSettingPrefs: SharedPreferences = (activity as MainActivity).getSharedPreferences("AppSettingPrefs",0)
 
-        calories = calculateCalories(distance, appSettingPrefs.getFloat("userWeight", 60.0f))
-    }
-
-    private fun calculateDistance(polyline: MutableList<LatLng>): Float {
-        var distance = 0f
-        for(i in 0..polyline.size - 2) {
-            val pos1 = polyline[i]
-            val pos2 = polyline[i + 1]
-
-            val result = FloatArray(1)
-            Location.distanceBetween(
-                pos1.latitude,
-                pos1.longitude,
-                pos2.latitude,
-                pos2.longitude,
-                result
-            )
-            distance += result[0]
-        }
-        return distance
-    }
-
-    private fun calculateCalories(distance: Int, weight: Float): Int{
-        return (distance.toFloat()/1000f*weight*0.8).toInt()
+        calories = viewModel.calculateCalories(distance, appSettingPrefs.getFloat("userWeight", 60.0f))
     }
 }

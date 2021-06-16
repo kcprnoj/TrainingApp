@@ -142,22 +142,6 @@ class TrackingService : LifecycleService() {
     private fun startForegroundService() {
         startTimer()
         isTracking.postValue(true)
-
-        /*
-        val id = "tracking_service"
-        val notificationManager : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
-            as NotificationManager
-
-        val notificationChannel = NotificationChannel(id, "Tracking", IMPORTANCE_LOW)
-        notificationManager.createNotificationChannel(notificationChannel)
-
-        val notificationBuilder = NotificationCompat.Builder (this, id)
-            .setAutoCancel(false)
-            .setOngoing(true)
-            .setContentTitle("Running App")
-            .setContentText("00:00:00")
-
-        startForeground(1, notificationBuilder.build())*/
     }
 
     private fun pauseService() {

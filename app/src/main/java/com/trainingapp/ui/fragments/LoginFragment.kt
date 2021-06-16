@@ -34,11 +34,6 @@ class LoginFragment : Fragment() {
         binding.loginViewModel = viewModel
         binding.lifecycleOwner = this
 
-        //TODO REMOVE WHEN PRODUCTION
-        //if (!(activity as MainActivity).stompClient.isConnected) {
-        //   findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
-        //}
-
         (activity as MainActivity).loginSuccess.observe(viewLifecycleOwner, Observer {
             if (it == true) {
                 Log.d("Login", "Logged in")
