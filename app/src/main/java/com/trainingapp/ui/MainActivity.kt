@@ -25,6 +25,7 @@ import com.trainingapp.utility.LocaleHelper
 import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
+import ua.naiksoftware.stomp.dto.LifecycleEvent
 
 
 class MainActivity : AppCompatActivity() {
@@ -129,9 +130,15 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    @SuppressLint("CheckResult")
     private fun connectToServer(): Boolean {
         stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://10.0.2.2:8080/chat")
         stompClient.connect()
+        stompClient.lifecycle().subscribe{
+            if (it.type == LifecycleEvent.Type.CLOSED) {
+                connectToServer()
+            }
+        }
 
         subscribeTopicModify()
         subscribeTopicLogin()
