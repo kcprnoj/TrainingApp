@@ -19,6 +19,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentCreateReminderBinding
 import com.trainingapp.utility.AlarmReceiver
@@ -109,7 +110,9 @@ class CreateReminderFragment : Fragment() {
         binding.createNotificationButton.setOnClickListener{
             setAlarm(calendar.timeInMillis)
         }
-
+        binding.backButton.setOnClickListener{
+            findNavController().navigate(CreateReminderFragmentDirections.actionCreateReminderFragmentToTrainingFragment())
+        }
         return binding.root
     }
 
