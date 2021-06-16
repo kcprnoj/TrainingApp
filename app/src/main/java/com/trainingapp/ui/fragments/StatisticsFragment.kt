@@ -39,8 +39,7 @@ class StatisticsFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_statistics,container,false)
         viewModelFactory = StatisticsViewModelFactory((activity?.application as RunApplication).repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(StatisticsViewModel::class.java)
-        binding.statisticsViewModel = viewModel
-        binding.lifecycleOwner = this
+
 
        createChart()
         val appSettingPrefs: SharedPreferences = requireActivity().getSharedPreferences("AppSettingPrefs", 0)

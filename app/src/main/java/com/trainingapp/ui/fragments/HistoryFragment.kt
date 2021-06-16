@@ -25,8 +25,7 @@ class HistoryFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_history,container,false)
         viewModelFactory = HistoryViewModelFactory((activity?.application as RunApplication).repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(HistoryViewModel::class.java)
-        binding.historyViewModel = viewModel
-        binding.lifecycleOwner = this
+
 
         val recyclerView = binding.recyclerview
         val adapter = RunListAdapter(this)

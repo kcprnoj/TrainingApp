@@ -48,8 +48,7 @@ class RunningFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_running,container,false)
         viewModelFactory = RunningViewModelFactory((activity?.application as RunApplication).repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(RunningViewModel::class.java)
-        binding.runningViewModel = viewModel
-        binding.lifecycleOwner = this
+
 
         return binding.root
     }

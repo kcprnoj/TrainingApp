@@ -2,11 +2,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="runningViewModel"
-            type="com.trainingapp.viewmodels.RunningViewModel" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -60,7 +55,7 @@
                 android:id="@+id/time_display"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00:00:00"
+                android:text="@string/zero_timer"
                 app:layout_constraintBottom_toTopOf="@id/distance_display"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -70,7 +65,7 @@
                 android:id="@+id/distance_display"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0.0 km"
+                android:text="@string/zero_distance"
                 app:layout_constraintBottom_toTopOf="@+id/next_exercise"
                 app:layout_constraintEnd_toStartOf="@+id/calories_display"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -80,7 +75,7 @@
                 android:id="@+id/calories_display"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0 kcal"
+                android:text="@string/zero_cal"
                 app:layout_constraintBottom_toTopOf="@+id/next_exercise"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toEndOf="@+id/distance_display"
@@ -90,7 +85,7 @@
                 android:id="@+id/next_exercise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="START"
+                android:text="@string/start"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left" />
@@ -99,7 +94,7 @@
                 android:id="@+id/button_end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="END"
+                android:text="@string/end"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"

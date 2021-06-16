@@ -31,8 +31,6 @@ class LoginFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        binding.loginViewModel = viewModel
-        binding.lifecycleOwner = this
 
         (activity as MainActivity).loginSuccess.observe(viewLifecycleOwner, Observer {
             if (it == true) {
