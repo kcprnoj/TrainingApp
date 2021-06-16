@@ -16,7 +16,8 @@
 
     <color name="light_grey">#C6C6C6</color>
     <color name="purple_700">#403653</color>
-    <color name="teal_200">#6D8481</color>
+
+    <color name="teal_200">#98B8B4</color>
     <color name="teal_700">#516260</color>
 
 </resources>
