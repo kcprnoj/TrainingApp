@@ -60,9 +60,9 @@
     <string name="exercise11">Pompka z obrotem</string>
     <string name="exercise12">Deska na boku</string>
     <string name="numberOfExercises">10</string>
-    <string name="summary_calories">Kalorie : %s</string>
-    <string name="summary_exercisesNumber">Ilość wykonanych ćwiczeń : %s</string>
-    <string name="summary_time">Czas : %s sekund</string>
+    <string name="summary_calories">Kalorie : \n %s</string>
+    <string name="summary_exercisesNumber">Ilość wykonanych ćwiczeń : \n %s</string>
+    <string name="summary_time">Czas : \n %s sekund</string>
     <string name="failed_register">Nie udało się zarejestrować</string>
     <string name="failed_login">Nie udało się zalogować</string>
     <string name="failed_modify">Nie udało się zmodyfikować</string>
@@ -75,4 +75,10 @@
     <string name="alarm_notification">Czas na bieganie!</string>
     <string name="running">BIEGANIE</string>
     <string name="admin_mess">Wiadomość od administratora</string>
+    <string name="your_bmi">Twoje BMI</string>
+    <string name="logo">Logo</string>
+    <string name="next">Następne</string>
+    <string name="end">Koniec</string>
+    <string name="default_date">01.01.2021</string>
+    <string name="repeats">Powtórzenia:</string>
 </resources>

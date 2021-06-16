@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:text="@string/distance_each_day"
             android:textAlignment="center"
+            style="@style/training_title"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/lineChart"
             app:layout_constraintEnd_toEndOf="@+id/guideline_right"
@@ -43,22 +44,47 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@+id/chartTitle"
-            app:layout_constraintBottom_toTopOf="@+id/test_text"
+            app:layout_constraintBottom_toTopOf="@+id/card_bmi"
             app:layout_constraintEnd_toEndOf="@+id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintVertical_chainStyle="spread"
             app:layout_constraintVertical_weight="4"/>
 
-        <TextView
-            android:id="@+id/test_text"
-            android:layout_width="0dp"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_bmi"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:cardBackgroundColor="?attr/card_color"
+            app:cardCornerRadius="4dp"
+            android:layout_margin="@dimen/small_margin"
             app:layout_constraintTop_toBottomOf="@+id/lineChart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintVertical_chainStyle="spread"
-            app:layout_constraintVertical_weight="2"/>
+            app:layout_constraintVertical_weight="1">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/bmi_text"
+            style="@style/training_title"
+            android:text="@string/your_bmi"
+            android:layout_margin="@dimen/small_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/bmi_value"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/small_margin"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

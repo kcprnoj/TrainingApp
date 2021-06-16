@@ -1,7 +1,7 @@
 package com.trainingapp.ui.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +37,8 @@ class AtHomeTrainingFragment : Fragment() {
 
         viewModel.eventTrainingFinished.observe(viewLifecycleOwner, Observer { hasFinished ->
             if (hasFinished){
-                viewModel.onTrainingFinished()
+                val appSettingPrefs: SharedPreferences = requireActivity().getSharedPreferences("AppSettingPrefs", 0)
+                viewModel.onTrainingFinished(appSettingPrefs.getFloat("userWeight",60.0f))
                 findNavController().navigate(AtHomeTrainingFragmentDirections
                     .actionAtHomeTrainingFragmentToAtHomeTrainingSummaryFragment
                         (viewModel.repeatsSum.value ?: 0,

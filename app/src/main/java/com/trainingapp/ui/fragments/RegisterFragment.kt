@@ -49,12 +49,16 @@ class RegisterFragment : Fragment() {
             val height = height_text_input_layout.editText?.text.toString()
             var sex = sex_text_input_layout.editText?.text.toString()
 
-            sex = if (sex == resources.getString(R.string.male)) {
-                "male"
-            } else if (sex == resources.getString(R.string.female)) {
-                "female"
-            } else {
-                "other"
+            sex = when (sex) {
+                resources.getString(R.string.male) -> {
+                    "male"
+                }
+                resources.getString(R.string.female) -> {
+                    "female"
+                }
+                else -> {
+                    "other"
+                }
             }
 
             val jsonObject = JSONObject()

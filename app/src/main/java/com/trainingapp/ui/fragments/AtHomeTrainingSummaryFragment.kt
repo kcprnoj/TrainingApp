@@ -21,7 +21,7 @@ class AtHomeTrainingSummaryFragment : Fragment() {
     private lateinit var viewModelFactory: AtHomeTrainingSummaryViewModelFactory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_at_home_training_summary,container,false)
         val fragmentArgs by navArgs<AtHomeTrainingSummaryFragmentArgs>()
         viewModelFactory = AtHomeTrainingSummaryViewModelFactory(fragmentArgs.calories,fragmentArgs.exercisesNumber,fragmentArgs.time)

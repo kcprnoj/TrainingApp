@@ -89,6 +89,11 @@ class StatisticsFragment : Fragment() {
 
         })
     }
+
+    private fun calculateBMI(){
+
+    }
+
 }
 
 

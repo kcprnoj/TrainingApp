@@ -1,4 +1,4 @@
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -44,6 +44,7 @@
             android:layout_height="0dp"
             android:text="@{@string/summary_time(atHomeTrainingSummaryViewModel.time)}"
             android:gravity="center"
+            android:textSize="@dimen/normal_text_size"
             app:layout_constraintBottom_toTopOf="@+id/end_button"
             app:layout_constraintEnd_toStartOf="@+id/calories_display"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -53,6 +54,7 @@
             android:id="@+id/calories_display"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:textSize="@dimen/normal_text_size"
             android:text="@{@string/summary_calories(atHomeTrainingSummaryViewModel.calories)}"
             app:layout_constraintBottom_toTopOf="@+id/end_button"
             android:gravity="center"
@@ -64,6 +66,7 @@
             android:id="@+id/number_of_exercises_display"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:textSize="@dimen/normal_text_size"
             android:text="@{@string/summary_exercisesNumber(atHomeTrainingSummaryViewModel.exercisesNumber)}"
             android:gravity="center"
             app:layout_constraintBottom_toTopOf="@+id/end_button"
@@ -75,7 +78,7 @@
             android:id="@+id/end_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="End"
+            android:text="@string/end"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"

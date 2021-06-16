@@ -104,13 +104,12 @@ class AtHomeTrainingViewModel(private val repository: TrainingRepository) : View
         repository.insert(training)
     }
 
-    fun onTrainingFinished(){
+
+    fun onTrainingFinished(weight : Float){
         endTime = System.currentTimeMillis()
         val duration = (endTime - startTime)/1000
         _duration.value = duration
         _repeatsSum.value = repSum
-        //TODO waga z profilu
-        val weight = 73F
         val cal = calculateCalories(duration/60, weight)
         _calories.value = cal
         val training = Training(
