@@ -1,9 +1,7 @@
 package com.trainingapp.viewmodels
 
 import android.location.Location
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
 import com.trainingapp.db.Run

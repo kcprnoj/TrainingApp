@@ -10,12 +10,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentLoginBinding
 import com.trainingapp.ui.MainActivity
-import com.trainingapp.viewmodels.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.username_text_input_layout
 import org.json.JSONObject
@@ -23,14 +21,12 @@ import org.json.JSONObject
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private lateinit var viewModel: LoginViewModel
     private var skip = true
 
     @SuppressLint("CheckResult")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
         (activity as MainActivity).loginSuccess.observe(viewLifecycleOwner, Observer {
             if (it == true) {

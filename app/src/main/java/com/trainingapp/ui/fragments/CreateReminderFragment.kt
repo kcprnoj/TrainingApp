@@ -1,15 +1,11 @@
 package com.trainingapp.ui.fragments
 
 import android.app.AlarmManager
-import android.app.AlarmManager.RTC
 import android.app.DatePickerDialog
 import android.app.PendingIntent
 import android.app.TimePickerDialog
-import android.content.BroadcastReceiver
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -77,17 +73,8 @@ class CreateReminderFragment : Fragment() {
 
         binding.pickDateButton.setOnClickListener{
             val startDatePicker = DatePickerDialog(requireActivity(), DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                val stringMonth =
-                        if (month+1 >= 10)
-                            (month+1).toString()
-                        else
-                            "0${month+1}"
-
-                val stringDay =
-                        if (dayOfMonth >= 10)
-                            dayOfMonth.toString()
-                        else
-                            "0$dayOfMonth"
+                val stringMonth = viewModel.formatMonth(month)
+                val stringDay = viewModel.formatDay(dayOfMonth)
 
                 defaultYear = year
                 defaultMonth = month

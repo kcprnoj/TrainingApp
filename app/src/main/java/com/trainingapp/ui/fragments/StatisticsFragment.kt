@@ -2,7 +2,6 @@ package com.trainingapp.ui.fragments
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,6 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.trainingapp.RunApplication
-import com.trainingapp.db.Run
 import com.trainingapp.viewmodels.MyValueFormatter
 import com.trainingapp.viewmodels.StatisticsViewModel
 import com.trainingapp.viewmodels.StatisticsViewModelFactory
