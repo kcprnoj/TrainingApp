@@ -1,23 +1,21 @@
 package com.trainingapp.viewmodels
 
-import android.graphics.Color
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.trainingapp.db.Run
 import com.trainingapp.repositories.RunRepository
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 class StatisticsViewModel(repository: RunRepository) : ViewModel() {
     val allRunsByDate: LiveData<List<Run>> = repository.allRunsByDate.asLiveData()
+
+     fun calculateBMI(height: Float, weight: Float): Float{
+        val heightVal = height / 100
+        return weight / (heightVal * heightVal)
+    }
 
 }
 

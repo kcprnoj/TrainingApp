@@ -1,4 +1,5 @@
 package com.trainingapp.ui.fragments
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -42,6 +43,9 @@ class StatisticsFragment : Fragment() {
         binding.lifecycleOwner = this
 
        createChart()
+        val appSettingPrefs: SharedPreferences = requireActivity().getSharedPreferences("AppSettingPrefs", 0)
+        binding.bmiValue.text = viewModel.calculateBMI(appSettingPrefs.getFloat("userHeight",170f),
+        appSettingPrefs.getFloat("userWeight",60.0f)).toString()
         return binding.root
     }
 
@@ -90,9 +94,7 @@ class StatisticsFragment : Fragment() {
         })
     }
 
-    private fun calculateBMI(){
 
-    }
 
 }
 
