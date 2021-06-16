@@ -1,6 +1,7 @@
 <resources>
     <attr name="logo_run" format="reference"/>
     <attr name="congrats_pic" format="reference"/>
+    <attr name="card_color" format="reference"/>
 
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/white</item>
@@ -12,29 +13,29 @@
 
     <style name="training_title">
         <item name="android:paddingLeft">8dp</item>
-        <item name="android:background">@color/grey</item>
+        <item name="android:background">@color/teal_200</item>
         <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
     </style>
 
     <style name="training_desc">
         <item name="android:paddingLeft">8dp</item>
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/light_grey</item>
         <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
     </style>
 
     <style name="Theme.Training_app" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="logo_run">@drawable/run_light</item>
         <item name="congrats_pic">@drawable/cong1</item>
+        <item name="card_color">@color/teal_200</item>
         <item name="colorPrimary">@color/primaryDarkColorLight</item>
         <item name="colorPrimaryVariant">@color/primaryLightColorLight</item>
         <item name="colorOnPrimary">@color/secondaryDarkColorLight</item>
-
         <item name="colorSecondary">@color/secondaryDarkColorLight</item>
         <item name="colorSecondaryVariant">@color/secondaryLightColorLight</item>
         <item name="colorOnSecondary">@color/primaryColorLight</item>
-
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/roboto</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.App.CornerSize10Percent" parent="">

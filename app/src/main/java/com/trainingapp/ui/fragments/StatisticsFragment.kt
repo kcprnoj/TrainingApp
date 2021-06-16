@@ -50,14 +50,14 @@ class StatisticsFragment : Fragment() {
         lineChart.isDragEnabled = true
         lineChart.setScaleEnabled(true)
         lineChart.description.text = ""
-        lineChart.description.textColor = Color.RED
-        lineChart.axisLeft.textColor = Color.RED
-        lineChart.axisRight.textColor = Color.RED
-        lineChart.legend.textColor = Color.RED
+        lineChart.description.textColor = Color.parseColor("#516260")
+        lineChart.axisLeft.textColor = Color.parseColor("#516260")
+        lineChart.axisRight.textColor =Color.parseColor("#516260")
+        lineChart.legend.textColor = Color.parseColor("#516260")
 
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.textColor = Color.RED
+        xAxis.textColor = Color.parseColor("#516260")
 
         viewModel.allRunsByDate.observe(viewLifecycleOwner, {
             val entryList = ArrayList<Entry>()
