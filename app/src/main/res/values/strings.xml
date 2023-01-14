@@ -9,11 +9,13 @@
     <string name="bottom_menu_statistics_description">Training statistics view</string>
     <string name="stop">Stop</string>
     <string name="start">Start</string>
-    <string name="training_title">%d. %s</string>
+    <string name="training_title"> %s </string>
     <string name="training_distance">Distance: %.2f km</string>
-    <string name="training_time">Time: %s</string>
+    <string name="training_start">Start: %s</string>
+    <string name="training_end">End: %s</string>
+    <string name="training_duration">Duration: %s</string>
     <string name="training_avg">Average speed: %.2f km/s</string>
-    <string name="training_calories">Burned: %d calories.</string>
+    <string name="training_calories">%s</string>
     <string name="at_home_training_button">At home training</string>
     <string name="running_training_button">Running training</string>
     <string name="hint_username">Username</string>
@@ -83,4 +85,5 @@
     <string name="zero_timer">00:00:00</string>
     <string name="zero_distance">0.0 km</string>
     <string name="zero_cal">0 kcal</string>
+    <string name="google_maps_api_key">AIzaSyDY0IPDnMTFyl93cP1_Nj2ynOGp3S9NSNs</string>
 </resources>

@@ -17,8 +17,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/title"
+        android:id="@+id/startDateTime"
         style="@style/training_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/endDateTime"
+        style="@style/training_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/duration"
+        style="@style/training_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -29,19 +41,7 @@
         android:layout_height="wrap_content" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/time"
-        style="@style/training_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/avg"
-        style="@style/training_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/calories"
+        android:id="@+id/additionalInfo"
         style="@style/training_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

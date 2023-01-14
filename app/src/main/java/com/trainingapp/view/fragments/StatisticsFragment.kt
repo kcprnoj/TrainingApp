@@ -1,4 +1,4 @@
-package com.trainingapp.ui.fragments
+package com.trainingapp.view.fragments
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
@@ -35,7 +35,7 @@ class StatisticsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View{
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_statistics,container,false)
-        viewModelFactory = StatisticsViewModelFactory((activity?.application as RunApplication).repository)
+        //viewModelFactory = StatisticsViewModelFactory((activity?.application as RunApplication).repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(StatisticsViewModel::class.java)
 
 
@@ -59,7 +59,7 @@ class StatisticsFragment : Fragment() {
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.textColor = Color.parseColor("#516260")
-
+/*
         viewModel.allRunsByDate.observe(viewLifecycleOwner, {
             val entryList = ArrayList<Entry>()
             val stringDateList = ArrayList<String>()
@@ -88,7 +88,7 @@ class StatisticsFragment : Fragment() {
             lineChart.invalidate()
             lineChart.setVisibleXRangeMaximum(3F)
 
-        })
+        })*/
     }
 
 

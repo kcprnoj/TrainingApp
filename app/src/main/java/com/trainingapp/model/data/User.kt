@@ -1,4 +1,4 @@
-package com.trainingapp.utility
+package com.trainingapp.model.data
 
 class User {
     var login: String = ""

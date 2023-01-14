@@ -1,5 +1,6 @@
-package com.trainingapp.ui.fragments
+package com.trainingapp.view.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -18,15 +19,17 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
-import com.trainingapp.RunApplication
-import com.trainingapp.db.Run
-import com.trainingapp.tracking.TrackingService
-import com.trainingapp.ui.MainActivity
+import com.trainingapp.model.data.TrainingCreate
+import com.trainingapp.model.webservice.TrainingService
+import com.trainingapp.viewmodels.tracking.TrackingService
+import com.trainingapp.view.MainActivity
 import com.trainingapp.viewmodels.RunningViewModel
 import com.trainingapp.viewmodels.RunningViewModelFactory
 import kotlinx.android.synthetic.main.fragment_running.*
+import java.sql.Time
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.round
 
 class RunningFragment : Fragment() {
     private lateinit var binding: FragmentRunningBinding
@@ -39,13 +42,14 @@ class RunningFragment : Fragment() {
     private var pathPoints = mutableListOf<MutableList<LatLng>>()
 
     private var currentTime = 0L
-    private var distance = 0
-    private var calories = 0
+    private var distance = 0.0
+    private var start: Long = 0L
+    private var calories = 0;
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_running,container,false)
-        viewModelFactory = RunningViewModelFactory((activity?.application as RunApplication).repository)
+        viewModelFactory = RunningViewModelFactory(TrainingService())
         viewModel = ViewModelProvider(this, viewModelFactory).get(RunningViewModel::class.java)
 
 
@@ -96,7 +100,7 @@ class RunningFragment : Fragment() {
 
             updateDistance()
             updateCalories()
-            val distanceInKm = distance.toDouble()/1000
+            val distanceInKm = distance/1000
             distance_display.text = "$distanceInKm km"
             calories_display.text = "$calories kcal"
         }
@@ -107,6 +111,9 @@ class RunningFragment : Fragment() {
             sendCommandToService("PAUSE")
         } else {
             sendCommandToService("START_OR_RESUME")
+            if (start == 0L) {
+                start = Calendar.getInstance().timeInMillis
+            }
         }
     }
 
@@ -159,14 +166,19 @@ class RunningFragment : Fragment() {
     private fun endRun() {
         updateDistance()
         updateCalories()
-        val run = Run(
-            Calendar.getInstance().timeInMillis,
-            round((distance/1000f) / (currentTime/1000f/60f/60f)*10f)/10f,
-            distance.toFloat(),
-            currentTime,
-            calories
-        )
-        viewModel.insert(run)
+
+        val username = (activity as MainActivity).getUsername() as String
+        val key = (activity as MainActivity).getAuthorizationKey() as String
+
+        val run = TrainingCreate(
+                        start,
+                        Calendar.getInstance().timeInMillis,
+                distance/1000,
+                        currentTime,
+                        "",
+                        username)
+
+        viewModel.addTraining(run, key)
         sendCommandToService("STOP")
         button_end.visibility = View.GONE
         findNavController().navigate(RunningFragmentDirections.actionRunningFragmentToTrainingFragment())
@@ -203,9 +215,9 @@ class RunningFragment : Fragment() {
     }
 
     private fun updateDistance() {
-        distance = 0;
+        distance = 0.0;
         for (locations in pathPoints) {
-            distance += viewModel.calculateDistance(locations).toInt()
+            distance += viewModel.calculateDistance(locations)
         }
     }
 

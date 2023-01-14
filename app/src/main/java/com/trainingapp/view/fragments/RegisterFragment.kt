@@ -1,4 +1,4 @@
-package com.trainingapp.ui.fragments
+package com.trainingapp.view.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentRegisterBinding
-import com.trainingapp.ui.MainActivity
+import com.trainingapp.view.MainActivity
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_register.username_text_input_layout
 import org.json.JSONObject
@@ -68,9 +68,11 @@ class RegisterFragment : Fragment() {
             jsonObject.put("height", height)
             jsonObject.put("sex", sex)
 
+
+            /*  TODO: Zastapic uzywajac repo
             (activity as MainActivity).stompClient.send("/app/register",  jsonObject.toString()).subscribe({ }, {
                 Log.d("Login", "Server Error")
-            })
+            }) */
 
         }
 

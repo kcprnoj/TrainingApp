@@ -18,9 +18,9 @@
         android:usesCleartextTraffic="true"
         >
 
-        <receiver android:name="com.trainingapp.utility.AlarmReceiver" />
+        <receiver android:name="com.trainingapp.viewmodels.utility.AlarmReceiver" />
 
-        <activity android:name="com.trainingapp.ui.MainActivity" android:launchMode="singleTask">
+        <activity android:name="com.trainingapp.view.MainActivity" android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.trainingapp.tracking.TrackingService"
+        <service android:name="com.trainingapp.viewmodels.tracking.TrackingService"
             android:foregroundServiceType="location" />
 
         <meta-data

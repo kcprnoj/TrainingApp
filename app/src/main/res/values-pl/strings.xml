@@ -10,9 +10,11 @@
     <string name="bottom_menu_statistics_description">Widok statystyk treningu</string>
     <string name="stop">Stop</string>
     <string name="start">Start</string>
+    <string name="training_start">Początek: %s</string>
+    <string name="training_end">Koniec: %s</string>
     <string name="training_title">%d. %s</string>
     <string name="training_distance">Dystans: %.2f km</string>
-    <string name="training_time">Czas: %s</string>
+    <string name="training_duration">Czas: %s</string>
     <string name="training_avg">Średnia prędkość: %.2f km/s</string>
     <string name="training_calories">Spalono: %d kalorii.</string>
     <string name="at_home_training_button">Trening w domu</string>

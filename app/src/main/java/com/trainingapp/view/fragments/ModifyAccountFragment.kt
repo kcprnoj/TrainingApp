@@ -1,4 +1,4 @@
-package com.trainingapp.ui.fragments
+package com.trainingapp.view.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -16,7 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentModifyAccountBinding
-import com.trainingapp.ui.MainActivity
+import com.trainingapp.view.MainActivity
 import org.json.JSONObject
 
 class ModifyAccountFragment : Fragment() {
@@ -54,9 +54,10 @@ class ModifyAccountFragment : Fragment() {
             jsonObject.put("login", username)
             jsonObject.put("password", password)
 
+            /* TODO: Zastapic uzywajac api
             (activity as MainActivity).stompClient.send("/app/delete",  jsonObject.toString()).subscribe({ }, {
                 Log.d("Login", "Server Error")
-            })
+            })*/
         }
 
         binding.registerButton.setOnClickListener{
@@ -85,9 +86,10 @@ class ModifyAccountFragment : Fragment() {
             jsonObject.put("login", username)
             jsonObject.put("password", password)
 
+            /* TODO: Zastapic uzywajac repo
             (activity as MainActivity).stompClient.send("/app/modify",  jsonObject.toString()).subscribe({ }, {
                 Log.d("Login", "Server Error")
-            })
+            })*/
         }
     }
 

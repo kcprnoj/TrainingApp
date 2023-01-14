@@ -1,20 +1,14 @@
 package com.trainingapp.viewmodels
 
-import android.content.SharedPreferences
-import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.main.R
-import com.trainingapp.db.Training
-import com.trainingapp.repositories.TrainingRepository
-import com.trainingapp.ui.MainActivity
 import kotlinx.coroutines.launch
 import java.util.*
 
-class AtHomeTrainingViewModel(private val repository: TrainingRepository) : ViewModel() {
+class AtHomeTrainingViewModel() : ViewModel() {
 
     data class Exercise(
             val text: Int,
@@ -99,13 +93,13 @@ class AtHomeTrainingViewModel(private val repository: TrainingRepository) : View
         exerciseIndex = 0
     }
 
-
+/*
     fun insert(training: Training) = viewModelScope.launch {
         repository.insert(training)
-    }
+    }*/
 
 
-    fun onTrainingFinished(weight : Float){
+    fun onTrainingFinished(weight : Float){/*
         endTime = System.currentTimeMillis()
         val duration = (endTime - startTime)/1000
         _duration.value = duration
@@ -122,7 +116,7 @@ class AtHomeTrainingViewModel(private val repository: TrainingRepository) : View
         insert(training)
         _eventTrainingFinished.value = false
         exerciseIndex = 0
-        exercisesString = ""
+        exercisesString = ""*/
     }
 
     private fun calculateCalories(duration: Long, weight: Float): Int{

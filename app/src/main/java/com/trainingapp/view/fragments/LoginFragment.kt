@@ -1,4 +1,4 @@
-package com.trainingapp.ui.fragments
+package com.trainingapp.view.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -9,57 +9,58 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentLoginBinding
-import com.trainingapp.ui.MainActivity
+import com.trainingapp.model.webservice.UserService
+import com.trainingapp.model.data.UserLogin
+import com.trainingapp.view.MainActivity
+import com.trainingapp.viewmodels.UserViewModel
+import com.trainingapp.viewmodels.UserViewModelFactory
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.username_text_input_layout
-import org.json.JSONObject
 
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private var skip = true
+    private lateinit var viewModelFactory: UserViewModelFactory
+    private lateinit var viewModel: UserViewModel
 
     @SuppressLint("CheckResult")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-
-        (activity as MainActivity).loginSuccess.observe(viewLifecycleOwner, Observer {
-            if (it == true) {
-                Log.d("Login", "Logged in")
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
-                skip = true
-                (activity as MainActivity).loginSuccess.postValue(false)
-            } else {
-                if (!skip)
-                    Toast.makeText(requireActivity(), getString(R.string.failed_login), Toast.LENGTH_SHORT).show()
-                else
-                    skip = false
-            }
-        })
+        viewModelFactory = UserViewModelFactory(UserService())
+        viewModel = ViewModelProvider(this, viewModelFactory).get(UserViewModel::class.java)
 
         binding.loginButton.setOnClickListener {
 
             val username = username_text_input_layout.editText?.text.toString()
             val password = password_text_input.editText?.text.toString()
 
-            val jsonObject = JSONObject()
-            jsonObject.put("login", username)
-            jsonObject.put("password", password)
+            val user = UserLogin(username, password)
+            val key = viewModel.login(user)
 
-            (activity as MainActivity).stompClient.send("/app/login",  jsonObject.toString()).subscribe({ }, {
-                Log.d("Login", "Server Error")
-            })
+            if (key != null) {
+                Log.d("Login", "Logged in $key")
+                (activity as MainActivity).saveAuthorizationKey(key)
+                (activity as MainActivity).saveUsername(username)
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
+            } else {
+                Toast.makeText(
+                    requireActivity(),
+                    getString(R.string.failed_login),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
 
         }
 
         binding.registerButton.setOnClickListener {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
         }
+
         return binding.root
     }
 

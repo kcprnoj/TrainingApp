@@ -1,4 +1,4 @@
-package com.trainingapp.tracking
+package com.trainingapp.viewmodels.tracking
 
 import android.Manifest
 import android.annotation.SuppressLint

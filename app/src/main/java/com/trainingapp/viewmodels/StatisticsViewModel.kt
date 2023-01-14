@@ -6,11 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.trainingapp.db.Run
-import com.trainingapp.repositories.RunRepository
+import com.trainingapp.model.data.Training
 
-class StatisticsViewModel(repository: RunRepository) : ViewModel() {
-    val allRunsByDate: LiveData<List<Run>> = repository.allRunsByDate.asLiveData()
+class StatisticsViewModel() : ViewModel() {
+    //val allRunsByDate: LiveData<List<Training>> = repository.allRunsByDate.asLiveData()
 
      fun calculateBMI(height: Float, weight: Float): Float{
         val heightVal = height / 100

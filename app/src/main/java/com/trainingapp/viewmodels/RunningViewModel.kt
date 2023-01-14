@@ -2,17 +2,15 @@ package com.trainingapp.viewmodels
 
 import android.location.Location
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
-import com.trainingapp.db.Run
-import com.trainingapp.repositories.RunRepository
-import kotlinx.coroutines.launch
+import com.trainingapp.model.data.TrainingCreate
+import com.trainingapp.model.webservice.TrainingService
 
-class RunningViewModel(private val repository: RunRepository) : ViewModel() {
+class RunningViewModel(private val service: TrainingService) : ViewModel() {
 
 
-    fun insert(run: Run) = viewModelScope.launch {
-        repository.insert(run)
+    fun addTraining(training: TrainingCreate, key: String) {
+        service.addTraining(training, key)
     }
 
     fun calculateDistance(polyline: MutableList<LatLng>): Float {
@@ -34,7 +32,7 @@ class RunningViewModel(private val repository: RunRepository) : ViewModel() {
         return distance
     }
 
-    fun calculateCalories(distance: Int, weight: Float): Int{
+    fun calculateCalories(distance: Double, weight: Float): Int{
         return (distance.toFloat()/1000f*weight*0.8).toInt()
     }
 

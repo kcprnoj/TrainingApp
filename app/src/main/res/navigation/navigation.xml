@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/trainingFragment"
-        android:name="com.trainingapp.ui.fragments.TrainingFragment"
+        android:name="com.trainingapp.view.fragments.TrainingFragment"
         android:label="fragment_training"
         tools:layout="@layout/fragment_training" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/runningFragment"
-        android:name="com.trainingapp.ui.fragments.RunningFragment"
+        android:name="com.trainingapp.view.fragments.RunningFragment"
         android:label="RunningFragment" >
         <action
             android:id="@+id/action_runningFragment_to_trainingFragment"
@@ -27,15 +27,15 @@
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.trainingapp.ui.fragments.HistoryFragment"
+        android:name="com.trainingapp.view.fragments.HistoryFragment"
         android:label="HistoryFragment" />
     <fragment
         android:id="@+id/statisticsFragment"
-        android:name="com.trainingapp.ui.fragments.StatisticsFragment"
+        android:name="com.trainingapp.view.fragments.StatisticsFragment"
         android:label="StatisticsFragment" />
     <fragment
         android:id="@+id/modifyAccountFragment"
-        android:name="com.trainingapp.ui.fragments.ModifyAccountFragment"
+        android:name="com.trainingapp.view.fragments.ModifyAccountFragment"
         android:label="fragment_modify_account"
         tools:layout="@layout/fragment_modify_account" >
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.trainingapp.ui.fragments.LoginFragment"
+        android:name="com.trainingapp.view.fragments.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_trainingFragment"
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.trainingapp.ui.fragments.RegisterFragment"
+        android:name="com.trainingapp.view.fragments.RegisterFragment"
         android:label="RegisterFragment" >
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
@@ -66,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/atHomeTrainingFragment"
-        android:name="com.trainingapp.ui.fragments.AtHomeTrainingFragment"
+        android:name="com.trainingapp.view.fragments.AtHomeTrainingFragment"
         android:label="AtHomeTrainingFragment" >
         <action
             android:id="@+id/action_atHomeTrainingFragment_to_atHomeTrainingSummaryFragment"
@@ -74,7 +74,7 @@
     </fragment>
     <fragment
         android:id="@+id/createReminderFragment"
-        android:name="com.trainingapp.ui.fragments.CreateReminderFragment"
+        android:name="com.trainingapp.view.fragments.CreateReminderFragment"
         android:label="CreateReminderFragment" >
         <action
             android:id="@+id/action_createReminderFragment_to_trainingFragment"
@@ -82,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/atHomeTrainingSummaryFragment"
-        android:name="com.trainingapp.ui.fragments.AtHomeTrainingSummaryFragment"
+        android:name="com.trainingapp.view.fragments.AtHomeTrainingSummaryFragment"
         android:label="AtHomeTrainingSummaryFragment" >
         <action
             android:id="@+id/action_atHomeTrainingSummaryFragment_to_trainingFragment"

@@ -1,4 +1,4 @@
-package com.trainingapp.ui.fragments
+package com.trainingapp.view.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -24,7 +24,7 @@ class AtHomeTrainingFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_at_home_training,container,false)
-        viewModelFactory = AtHomeTrainingViewModelFactory((activity?.application as RunApplication).repositoryTraining)
+        //viewModelFactory = AtHomeTrainingViewModelFactory((activity?.application as RunApplication).repositoryTraining)
         viewModel = ViewModelProvider(this, viewModelFactory).get(AtHomeTrainingViewModel::class.java)
         binding.atHomeTrainingViewModel = viewModel
         binding.lifecycleOwner = this

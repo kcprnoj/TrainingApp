@@ -1,4 +1,4 @@
-package com.trainingapp.ui.fragments
+package com.trainingapp.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.main.R
 import com.example.main.databinding.FragmentHistoryBinding
 import com.trainingapp.RunApplication
+import com.trainingapp.model.webservice.TrainingService
+import com.trainingapp.view.MainActivity
 import com.trainingapp.viewmodels.HistoryViewModel
 import com.trainingapp.viewmodels.HistoryViewModelFactory
 import com.trainingapp.viewmodels.RunListAdapter
@@ -23,7 +25,7 @@ class HistoryFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_history,container,false)
-        viewModelFactory = HistoryViewModelFactory((activity?.application as RunApplication).repository)
+        viewModelFactory = HistoryViewModelFactory(TrainingService())
         viewModel = ViewModelProvider(this, viewModelFactory).get(HistoryViewModel::class.java)
 
 
@@ -32,10 +34,9 @@ class HistoryFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
-        viewModel.allRunsByDate.observe(viewLifecycleOwner, { runs ->
-            runs.let { adapter.submitList(it) }
-        })
-
+        val activity = (activity as MainActivity)
+        val trainings = viewModel.getAllTrainings(activity.getUsername() as String, activity.getAuthorizationKey() as String)
+        trainings.let { adapter.submitList(it) }
 
         return binding.root
     }

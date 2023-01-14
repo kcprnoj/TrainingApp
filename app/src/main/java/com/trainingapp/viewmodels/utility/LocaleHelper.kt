@@ -1,4 +1,4 @@
-package com.trainingapp.utility
+package com.trainingapp.viewmodels.utility
 
 import android.content.Context
 import android.content.ContextWrapper

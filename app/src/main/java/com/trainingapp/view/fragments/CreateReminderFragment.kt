@@ -1,4 +1,4 @@
-package com.trainingapp.ui.fragments
+package com.trainingapp.view.fragments
 
 import android.app.AlarmManager
 import android.app.DatePickerDialog
@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentCreateReminderBinding
-import com.trainingapp.utility.AlarmReceiver
+import com.trainingapp.viewmodels.utility.AlarmReceiver
 import com.trainingapp.viewmodels.CreateReminderViewModel
 import com.trainingapp.viewmodels.CreateReminderViewModelFactory
 import java.util.*

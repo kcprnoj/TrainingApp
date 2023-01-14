@@ -1,11 +1,11 @@
 package com.trainingapp.viewmodels
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import com.trainingapp.db.Run
-import com.trainingapp.repositories.RunRepository
+import com.trainingapp.model.data.Training
+import com.trainingapp.model.webservice.TrainingService
 
-class HistoryViewModel(private val repository: RunRepository) : ViewModel(){
-    val allRunsByDate: LiveData<List<Run>> = repository.allRunsByDate.asLiveData()
+class HistoryViewModel(private val service: TrainingService) : ViewModel(){
+    fun getAllTrainings(username: String, key: String): List<Training> {
+        return service.getTrainings(username, key)
+    }
 }

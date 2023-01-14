@@ -1,4 +1,4 @@
-package com.trainingapp.utility
+package com.trainingapp.viewmodels.utility
 
 import android.content.BroadcastReceiver
 import android.content.Context
