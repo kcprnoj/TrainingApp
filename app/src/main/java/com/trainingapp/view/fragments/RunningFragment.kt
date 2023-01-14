@@ -42,7 +42,7 @@ class RunningFragment : Fragment() {
     private var pathPoints = mutableListOf<MutableList<LatLng>>()
 
     private var currentTime = 0L
-    private var distance = 0.0
+    private var distance = 0
     private var start: Long = 0L
     private var calories = 0;
 
@@ -100,7 +100,7 @@ class RunningFragment : Fragment() {
 
             updateDistance()
             updateCalories()
-            val distanceInKm = distance/1000
+            val distanceInKm = distance/1000.0
             distance_display.text = "$distanceInKm km"
             calories_display.text = "$calories kcal"
         }
@@ -173,7 +173,7 @@ class RunningFragment : Fragment() {
         val run = TrainingCreate(
                         start,
                         Calendar.getInstance().timeInMillis,
-                distance/1000,
+                distance/1000.0,
                         currentTime,
                         "",
                         username)
@@ -215,15 +215,15 @@ class RunningFragment : Fragment() {
     }
 
     private fun updateDistance() {
-        distance = 0.0;
+        distance = 0;
         for (locations in pathPoints) {
-            distance += viewModel.calculateDistance(locations)
+            distance += viewModel.calculateDistance(locations).toInt()
         }
     }
 
     private fun updateCalories() {
         val appSettingPrefs: SharedPreferences = (activity as MainActivity).getSharedPreferences("AppSettingPrefs",0)
 
-        calories = viewModel.calculateCalories(distance, appSettingPrefs.getFloat("userWeight", 60.0f))
+        calories = viewModel.calculateCalories(distance.toDouble(), appSettingPrefs.getFloat("userWeight", 60.0f))
     }
 }

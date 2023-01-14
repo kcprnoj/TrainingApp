@@ -31,9 +31,9 @@ class RunListAdapter(private val context: HistoryFragment) : ListAdapter<Trainin
     }
 
     fun convertMsToTime (milliseconds: Long): String {
-        var seconds = floor((milliseconds / 1000).toDouble());
-        var minutes = floor(seconds / 60);
-        var hours = floor(minutes / 60);
+        var seconds = floor((milliseconds / 1000.0)).toInt();
+        var minutes = floor(seconds / 60.0).toInt();
+        var hours = floor(minutes / 60.0).toInt();
 
         seconds %= 60;
         minutes %= 60;
