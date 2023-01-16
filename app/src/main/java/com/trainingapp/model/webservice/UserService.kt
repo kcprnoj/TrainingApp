@@ -1,7 +1,10 @@
 package com.trainingapp.model.webservice
 
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.trainingapp.model.data.Training
 import com.trainingapp.model.data.UserLogin
+import com.trainingapp.model.data.UserView
 import okhttp3.*
 
 class UserService {
@@ -18,6 +21,18 @@ class UserService {
             .post(RequestBody.create(JSON, gson.toJson(user)))
             .build()
 
-        client.newCall(request).execute().use { response -> return response }
+        client.newCall(request).execute().use {
+                response -> return response }
+    }
+
+    fun getUser(username: String, authorization: String): UserView {
+        val request = Request.Builder()
+            .url("$url/$username")
+            .header("Authorization", authorization)
+            .build()
+
+        client.newCall(request).execute().use {
+                response -> return gson.fromJson(response.body()?.string() ?: "[]", UserView::class.java)
+        }
     }
 }

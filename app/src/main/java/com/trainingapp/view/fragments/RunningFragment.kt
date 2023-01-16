@@ -21,6 +21,7 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.OnMapsSdkInitializedCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
+import com.trainingapp.RunApplication
 import com.trainingapp.model.data.TrainingCreate
 import com.trainingapp.model.webservice.TrainingService
 import com.trainingapp.view.MainActivity
@@ -48,7 +49,8 @@ class RunningFragment : Fragment(), OnMapsSdkInitializedCallback {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_running,container,false)
-        viewModelFactory = RunningViewModelFactory(TrainingService())
+        viewModelFactory = RunningViewModelFactory(TrainingService(), (requireActivity().application
+                as RunApplication).perfRepository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(RunningViewModel::class.java)
 
 
@@ -167,18 +169,15 @@ class RunningFragment : Fragment(), OnMapsSdkInitializedCallback {
         updateDistance()
         updateCalories()
 
-        val username = (activity as MainActivity).getUsername() as String
-        val key = (activity as MainActivity).getAuthorizationKey() as String
-
         val run = TrainingCreate(
                         start,
                         Calendar.getInstance().timeInMillis,
                 distance/1000.0,
                         currentTime,
                         "",
-                        username)
+                        "")
 
-        viewModel.addTraining(run, key)
+        viewModel.addTraining(run)
         sendCommandToService("STOP")
         button_end.visibility = View.GONE
         findNavController().navigate(RunningFragmentDirections.actionRunningFragmentToTrainingFragment())

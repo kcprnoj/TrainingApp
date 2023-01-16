@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     val modifySuccess = MutableLiveData(false)
     val deleteSuccess = MutableLiveData(false)
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -132,28 +134,5 @@ class MainActivity : AppCompatActivity() {
         notificationManager.createNotificationChannel(channel)
     }
 
-    fun saveAuthorizationKey(key: String) {
-        val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs", 0)
-        val sharedPrefEdit : SharedPreferences.Editor = appSettingPrefs.edit()
-        sharedPrefEdit.putString("Authorization", "Bearer $key")
-        sharedPrefEdit.apply()
-    }
-
-    fun getAuthorizationKey():String? {
-        val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs", 0)
-        return appSettingPrefs.getString("Authorization", null)
-    }
-
-    fun saveUsername(login: String) {
-        val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs", 0)
-        val sharedPrefEdit : SharedPreferences.Editor = appSettingPrefs.edit()
-        sharedPrefEdit.putString("username", login)
-        sharedPrefEdit.apply()
-    }
-
-    fun getUsername():String? {
-        val appSettingPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs", 0)
-        return appSettingPrefs.getString("username", null)
-    }
 
 }

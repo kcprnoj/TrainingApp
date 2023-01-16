@@ -13,28 +13,29 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentLoginBinding
+import com.trainingapp.RunApplication
 import com.trainingapp.model.webservice.UserService
 import com.trainingapp.model.data.UserLogin
 import com.trainingapp.view.MainActivity
-import com.trainingapp.viewmodels.UserViewModel
-import com.trainingapp.viewmodels.UserViewModelFactory
+import com.trainingapp.viewmodels.LoginViewModel
+import com.trainingapp.viewmodels.LoginViewModelFactory
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.username_text_input_layout
 
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private lateinit var viewModelFactory: UserViewModelFactory
-    private lateinit var viewModel: UserViewModel
+    private lateinit var viewModelFactory: LoginViewModelFactory
+    private lateinit var viewModel: LoginViewModel
 
     @SuppressLint("CheckResult")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-        viewModelFactory = UserViewModelFactory(UserService())
-        viewModel = ViewModelProvider(this, viewModelFactory).get(UserViewModel::class.java)
-        (activity as MainActivity).saveAuthorizationKey("")
-        (activity as MainActivity).saveUsername("")
+        viewModelFactory = LoginViewModelFactory(UserService(), (requireActivity().application as RunApplication).perfRepository)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
+
+        viewModel.cleanRepo()
 
         binding.loginButton.setOnClickListener {
 
@@ -44,10 +45,8 @@ class LoginFragment : Fragment() {
             val user = UserLogin(username, password)
             val key = viewModel.login(user)
 
-            if (key != null) {
-                Log.d("Login", "Logged in $key")
-                (activity as MainActivity).saveAuthorizationKey(key)
-                (activity as MainActivity).saveUsername(username)
+            if (key) {
+                Log.d("Login", "Logged in")
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTrainingFragment())
             } else {
                 Toast.makeText(

@@ -12,6 +12,7 @@ import com.example.main.R
 import com.example.main.databinding.FragmentHistoryBinding
 import com.trainingapp.RunApplication
 import com.trainingapp.model.webservice.TrainingService
+import com.trainingapp.model.webservice.UserService
 import com.trainingapp.view.MainActivity
 import com.trainingapp.viewmodels.HistoryViewModel
 import com.trainingapp.viewmodels.HistoryViewModelFactory
@@ -25,7 +26,7 @@ class HistoryFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_history,container,false)
-        viewModelFactory = HistoryViewModelFactory(TrainingService())
+        viewModelFactory = HistoryViewModelFactory(TrainingService(), (requireActivity().application as RunApplication).perfRepository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(HistoryViewModel::class.java)
 
 
@@ -34,8 +35,7 @@ class HistoryFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
-        val activity = (activity as MainActivity)
-        val trainings = viewModel.getAllTrainings(activity.getUsername() as String, activity.getAuthorizationKey() as String)
+        val trainings = viewModel.getAllTrainings()
         trainings.let { adapter.submitList(it) }
 
         return binding.root

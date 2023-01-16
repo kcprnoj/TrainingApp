@@ -4,12 +4,15 @@ import android.location.Location
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.trainingapp.model.data.TrainingCreate
+import com.trainingapp.model.repository.PrefRepository
 import com.trainingapp.model.webservice.TrainingService
 
-class RunningViewModel(private val service: TrainingService) : ViewModel() {
+class RunningViewModel(private val service: TrainingService,  private val repository: PrefRepository) : ViewModel() {
 
 
-    fun addTraining(training: TrainingCreate, key: String) {
+    fun addTraining(training: TrainingCreate) {
+        val key = repository.getAuthorizationKey()
+        training.username = repository.getUsername()
         service.addTraining(training, key)
     }
 

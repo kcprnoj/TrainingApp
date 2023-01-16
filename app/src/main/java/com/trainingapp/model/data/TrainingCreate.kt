@@ -8,5 +8,5 @@ data class TrainingCreate(
     val distance: Double,
     val duration: Long,
     val additionalInfo: String,
-    val username: String
+    var username: String
 )
