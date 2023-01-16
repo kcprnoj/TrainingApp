@@ -4,11 +4,12 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
@@ -16,18 +17,20 @@ import com.example.main.R
 import com.example.main.databinding.FragmentRunningBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.OnMapsSdkInitializedCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 import com.trainingapp.model.data.TrainingCreate
 import com.trainingapp.model.webservice.TrainingService
-import com.trainingapp.viewmodels.tracking.TrackingLifecycle
 import com.trainingapp.view.MainActivity
 import com.trainingapp.viewmodels.RunningViewModel
 import com.trainingapp.viewmodels.RunningViewModelFactory
+import com.trainingapp.viewmodels.tracking.TrackingLifecycle
 import kotlinx.android.synthetic.main.fragment_running.*
 import java.util.*
 
-class RunningFragment : Fragment() {
+class RunningFragment : Fragment(), OnMapsSdkInitializedCallback {
     private lateinit var binding: FragmentRunningBinding
     private lateinit var viewModel : RunningViewModel
     private lateinit var viewModelFactory: RunningViewModelFactory
@@ -54,6 +57,7 @@ class RunningFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        context?.let { MapsInitializer.initialize(it, MapsInitializer.Renderer.LATEST, this) }
         mapView.onCreate(savedInstanceState)
 
         next_exercise.setOnClickListener{
@@ -222,4 +226,9 @@ class RunningFragment : Fragment() {
 
         calories = viewModel.calculateCalories(distance.toDouble(), appSettingPrefs.getFloat("userWeight", 60.0f))
     }
+
+    override fun onMapsSdkInitialized(renderer: MapsInitializer.Renderer) {
+        Log.d("Map: ", renderer.toString())
+    }
+
 }

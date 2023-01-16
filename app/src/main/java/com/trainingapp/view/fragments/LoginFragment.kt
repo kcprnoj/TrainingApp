@@ -33,6 +33,8 @@ class LoginFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         viewModelFactory = UserViewModelFactory(UserService())
         viewModel = ViewModelProvider(this, viewModelFactory).get(UserViewModel::class.java)
+        (activity as MainActivity).saveAuthorizationKey("")
+        (activity as MainActivity).saveUsername("")
 
         binding.loginButton.setOnClickListener {
 

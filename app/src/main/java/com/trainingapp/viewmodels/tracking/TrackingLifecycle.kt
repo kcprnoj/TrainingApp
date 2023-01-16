@@ -19,11 +19,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
 class TrackingLifecycle : LifecycleService() {
 
     private var isFirst = true
     private var service = true
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var request: LocationRequest
     
     companion object {
         val timeInMillis = MutableLiveData<Long>()
@@ -45,7 +47,6 @@ class TrackingLifecycle : LifecycleService() {
     override fun onCreate() {
         super.onCreate()
         init()
-        @SuppressLint("VisibleForTests")
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         isTracking.observe(this) {
@@ -86,7 +87,7 @@ class TrackingLifecycle : LifecycleService() {
                 result.locations.let { locations ->
                     for (location in locations) {
                         addPathPoint(location)
-                        Log.d("TrackingService", "Added path point $location")
+                        Log.d("TrackingService", "Added path point ${location.latitude} ${location.longitude}")
                     }
                 }
             }
