@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener{ _, destination, _ ->
             when(destination.id){
-                R.id.trainingFragment, R.id.historyFragment, R.id.statisticsFragment -> {
+                R.id.trainingFragment, R.id.historyFragment -> {
                     bottomNavView.visibility = View.VISIBLE
                     openDrawerButton.visibility = View.VISIBLE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)

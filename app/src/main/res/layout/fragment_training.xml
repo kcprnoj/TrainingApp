@@ -21,26 +21,13 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/start_running_training_button"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="@string/running_training_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/running_train"
-            app:layout_constraintBottom_toTopOf="@+id/start_athome_training_button"
-            app:layout_constraintEnd_toEndOf="@+id/guideline_right"
-            app:layout_constraintStart_toStartOf="@+id/guideline_left"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/start_athome_training_button"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="@string/at_home_training_button"
-            android:background="@drawable/aerobic_training"
+            android:text="@string/running_training_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-            app:layout_constraintTop_toBottomOf="@+id/start_running_training_button" />
-
-
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

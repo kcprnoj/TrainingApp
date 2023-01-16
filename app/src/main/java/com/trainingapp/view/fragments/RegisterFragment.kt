@@ -14,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentRegisterBinding
 import com.trainingapp.view.MainActivity
+import com.trainingapp.viewmodels.RegisterViewModel
+import com.trainingapp.viewmodels.RegisterViewModelFactory
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_register.username_text_input_layout
 import org.json.JSONObject
@@ -22,6 +24,8 @@ import org.json.JSONObject
 class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
+    private lateinit var viewModelFactory: RegisterViewModelFactory
+    private lateinit var viewModel: RegisterViewModel
     private var skip = true
 
     override fun onCreateView(
@@ -29,6 +33,7 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
+        //viewModelFactory = RegisterViewModelFactory()
         binding.lifecycleOwner = this
 
         setClientObservers()

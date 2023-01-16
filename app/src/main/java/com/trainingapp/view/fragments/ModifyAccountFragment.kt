@@ -48,11 +48,9 @@ class ModifyAccountFragment : Fragment() {
         binding.deleteAccountButton.setOnClickListener{
             val appSettingPrefs: SharedPreferences = (activity as MainActivity).getSharedPreferences("AppSettingPrefs",0)
             val username = appSettingPrefs.getString("userLogin", "Kacper")
-            val password = binding.oldPasswordTextInputLayout.editText?.text.toString()
 
             val jsonObject = JSONObject()
             jsonObject.put("login", username)
-            jsonObject.put("password", password)
 
             /* TODO: Zastapic uzywajac api
             (activity as MainActivity).stompClient.send("/app/delete",  jsonObject.toString()).subscribe({ }, {
@@ -62,12 +60,10 @@ class ModifyAccountFragment : Fragment() {
 
         binding.registerButton.setOnClickListener{
             val appSettingPrefs: SharedPreferences = (activity as MainActivity).getSharedPreferences("AppSettingPrefs",0)
-            val newUsername = binding.usernameTextInputLayout.editText?.text.toString()
-            val newPassword = binding.newPasswordTextInputLayout.editText?.text.toString()
+            val newBirthday = binding.birthdayTextInputLayout.editText?.text.toString()
             val newWeight = binding.weightTextInputLayout.editText?.text.toString()
             val newHeight = binding.heightTextInputLayout.editText?.text.toString()
             var newSex = binding.sexTextInputLayout.editText?.text.toString()
-            val password = binding.oldPasswordTextInputLayout.editText?.text.toString()
             val username = appSettingPrefs.getString("userLogin", "Kacper")
 
             newSex = when(newSex) {
@@ -78,13 +74,11 @@ class ModifyAccountFragment : Fragment() {
             }
 
             val jsonObject = JSONObject()
-            jsonObject.put("new login", newUsername)
-            jsonObject.put("new password", newPassword)
+            jsonObject.put("new login", newBirthday)
             jsonObject.put("new weight", newWeight)
             jsonObject.put("new height", newHeight)
             jsonObject.put("new sex", newSex)
             jsonObject.put("login", username)
-            jsonObject.put("password", password)
 
             /* TODO: Zastapic uzywajac repo
             (activity as MainActivity).stompClient.send("/app/modify",  jsonObject.toString()).subscribe({ }, {

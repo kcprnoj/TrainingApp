@@ -6,7 +6,6 @@
     <string name="bottom_menu_statistics">Statistics</string>
     <string name="bottom_menu_train_description">Training view</string>
     <string name="bottom_menu_history_description">Training history view</string>
-    <string name="bottom_menu_statistics_description">Training statistics view</string>
     <string name="stop">Stop</string>
     <string name="start">Start</string>
     <string name="training_title"> %s </string>
@@ -16,7 +15,6 @@
     <string name="training_duration">Duration: %s</string>
     <string name="training_avg">Average speed: %.2f km/s</string>
     <string name="training_calories">%s</string>
-    <string name="at_home_training_button">At home training</string>
     <string name="running_training_button">Running training</string>
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
@@ -30,8 +28,6 @@
     <string name="distance_each_day">Distance each day</string>
     <string name="hint_change_username">Change Username</string>
     <string name="hint_change_email">Change E-mail</string>
-    <string name="hint_old_password">Old password</string>
-    <string name="hint_new_password">New password</string>
     <string name="button_update">Update</string>
     <string name="hint_change_height">Change height</string>
     <string name="hint_change_weight">Change weight</string>
@@ -48,19 +44,6 @@
     <string name="hint_pick_time_message">12:00</string>
     <string name="pick_time_button">Pick Time</string>
     <string name="pick_date_button">Pick Date</string>
-    <string name="exercise1">Jumping jacks</string>
-    <string name="exercise2">Wall sit</string>
-    <string name="exercise3">Push-up</string>
-    <string name="exercise4">Abdominal crunch</string>
-    <string name="exercise5">Step-up onto chair</string>
-    <string name="exercise6">Squat</string>
-    <string name="exercise7">Triceps dip on chair</string>
-    <string name="exercise8">Plank</string>
-    <string name="exercise9">High knees running in place</string>
-    <string name="exercise10">Lunge</string>
-    <string name="exercise11">Push-up and rotation</string>
-    <string name="exercise12">Side plank</string>
-    <string name="numberOfExercises">10</string>
     <string name="summary_calories">Calories : \n %s</string>
     <string name="summary_exercisesNumber">Number of exercises : \n %s</string>
     <string name="summary_time">Time : \n %s seconds</string>
@@ -85,5 +68,8 @@
     <string name="zero_timer">00:00:00</string>
     <string name="zero_distance">0.0 km</string>
     <string name="zero_cal">0 kcal</string>
-    <string name="google_maps_api_key">AIzaSyDY0IPDnMTFyl93cP1_Nj2ynOGp3S9NSNs</string>
+    <string name="google_maps_api_key" translatable="false">AIzaSyCx_3la3ryFDCoYNzXKcSEQMlAw3QYwdRM</string>
+    <string name="hint_birthday">Birthday</string>
+    <string name="change_birthday">Change birthday</string>
+    <string name="change_sex">Change sex</string>
 </resources>

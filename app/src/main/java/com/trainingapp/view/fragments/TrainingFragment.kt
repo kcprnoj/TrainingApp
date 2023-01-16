@@ -22,12 +22,6 @@ class TrainingFragment : Fragment() {
             findNavController().navigate(TrainingFragmentDirections.actionTrainingFragmentToRunningFragment())
         }
 
-        binding.startAthomeTrainingButton.setOnClickListener {
-            findNavController().navigate(TrainingFragmentDirections.actionTrainingFragmentToAtHomeTrainingFragment())
-        }
-
         return binding.root
     }
-
-
 }

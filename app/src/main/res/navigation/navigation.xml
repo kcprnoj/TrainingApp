@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_trainingFragment_to_runningFragment"
             app:destination="@id/runningFragment" />
-        <action
-            android:id="@+id/action_trainingFragment_to_atHomeTrainingFragment"
-            app:destination="@id/atHomeTrainingFragment" />
     </fragment>
     <fragment
         android:id="@+id/runningFragment"
@@ -29,10 +26,6 @@
         android:id="@+id/historyFragment"
         android:name="com.trainingapp.view.fragments.HistoryFragment"
         android:label="HistoryFragment" />
-    <fragment
-        android:id="@+id/statisticsFragment"
-        android:name="com.trainingapp.view.fragments.StatisticsFragment"
-        android:label="StatisticsFragment" />
     <fragment
         android:id="@+id/modifyAccountFragment"
         android:name="com.trainingapp.view.fragments.ModifyAccountFragment"
@@ -65,37 +58,12 @@
             app:destination="@id/loginFragment" />
     </fragment>
     <fragment
-        android:id="@+id/atHomeTrainingFragment"
-        android:name="com.trainingapp.view.fragments.AtHomeTrainingFragment"
-        android:label="AtHomeTrainingFragment" >
-        <action
-            android:id="@+id/action_atHomeTrainingFragment_to_atHomeTrainingSummaryFragment"
-            app:destination="@id/atHomeTrainingSummaryFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/createReminderFragment"
         android:name="com.trainingapp.view.fragments.CreateReminderFragment"
         android:label="CreateReminderFragment" >
         <action
             android:id="@+id/action_createReminderFragment_to_trainingFragment"
             app:destination="@id/trainingFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/atHomeTrainingSummaryFragment"
-        android:name="com.trainingapp.view.fragments.AtHomeTrainingSummaryFragment"
-        android:label="AtHomeTrainingSummaryFragment" >
-        <action
-            android:id="@+id/action_atHomeTrainingSummaryFragment_to_trainingFragment"
-            app:destination="@id/trainingFragment" />
-        <argument
-            android:name="exercisesNumber"
-            app:argType="integer" />
-        <argument
-            android:name="calories"
-            app:argType="integer" />
-        <argument
-            android:name="time"
-            app:argType="long" />
     </fragment>
 
 </navigation>

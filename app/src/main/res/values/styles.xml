@@ -25,7 +25,6 @@
 
     <style name="Theme.Training_app" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="logo_run">@drawable/run_light</item>
-        <item name="congrats_pic">@drawable/cong1</item>
         <item name="card_color">@color/teal_200</item>
         <item name="colorPrimary">@color/primaryDarkColorLight</item>
         <item name="colorPrimaryVariant">@color/primaryLightColorLight</item>
