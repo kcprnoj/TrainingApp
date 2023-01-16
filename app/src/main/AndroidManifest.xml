@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.trainingapp.viewmodels.tracking.TrackingService"
+        <service android:name="com.trainingapp.viewmodels.tracking.TrackingLifecycle"
             android:foregroundServiceType="location" />
 
         <meta-data

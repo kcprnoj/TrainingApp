@@ -19,7 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class TrackingService : LifecycleService() {
+class TrackingLifecycle : LifecycleService() {
 
     private var isFirst = true
     private var service = true

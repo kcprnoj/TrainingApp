@@ -1,6 +1,5 @@
 package com.trainingapp.view.fragments
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -21,14 +20,11 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 import com.trainingapp.model.data.TrainingCreate
 import com.trainingapp.model.webservice.TrainingService
-import com.trainingapp.viewmodels.tracking.TrackingService
+import com.trainingapp.viewmodels.tracking.TrackingLifecycle
 import com.trainingapp.view.MainActivity
 import com.trainingapp.viewmodels.RunningViewModel
 import com.trainingapp.viewmodels.RunningViewModelFactory
 import kotlinx.android.synthetic.main.fragment_running.*
-import java.sql.Time
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
 import java.util.*
 
 class RunningFragment : Fragment() {
@@ -77,23 +73,23 @@ class RunningFragment : Fragment() {
     }
 
     private fun sendCommandToService(action: String) {
-        val intent = Intent(requireContext(), TrackingService::class.java)
+        val intent = Intent(requireContext(), TrackingLifecycle::class.java)
         intent.action = action
         requireContext().startService(intent)
     }
 
     private fun subToObservers() {
-        TrackingService.isTracking.observe(viewLifecycleOwner) {
+        TrackingLifecycle.isTracking.observe(viewLifecycleOwner) {
             updateTracking(it)
         }
 
-        TrackingService.pathPoints.observe(viewLifecycleOwner) {
+        TrackingLifecycle.pathPoints.observe(viewLifecycleOwner) {
             pathPoints = it
             addLatestLocation()
             moveCamera()
         }
 
-        TrackingService.timeInMillis.observe(viewLifecycleOwner) {
+        TrackingLifecycle.timeInMillis.observe(viewLifecycleOwner) {
             currentTime = it
             val formattedTime = viewModel.formatTime(currentTime)
             time_display.text = formattedTime
