@@ -2,10 +2,11 @@ package com.trainingapp.model.data
 
 import java.time.LocalDate
 
-data class User(
+data class UserRegister (
     var username: String,
-    var height: Double,
-    var weight: Double,
+    var password: String,
     var sex: String,
+    var weight: Double,
+    var height: Double,
     var birthday: LocalDate
 )

@@ -49,6 +49,7 @@
     <string name="summary_exercisesNumber">Ilość wykonanych ćwiczeń : \n %s</string>
     <string name="summary_time">Czas : \n %s sekund</string>
     <string name="failed_register">Nie udało się zarejestrować</string>
+    <string name="success_register">Rejestracja pomyślna</string>
     <string name="failed_login">Nie udało się zalogować</string>
     <string name="failed_modify">Nie udało się zmodyfikować</string>
     <string name="failed_delete">Nie udało się usunąć</string>

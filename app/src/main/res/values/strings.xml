@@ -48,6 +48,7 @@
     <string name="summary_exercisesNumber">Number of exercises : \n %s</string>
     <string name="summary_time">Time : \n %s seconds</string>
     <string name="failed_register">Failed to register</string>
+    <string name="success_register">Register successful</string>
     <string name="failed_login">Failed to login</string>
     <string name="failed_modify">Failed to modify</string>
     <string name="failed_delete">Failed to delete</string>

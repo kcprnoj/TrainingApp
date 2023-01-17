@@ -81,7 +81,7 @@
             app:layout_constraintEnd_toEndOf="@+id/guideline_right">
 
             <AutoCompleteTextView
-                android:id="@+id/sex_auto"
+                android:id="@+id/sex_auto_complete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
