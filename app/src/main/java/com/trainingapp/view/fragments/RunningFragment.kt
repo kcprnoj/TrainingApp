@@ -3,6 +3,7 @@ package com.trainingapp.view.fragments
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 import com.trainingapp.RunApplication
 import com.trainingapp.model.data.TrainingCreate
+import com.trainingapp.model.repository.TrainingRepository
 import com.trainingapp.model.webservice.TrainingService
 import com.trainingapp.view.MainActivity
 import com.trainingapp.viewmodels.RunningViewModel
@@ -49,7 +51,9 @@ class RunningFragment : Fragment(), OnMapsSdkInitializedCallback {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_running,container,false)
-        viewModelFactory = RunningViewModelFactory(TrainingService(), (requireActivity().application
+        val perf = (requireActivity().application as RunApplication).perfRepository
+        viewModelFactory = RunningViewModelFactory(
+            TrainingRepository(TrainingService(), perf), (requireActivity().application
                 as RunApplication).perfRepository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(RunningViewModel::class.java)
 
@@ -97,7 +101,7 @@ class RunningFragment : Fragment(), OnMapsSdkInitializedCallback {
 
         TrackingLifecycle.timeInMillis.observe(viewLifecycleOwner) {
             currentTime = it
-            val formattedTime = viewModel.formatTime(currentTime)
+            val formattedTime = formatTime(currentTime)
             time_display.text = formattedTime
 
             updateDistance()
@@ -216,18 +220,67 @@ class RunningFragment : Fragment(), OnMapsSdkInitializedCallback {
     private fun updateDistance() {
         distance = 0;
         for (locations in pathPoints) {
-            distance += viewModel.calculateDistance(locations).toInt()
+            distance += calculateDistance(locations).toInt()
         }
     }
 
     private fun updateCalories() {
-        val appSettingPrefs: SharedPreferences = (activity as MainActivity).getSharedPreferences("AppSettingPrefs",0)
-
-        calories = viewModel.calculateCalories(distance.toDouble(), appSettingPrefs.getFloat("userWeight", 60.0f))
+        val repo = (requireActivity().application as RunApplication).perfRepository
+        calories = calculateCalories(distance.toDouble(), repo.getUser().weight.toFloat())
     }
 
     override fun onMapsSdkInitialized(renderer: MapsInitializer.Renderer) {
         Log.d("Map: ", renderer.toString())
     }
 
+
+    fun calculateDistance(polyline: MutableList<LatLng>): Float {
+        var distance = 0f
+        for(i in 0..polyline.size - 2) {
+            val pos1 = polyline[i]
+            val pos2 = polyline[i + 1]
+
+            val result = FloatArray(1)
+            Location.distanceBetween(
+                pos1.latitude,
+                pos1.longitude,
+                pos2.latitude,
+                pos2.longitude,
+                result
+            )
+            distance += result[0]
+        }
+        return distance
+    }
+
+    private fun calculateCalories(distance: Double, weight: Float): Int{
+        return (distance.toFloat()/1000f*weight*0.8).toInt()
+    }
+
+    private fun formatTime(time: Long): String {
+        var seconds = time/1000
+        var minutes = seconds/60
+        var hours = minutes/60
+
+        seconds %= 60
+        minutes %= 60
+        hours %= 60
+
+        val secondsString: String = if (seconds < 10)
+            "0$seconds"
+        else
+            "$seconds"
+
+        val minutesString: String = if (minutes < 10)
+            "0$minutes"
+        else
+            "$minutes"
+
+        val hoursString : String = if (hours < 10)
+            "0$hours"
+        else
+            "$hours"
+
+        return "$hoursString:$minutesString:$secondsString"
+    }
 }

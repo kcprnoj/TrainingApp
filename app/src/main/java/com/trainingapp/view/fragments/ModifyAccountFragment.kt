@@ -35,7 +35,8 @@ class ModifyAccountFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_modify_account, container, false)
-        viewModelFactory = ModifyAccountViewModelFactory(UserRepository(UserService()), (requireActivity().application as RunApplication).perfRepository)
+        viewModelFactory = ModifyAccountViewModelFactory(UserRepository(UserService(),
+            (requireActivity().application as RunApplication).perfRepository), (requireActivity().application as RunApplication).perfRepository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ModifyAccountViewModel::class.java)
 
         setClientObservers()

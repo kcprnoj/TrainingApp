@@ -34,12 +34,12 @@ class ModifyAccountViewModel(private val repository: UserRepository, private val
         get() = _previousBirthday
 
     fun modifyUser(userUpdate: UserUpdate) {
-        val response = repository.updateUser(preferences.getUsername(), preferences.getAuthorizationKey(),userUpdate)
+        val response = repository.updateUser(preferences.getUsername(), userUpdate)
         _modifySuccess.value = response.isSuccessful
     }
 
     fun deleteUser(){
-        val response = repository.deleteUser(preferences.getUsername(), preferences.getAuthorizationKey())
+        val response = repository.deleteUser(preferences.getUsername())
         _deleteSuccess.value = response.isSuccessful
     }
 

@@ -14,13 +14,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentRegisterBinding
+import com.trainingapp.RunApplication
 import com.trainingapp.model.data.UserRegister
 import com.trainingapp.model.repository.UserRepository
 import com.trainingapp.model.webservice.UserService
 import com.trainingapp.viewmodels.RegisterViewModel
 import com.trainingapp.viewmodels.RegisterViewModelFactory
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 
@@ -35,7 +34,8 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
-        viewModelFactory = RegisterViewModelFactory(UserRepository(UserService()))
+        viewModelFactory = RegisterViewModelFactory(UserRepository(UserService(),
+            (requireActivity().application as RunApplication).perfRepository))
         viewModel = ViewModelProvider(this, viewModelFactory).get(RegisterViewModel::class.java)
 
         setClientObservers()

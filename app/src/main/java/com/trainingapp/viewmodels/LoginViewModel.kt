@@ -1,33 +1,40 @@
 package com.trainingapp.viewmodels
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.trainingapp.model.data.UserLogin
 import com.trainingapp.model.data.UserView
 import com.trainingapp.model.repository.PrefRepository
+import com.trainingapp.model.repository.UserRepository
 import com.trainingapp.model.webservice.UserService
 
-class LoginViewModel(private val service: UserService, private val repository: PrefRepository) : ViewModel() {
+class LoginViewModel(private val userRepository: UserRepository, private val perfRepository: PrefRepository) : ViewModel() {
 
-    private val gson = Gson()
+    private val _loginSuccess = MutableLiveData<Boolean>()
+    val loginSuccess : LiveData<Boolean>
+        get() = _loginSuccess
 
-    fun login(user: UserLogin): Boolean {
-        val response = service.login(user)
+    fun login(user: UserLogin) {
+        val key = userRepository.login(user)
 
-        if (response.isSuccessful) {
-            repository.saveAuthorizationKey(response.headers("Authorization")[0].toString())
-            repository.saveUsername(user.username)
-            repository.saveUser(service.getUser(user.username, repository.getAuthorizationKey()))
-            return true
+        if (key != null) {
+            perfRepository.saveAuthorizationKey(key)
+            perfRepository.saveUsername(user.username)
+            userRepository.getUser(user.username)
+                .let { perfRepository.saveUser(it) }
+            _loginSuccess.value = true
+            return
         }
 
-        return false
+        _loginSuccess.value = false
     }
 
     fun cleanRepo() {
-        repository.saveUser(UserView("","","","",""))
-        repository.saveAuthorizationKey("")
-        repository.saveUsername("")
+        perfRepository.saveUser(UserView("","","","",""))
+        perfRepository.saveAuthorizationKey("")
+        perfRepository.saveUsername("")
     }
 }
