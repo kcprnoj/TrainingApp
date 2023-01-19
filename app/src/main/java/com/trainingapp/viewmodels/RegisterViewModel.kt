@@ -16,5 +16,4 @@ class RegisterViewModel(private val repository: UserRepository) : ViewModel() {
        val response = repository.registerUser(userRegister)
         _registerSuccess.value = response.isSuccessful
     }
-
 }

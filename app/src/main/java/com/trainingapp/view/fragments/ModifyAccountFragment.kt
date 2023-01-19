@@ -1,6 +1,6 @@
 package com.trainingapp.view.fragments
 
-import android.content.SharedPreferences
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,29 +13,35 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentModifyAccountBinding
-import com.trainingapp.view.MainActivity
-import org.json.JSONObject
+import com.trainingapp.RunApplication
+import com.trainingapp.model.data.UserUpdate
+import com.trainingapp.model.repository.UserRepository
+import com.trainingapp.model.webservice.UserService
+import com.trainingapp.viewmodels.ModifyAccountViewModel
+import com.trainingapp.viewmodels.ModifyAccountViewModelFactory
+import java.util.*
 
 class ModifyAccountFragment : Fragment() {
     private lateinit var binding: FragmentModifyAccountBinding
+    private lateinit var viewModelFactory: ModifyAccountViewModelFactory
+    private lateinit var viewModel: ModifyAccountViewModel
+
     private val CHANNEL_ID = "0"
-    private var skipDelete = true
-    private var skipModify = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_modify_account, container, false)
-        binding.lifecycleOwner = this
+        viewModelFactory = ModifyAccountViewModelFactory(UserRepository(UserService()), (requireActivity().application as RunApplication).perfRepository)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ModifyAccountViewModel::class.java)
 
         setClientObservers()
         setListeners()
-
-        val items = listOf(resources.getString(R.string.male), resources.getString(R.string.female), resources.getString(R.string.other))
-        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
-        binding.sexAuto.setAdapter(adapter)
+        createAutoComplete()
+        createDatePicker()
 
         return binding.root
     }
@@ -46,72 +52,73 @@ class ModifyAccountFragment : Fragment() {
         }
 
         binding.deleteAccountButton.setOnClickListener{
-            val appSettingPrefs: SharedPreferences = (activity as MainActivity).getSharedPreferences("AppSettingPrefs",0)
-            val username = appSettingPrefs.getString("userLogin", "Kacper")
-
-            val jsonObject = JSONObject()
-            jsonObject.put("login", username)
-
-            /* TODO: Zastapic uzywajac api
-            (activity as MainActivity).stompClient.send("/app/delete",  jsonObject.toString()).subscribe({ }, {
-                Log.d("Login", "Server Error")
-            })*/
+            deleteAccount()
         }
 
         binding.registerButton.setOnClickListener{
-            val appSettingPrefs: SharedPreferences = (activity as MainActivity).getSharedPreferences("AppSettingPrefs",0)
-            val newBirthday = binding.birthdayTextInputLayout.editText?.text.toString()
-            val newWeight = binding.weightTextInputLayout.editText?.text.toString()
-            val newHeight = binding.heightTextInputLayout.editText?.text.toString()
-            var newSex = binding.sexTextInputLayout.editText?.text.toString()
-            val username = appSettingPrefs.getString("userLogin", "Kacper")
-
-            newSex = when(newSex) {
-                resources.getString(R.string.male) -> "male"
-                resources.getString(R.string.female) -> "female"
-                resources.getString(R.string.other) -> "other"
-                else -> ""
-            }
-
-            val jsonObject = JSONObject()
-            jsonObject.put("new login", newBirthday)
-            jsonObject.put("new weight", newWeight)
-            jsonObject.put("new height", newHeight)
-            jsonObject.put("new sex", newSex)
-            jsonObject.put("login", username)
-
-            /* TODO: Zastapic uzywajac repo
-            (activity as MainActivity).stompClient.send("/app/modify",  jsonObject.toString()).subscribe({ }, {
-                Log.d("Login", "Server Error")
-            })*/
+            modifyAccount()
         }
+    }
+    private fun inputPreviousValues(){
+
+    }
+    private fun modifyAccount(){
+        val newBirthday = binding.birthdayInput.text.toString()
+        val newWeight = binding.weightInput.text.toString().toDouble()
+        val newHeight = binding.heightInput.text.toString().toDouble()
+        var newSex = binding.sexAutoComplete.text.toString()
+        newSex = when(newSex) {
+            resources.getString(R.string.male) -> "male"
+            resources.getString(R.string.female) -> "female"
+            resources.getString(R.string.other) -> "other"
+            else -> ""
+        }
+
+        val user = UserUpdate(newSex,newWeight,newHeight,newBirthday)
+        viewModel.modifyUser(user)
+    }
+
+    private fun deleteAccount(){
+        viewModel.deleteUser()
+    }
+
+    private fun createDatePicker(){
+        val calendar = Calendar.getInstance()
+        val yearCal = calendar.get(Calendar.YEAR)
+        val monthCal = calendar.get(Calendar.MONTH)
+        val dayCal = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(requireActivity(), { _, year, month, dayOfMonth ->
+            val stringMonth = formatMonth(month)
+            val stringDay = formatDay(dayOfMonth)
+
+            val dat = "$year-$stringMonth-$stringDay"
+            binding.birthdayInput.setText(dat)
+        }, yearCal,monthCal,dayCal)
+        datePickerDialog.show()
+    }
+
+    private fun createAutoComplete(){
+        val items = listOf(resources.getString(R.string.male), resources.getString(R.string.female), resources.getString(R.string.other))
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
+        binding.sexAutoComplete.setAdapter(adapter)
     }
 
     private fun setClientObservers() {
-        (activity as MainActivity).modifySuccess.observe(viewLifecycleOwner, Observer {
+        viewModel.modifySuccess.observe(viewLifecycleOwner, Observer {
             if (it == true) {
                 findNavController().navigate(ModifyAccountFragmentDirections.actionModifyAccountFragmentToTrainingFragment())
-                skipModify = true
-                (activity as MainActivity).modifySuccess.postValue(false)
             } else {
-                if (!skipModify)
                     Toast.makeText(requireActivity(), getString(R.string.failed_modify), Toast.LENGTH_SHORT).show()
-                else
-                    skipModify = false
             }
         })
 
-        (activity as MainActivity).deleteSuccess.observe(viewLifecycleOwner, Observer {
+        viewModel.deleteSuccess.observe(viewLifecycleOwner, Observer {
             if (it == true) {
                 findNavController().navigate(ModifyAccountFragmentDirections.actionModifyAccountFragmentToLoginFragment())
-                skipDelete = true
                 notifyDelete()
-                (activity as MainActivity).deleteSuccess.postValue(false)
             } else {
-                if (!skipDelete)
                     Toast.makeText(requireActivity(), getString(R.string.failed_delete), Toast.LENGTH_SHORT).show()
-                else
-                    skipDelete = false
             }
         })
     }
@@ -130,4 +137,17 @@ class ModifyAccountFragment : Fragment() {
         }
     }
 
+    fun formatDay(dayOfMonth: Int): String{
+        return if (dayOfMonth >= 10)
+            dayOfMonth.toString()
+        else
+            "0$dayOfMonth"
+    }
+
+    fun formatMonth(month: Int): String{
+        return if (month+1 >= 10)
+            (month+1).toString()
+        else
+            "0${month+1}"
+    }
 }

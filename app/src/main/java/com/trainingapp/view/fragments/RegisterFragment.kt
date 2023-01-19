@@ -66,8 +66,7 @@ class RegisterFragment : Fragment() {
         val height = binding.heightInput.text.toString().toDouble()
         var sex = binding.sexAutoComplete.text.toString()
         val birthday = binding.birthdayInput.text.toString()
-        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val birthdayFormatted = LocalDate.parse(birthday, dateFormatter)
+
 
         sex = when (sex) {
             resources.getString(R.string.male) -> {
@@ -81,7 +80,7 @@ class RegisterFragment : Fragment() {
             }
         }
 
-        val user = UserRegister(username, password, sex, weight, height, birthdayFormatted)
+        val user = UserRegister(username, password, sex, weight, height, birthday)
         viewModel.registerUser(user)
     }
 

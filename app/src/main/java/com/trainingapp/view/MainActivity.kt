@@ -22,9 +22,6 @@ import com.trainingapp.viewmodels.utility.LocaleHelper
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    val registerSuccess = MutableLiveData(false)
-    val modifySuccess = MutableLiveData(false)
-    val deleteSuccess = MutableLiveData(false)
 
 
 
