@@ -46,7 +46,8 @@ class RunningFragment : Fragment(), OnMapsSdkInitializedCallback {
     private var currentTime = 0L
     private var distance = 0
     private var start: Long = 0L
-    private var calories = 0;
+    private var calories = 0
+    private var weight = 60f
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -57,6 +58,9 @@ class RunningFragment : Fragment(), OnMapsSdkInitializedCallback {
                 as RunApplication).perfRepository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(RunningViewModel::class.java)
 
+        val repo = (requireActivity().application as RunApplication).perfRepository
+
+        weight = repo.getUser().weight.toFloat()
 
         return binding.root
     }
@@ -225,8 +229,7 @@ class RunningFragment : Fragment(), OnMapsSdkInitializedCallback {
     }
 
     private fun updateCalories() {
-        val repo = (requireActivity().application as RunApplication).perfRepository
-        calories = calculateCalories(distance.toDouble(), repo.getUser().weight.toFloat())
+        calories = calculateCalories(distance.toDouble(), weight)
     }
 
     override fun onMapsSdkInitialized(renderer: MapsInitializer.Renderer) {
