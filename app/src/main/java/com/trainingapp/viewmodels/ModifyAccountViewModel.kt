@@ -1,13 +1,15 @@
 package com.trainingapp.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.trainingapp.model.data.UserUpdate
-import com.trainingapp.model.repository.PrefRepository
+import com.trainingapp.model.data.UserView
+import com.trainingapp.model.repository.PreferencesRepository
 import com.trainingapp.model.repository.UserRepository
 
-class ModifyAccountViewModel(private val repository: UserRepository, private val preferences: PrefRepository): ViewModel() {
+class ModifyAccountViewModel(private val repository: UserRepository, private val preferences: PreferencesRepository): ViewModel() {
 
     private val _modifySuccess = MutableLiveData<Boolean>()
     val modifySuccess : LiveData<Boolean>
@@ -17,33 +19,42 @@ class ModifyAccountViewModel(private val repository: UserRepository, private val
     val deleteSuccess : LiveData<Boolean>
         get() = _deleteSuccess
 
-    private val _previousSex = MutableLiveData<Boolean>()
-    val previousSex : LiveData<Boolean>
-        get() = _previousSex
+    private val _sex = MutableLiveData<String>()
+    val sex : LiveData<String>
+        get() = _sex
 
-    private val _previousWeight = MutableLiveData<Boolean>()
-    val previousWeight : LiveData<Boolean>
-        get() = _previousWeight
+    private val _weightString = MutableLiveData<String>()
+    val weightString : LiveData<String>
+        get() = _weightString
 
-    private val _previousHeight = MutableLiveData<Boolean>()
-    val previousHeight : LiveData<Boolean>
-        get() = _previousHeight
+    private val _heightString = MutableLiveData<String>()
+    val heightString : LiveData<String>
+        get() = _heightString
 
-    private val _previousBirthday = MutableLiveData<Boolean>()
-    val previousBirthday : LiveData<Boolean>
-        get() = _previousBirthday
+    private val _birthday = MutableLiveData<String>()
+    val birthday : LiveData<String>
+        get() = _birthday
 
-    fun modifyUser(userUpdate: UserUpdate) {
-        val response = repository.updateUser(preferences.getUsername(), userUpdate)
-        _modifySuccess.value = response.isSuccessful
+    init {
+        getUserDetails()
+    }
+
+    fun modifyUser(sex:String, weight:Double, height:Double, birthday:String) {
+        val user = UserUpdate(sex, weight, height, birthday)
+        val success = repository.updateUser(preferences.getUsername(), preferences.getAuthorizationKey(), user)
+        _modifySuccess.value = success
     }
 
     fun deleteUser(){
-        val response = repository.deleteUser(preferences.getUsername())
-        _deleteSuccess.value = response.isSuccessful
+        val success = repository.deleteUser(preferences.getUsername(), preferences.getAuthorizationKey())
+        _deleteSuccess.value = success
     }
 
     fun getUserDetails(){
-
+        val user = repository.getUser(preferences.getUsername(), preferences.getAuthorizationKey())
+        _sex.value = user.sex
+        _birthday.value = user.birthday
+        _weightString.value = user.weight
+        _heightString.value = user.height
     }
 }

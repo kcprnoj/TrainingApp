@@ -13,7 +13,7 @@ class RegisterViewModel(private val repository: UserRepository) : ViewModel() {
         get() = _registerSuccess
 
     fun registerUser(userRegister: UserRegister) {
-       val response = repository.registerUser(userRegister)
-        _registerSuccess.value = response.isSuccessful
+       val success = repository.registerUser(userRegister)
+        _registerSuccess.value = success
     }
 }

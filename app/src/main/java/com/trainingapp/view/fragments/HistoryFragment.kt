@@ -30,8 +30,7 @@ class HistoryFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_history,container,false)
-        viewModelFactory = HistoryViewModelFactory(TrainingRepository(TrainingService(),
-            (requireActivity().application as RunApplication).perfRepository),
+        viewModelFactory = HistoryViewModelFactory(TrainingRepository(TrainingService()),
             (requireActivity().application as RunApplication).perfRepository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(HistoryViewModel::class.java)
 

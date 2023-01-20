@@ -29,7 +29,7 @@ class LoginFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-        viewModelFactory = LoginViewModelFactory(UserRepository(UserService(), (requireActivity().application as RunApplication).perfRepository),
+        viewModelFactory = LoginViewModelFactory(UserRepository(UserService()),
             (requireActivity().application as RunApplication).perfRepository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
 
@@ -69,7 +69,4 @@ class LoginFragment : Fragment() {
                 ).show()            }
         })
     }
-
-
-
 }

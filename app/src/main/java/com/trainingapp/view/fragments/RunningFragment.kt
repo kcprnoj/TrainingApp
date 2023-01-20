@@ -54,7 +54,7 @@ class RunningFragment : Fragment(), OnMapsSdkInitializedCallback {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_running,container,false)
         val perf = (requireActivity().application as RunApplication).perfRepository
         viewModelFactory = RunningViewModelFactory(
-            TrainingRepository(TrainingService(), perf), (requireActivity().application
+            TrainingRepository(TrainingService()), (requireActivity().application
                 as RunApplication).perfRepository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(RunningViewModel::class.java)
 

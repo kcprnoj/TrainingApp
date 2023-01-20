@@ -34,8 +34,7 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
-        viewModelFactory = RegisterViewModelFactory(UserRepository(UserService(),
-            (requireActivity().application as RunApplication).perfRepository))
+        viewModelFactory = RegisterViewModelFactory(UserRepository(UserService()))
         viewModel = ViewModelProvider(this, viewModelFactory).get(RegisterViewModel::class.java)
 
         setClientObservers()

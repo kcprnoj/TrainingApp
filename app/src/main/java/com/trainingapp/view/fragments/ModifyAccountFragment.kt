@@ -18,7 +18,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.main.R
 import com.example.main.databinding.FragmentModifyAccountBinding
 import com.trainingapp.RunApplication
-import com.trainingapp.model.data.UserUpdate
 import com.trainingapp.model.repository.UserRepository
 import com.trainingapp.model.webservice.UserService
 import com.trainingapp.viewmodels.ModifyAccountViewModel
@@ -35,14 +34,12 @@ class ModifyAccountFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_modify_account, container, false)
-        viewModelFactory = ModifyAccountViewModelFactory(UserRepository(UserService(),
-            (requireActivity().application as RunApplication).perfRepository), (requireActivity().application as RunApplication).perfRepository)
+        viewModelFactory = ModifyAccountViewModelFactory(UserRepository(UserService()), (requireActivity().application as RunApplication).perfRepository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ModifyAccountViewModel::class.java)
-
+        binding.viewModel = viewModel
         setClientObservers()
         setListeners()
         createAutoComplete()
-        createDatePicker()
 
         return binding.root
     }
@@ -53,34 +50,30 @@ class ModifyAccountFragment : Fragment() {
         }
 
         binding.deleteAccountButton.setOnClickListener{
-            deleteAccount()
+            viewModel.deleteUser()
         }
 
-        binding.registerButton.setOnClickListener{
+        binding.updateButton.setOnClickListener{
             modifyAccount()
         }
-    }
-    private fun inputPreviousValues(){
 
+        binding.birthdayInput.setOnClickListener {
+            createDatePicker()
+        }
     }
+
     private fun modifyAccount(){
-        val newBirthday = binding.birthdayInput.text.toString()
+        var newSex = binding.sexAutoComplete.text.toString()
         val newWeight = binding.weightInput.text.toString().toDouble()
         val newHeight = binding.heightInput.text.toString().toDouble()
-        var newSex = binding.sexAutoComplete.text.toString()
+        val newBirthday = binding.birthdayInput.text.toString()
         newSex = when(newSex) {
             resources.getString(R.string.male) -> "male"
             resources.getString(R.string.female) -> "female"
             resources.getString(R.string.other) -> "other"
             else -> ""
         }
-
-        val user = UserUpdate(newSex,newWeight,newHeight,newBirthday)
-        viewModel.modifyUser(user)
-    }
-
-    private fun deleteAccount(){
-        viewModel.deleteUser()
+        viewModel.modifyUser(newSex, newWeight,newHeight, newBirthday)
     }
 
     private fun createDatePicker(){
@@ -103,6 +96,13 @@ class ModifyAccountFragment : Fragment() {
         val items = listOf(resources.getString(R.string.male), resources.getString(R.string.female), resources.getString(R.string.other))
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         binding.sexAutoComplete.setAdapter(adapter)
+        val default = when(viewModel.sex.value) {
+            "male" -> resources.getString(R.string.male)
+            "female" -> resources.getString(R.string.female)
+            "other" -> resources.getString(R.string.other)
+            else -> ""
+        }
+        binding.sexAutoComplete.setText(default, false)
     }
 
     private fun setClientObservers() {

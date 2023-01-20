@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.trainingapp.model.data.UserView
 
-class PrefRepository(context: Context) {
+class PreferencesRepository(context: Context) {
 
     private val pref: SharedPreferences = context.getSharedPreferences(
         PREFERENCE_NAME,

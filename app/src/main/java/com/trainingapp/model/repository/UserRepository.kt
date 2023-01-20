@@ -5,9 +5,8 @@ import com.trainingapp.model.data.UserRegister
 import com.trainingapp.model.data.UserUpdate
 import com.trainingapp.model.data.UserView
 import com.trainingapp.model.webservice.UserService
-import okhttp3.Response
 
-class UserRepository (private val userService: UserService, private val pref: PrefRepository){
+class UserRepository (private val userService: UserService){
 
     fun login(user: UserLogin) : String?{
         val response = userService.login(user)
@@ -17,19 +16,22 @@ class UserRepository (private val userService: UserService, private val pref: Pr
             null
     }
 
-    fun getUser(username: String): UserView {
-        return userService.getUser(username, pref.getAuthorizationKey())
+    fun getUser(username: String, authorizationKey: String): UserView {
+        return userService.getUser(username, authorizationKey)
     }
 
-    fun registerUser(user: UserRegister) : Response{
-        return userService.registerUser(user)
+    fun registerUser(user: UserRegister) : Boolean{
+        val response = userService.registerUser(user)
+        return response.isSuccessful
     }
 
-    fun updateUser(username: String, userUpdate: UserUpdate): Response{
-        return userService.updateUser(username, pref.getAuthorizationKey(), userUpdate)
+    fun updateUser(username: String, authorizationKey: String, userUpdate: UserUpdate): Boolean{
+        val response = userService.updateUser(username, authorizationKey, userUpdate)
+        return response.isSuccessful
     }
 
-    fun deleteUser(username: String): Response{
-        return userService.deleteUser(username, pref.getAuthorizationKey())
+    fun deleteUser(username: String, authorizationKey: String): Boolean{
+        val response = userService.deleteUser(username, authorizationKey)
+        return response.isSuccessful
     }
 }
